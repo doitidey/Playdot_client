@@ -10,7 +10,7 @@ function Reply({ onChange, reply }: ReplyProps) {
   return (
     <div className="reply-block">
       <input
-        className="reply-input"
+        className="reply-block__input"
         type="text"
         onChange={onChange}
         value={reply}
