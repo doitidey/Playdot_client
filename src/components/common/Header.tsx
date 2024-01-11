@@ -19,8 +19,6 @@ function Header() {
     PATH,
   } = usePath();
 
-  if (pathname === "/login") return;
-
   return (
     <>
       <header className="header-block">
@@ -58,7 +56,9 @@ function Header() {
             <span>로그인</span>
           </Link>
         </div>
-        {pathname === "/community" || pathname === "/match/chat" || <SubMenu />}
+        {pathname === "/community" ||
+          pathname === "/match/chat" ||
+          pathname === "/login" || <SubMenu />}
       </header>
       <div className="space" />
     </>

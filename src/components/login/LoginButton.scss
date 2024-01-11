@@ -1,0 +1,61 @@
+// 네이버
+$naverBG: #05dc67;
+$naverFont: #1b3c1b;
+
+//카카오톡
+$kakaoBG: #fae100;
+$kakaoFont: #381e1f;
+
+//구글
+$googleBG: #ffffff;
+$googleFont: #353535;
+
+.buttons-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  font-family: "Pretendard";
+  font-size: 30px;
+  font-weight: 700;
+  &__button {
+    width: 700px;
+    height: 90px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+      cursor: pointer;
+    }
+    &--naver {
+      background-color: $naverBG;
+      color: $naverFont;
+    }
+    &--kakao {
+      background-color: $kakaoBG;
+      color: $kakaoFont;
+    }
+    &--google {
+      background-color: $googleBG;
+      color: $googleFont;
+    }
+    .description {
+      display: flex;
+      position: relative;
+      justify-content: center;
+      width: 100%;
+      img {
+        width: 72px;
+        height: auto;
+        position: absolute;
+        margin-left: 34px;
+        left: 0;
+      }
+      p {
+        z-index: 9;
+      }
+    }
+  }
+}
