@@ -14,6 +14,8 @@ interface ScoreListItemProps {
   awayImg: string;
 }
 
+// 서버에서 크롤링한 날짜를 받아옴!
+// pc에서 받아온 날짜는 동기화가 안될 수 있음
 const today = new Date();
 const month = today.getMonth() + 1;
 const date = today.getDate();
