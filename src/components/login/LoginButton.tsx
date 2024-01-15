@@ -30,13 +30,7 @@ function LoginButton() {
           )}
         >
           <div className="description">
-            <Image
-              src={img}
-              alt={name}
-              width={0}
-              height={0}
-              style={{ width: "30px", height: "auto" }}
-            />
+            <Image src={img} alt={name} width={0} height={0} />
             <p>{text}</p>
           </div>
         </div>
