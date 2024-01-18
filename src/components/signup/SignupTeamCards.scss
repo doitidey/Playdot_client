@@ -1,0 +1,44 @@
+.teamcard-block {
+  position: relative;
+  width: 285px;
+  height: 350px;
+  border-radius: 20px;
+  border: 2px solid #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+  cursor: pointer;
+  overflow: hidden;
+
+  .teamname {
+    position: relative;
+    z-index: 9;
+    font-size: 30px;
+  }
+
+  img {
+    position: relative;
+    z-index: 9;
+    width: 216px;
+    height: 350px;
+  }
+
+  &__backgrounds {
+    position: absolute;
+    bottom: 40px;
+    z-index: 1;
+    display: flex;
+    transform: rotate(45deg);
+
+    .square {
+      width: 150px;
+      height: 450px;
+      background-color: cadetblue;
+      &:last-child {
+        width: 40px;
+      }
+    }
+  }
+}
