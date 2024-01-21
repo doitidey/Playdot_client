@@ -51,7 +51,13 @@ function ScoreListItem({ home, away, homeImg, awayImg }: ScoreListItemProps) {
           onClick={onClickLeft}
         >
           <div className="team-img">
-            <Image src={homeImg} alt="lions" width={55} height={55} />
+            <Image
+              src={homeImg}
+              alt="lions"
+              width={0}
+              height={0}
+              draggable={false}
+            />
           </div>
           <div className="team-info-left">
             {selectHome ? <Text large>{home}</Text> : <Text large>{home}</Text>}
@@ -65,7 +71,13 @@ function ScoreListItem({ home, away, homeImg, awayImg }: ScoreListItemProps) {
           onClick={onClickRight}
         >
           <div className="team-img">
-            <Image src={awayImg} alt="lions" width={55} height={55} />
+            <Image
+              src={awayImg}
+              alt="lions"
+              width={0}
+              height={0}
+              draggable={false}
+            />
           </div>
           <div className="team-info-right">
             {selectAway ? <Text small>{away}</Text> : <Text large>{away}</Text>}
