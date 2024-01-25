@@ -13,7 +13,6 @@ function LoginSection() {
           alt={"login-logo"}
           width={0}
           height={0}
-          style={{ width: "72px", height: "auto", marginBottom: "22px" }}
         />
 
         <Title largest>플레이닷 ID 생성</Title>
