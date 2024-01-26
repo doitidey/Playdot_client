@@ -4,6 +4,7 @@ import "@/components/signup/SignupSection.scss";
 
 import useStore from "@/lib/store/signup/store";
 import SignupStepOne from "@/components/signup/SignupStepOne";
+import SignupStepTwo from "@/components/signup/SignupStepTwo";
 
 function SignupSection() {
   const { signUpStep } = useStore();
@@ -14,6 +15,7 @@ function SignupSection() {
         <div className="signup-block__intro__circles">{signUpStep}</div>
       </div>
       <SignupStepOne />
+      <SignupStepTwo />
     </section>
   );
 }
