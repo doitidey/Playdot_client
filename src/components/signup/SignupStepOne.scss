@@ -1,0 +1,16 @@
+@import "@/styles/colors.scss";
+
+.content {
+  margin-top: 25px;
+  text-align: center;
+  line-height: 34px;
+  color: $login-text;
+}
+
+.teamcards-block {
+  margin-top: 80px;
+  width: 1200px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
