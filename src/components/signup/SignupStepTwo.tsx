@@ -1,7 +1,7 @@
-import "@/components/signup/SignupStepTwo.scss";
+import Image from "next/image";
 
+import "@/components/signup/SignupStepTwo.scss";
 import Title from "@/components/common/Title";
-import Text from "@/components/common/Text";
 
 import SignupTeamCards from "@/components/signup/SignupTeamCards";
 import { TEAMS_INFO } from "./TeamsInfo";
@@ -9,27 +9,47 @@ import { TEAMS_INFO } from "./TeamsInfo";
 function SignupStepTwo() {
   return (
     <div className="stepTwo-block">
-      <Title largest className="content">
+      <Title largest className="stepTwo-block__title">
         프로필 설정하기
       </Title>
-      <Title small className="content">
+      <Title small className="stepTwo-block__text">
         나만의 프로필을 만들어봐!
       </Title>
       <div className="stepTwo-content">
-        <SignupTeamCards {...TEAMS_INFO[1]} />
-        <div className="upload">
-          <div></div>
-          <input type="file" accept="image/*" />
-        </div>
-        <div>
-          <div>
-            <Text>닉네임</Text>
-            <input type="text" />
-            <button>중복확인</button>
+        <div className="stepTwo-content__cards">
+          <SignupTeamCards {...TEAMS_INFO[1]} />
+          <div className="cards__upload">
+            <Image
+              src={"/images/signupIcon.svg"}
+              alt={"plusIcon"}
+              width={0}
+              height={0}
+            />
+            <input type="file" accept="image/*" className="cards__input" />
           </div>
-          <div>
-            <Text>한마디</Text>
-            <textarea></textarea>
+        </div>
+        <div className="stepTwo-content__info">
+          <div className="info-content">
+            <Title small className="stepTwo-content__title">
+              닉네임
+            </Title>
+            <div className="info-content__nickname">
+              <input
+                type="text"
+                className="nickname__input"
+                placeholder="닉네임을 입력해줘!"
+              />
+              <button className="nickname__button">중복확인</button>
+            </div>
+          </div>
+          <div className="info-content">
+            <Title small className="stepTwo-content__title">
+              한마디
+            </Title>
+            <textarea
+              className="words__input"
+              placeholder="한마디를 입력해줘!"
+            ></textarea>
           </div>
         </div>
       </div>
