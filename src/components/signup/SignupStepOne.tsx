@@ -6,11 +6,11 @@ import { TEAMS_INFO } from "./TeamsInfo";
 
 function SignupStepOne() {
   return (
-    <div>
-      <Title largest className="content">
+    <div className="stepOne__block">
+      <Title largest className="stepOne__block--title">
         나의 구단 선택하기
       </Title>
-      <Title small className="content">
+      <Title small className="stepOne__block--text">
         응원하는 구단을 골라줘!
         <br />팀 뱃지를 부여받고 커뮤니티에서 소통할 수 있어.
       </Title>
