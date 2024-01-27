@@ -14,8 +14,7 @@ function SignupSection() {
       <div className="signup-block__intro">
         <div className="signup-block__intro__circles">{signUpStep}</div>
       </div>
-      <SignupStepOne />
-      <SignupStepTwo />
+      {signUpStep === 1 ? <SignupStepOne /> : <SignupStepTwo />}
     </section>
   );
 }
