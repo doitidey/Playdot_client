@@ -1,11 +1,13 @@
+@import "@/styles/colors.scss";
+
 @mixin container-style {
   box-sizing: border-box;
   font-size: 22px;
   border-radius: 16px;
-  background: #292b2e;
+  background: $signup-back;
   border: none;
   resize: none;
-  color: white;
+  color: $dark-text2;
 }
 
 .stepTwo-block {
@@ -32,8 +34,8 @@
         width: 285px;
         height: 350px;
         border-radius: 20px;
-        background: #292b2e;
-        border: 2px solid #45484d;
+        background: $signup-back;
+        border: 2px solid $signup-border;
 
         img {
           width: 90px;
