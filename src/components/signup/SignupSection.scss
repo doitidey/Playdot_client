@@ -8,12 +8,21 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 152px;
+
+  &__buttons {
+    width: 100%;
+    padding: 54px 70px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
+
   &__intro {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 92px 0 70px 0;
+    margin-bottom: 70px;
     &__circles {
       background-color: rgba(255, 255, 255, 0.2);
       border-radius: 50%;
