@@ -1,0 +1,99 @@
+@import "@/styles/colors.scss";
+
+@mixin container-style {
+  box-sizing: border-box;
+  font-size: 22px;
+  border-radius: 16px;
+  background: $signup-back;
+  border: none;
+  resize: none;
+  color: $dark-text2;
+}
+
+.stepTwo-block {
+  width: 1200px;
+  text-align: center;
+
+  &__text {
+    margin-top: 25px;
+  }
+
+  .stepTwo-content {
+    display: flex;
+    gap: 30px;
+    margin-top: 152px;
+
+    &__cards {
+      display: flex;
+      gap: 31px;
+
+      .cards__upload {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 285px;
+        height: 350px;
+        border-radius: 20px;
+        background: $signup-back;
+        border: 2px solid $signup-border;
+
+        img {
+          width: 90px;
+          height: 90px;
+        }
+
+        .cards__input {
+          display: none;
+        }
+      }
+    }
+
+    &__info {
+      width: 568px;
+      justify-content: space-between;
+
+      .info-content {
+        display: flex;
+        flex-direction: column;
+
+        &__nickname {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 32px;
+
+          .nickname__input {
+            @include container-style;
+            width: 380px;
+            height: 75px;
+            padding-left: 29px;
+            &:focus {
+              outline: none;
+            }
+          }
+          .nickname__button {
+            @include container-style;
+            cursor: pointer;
+            width: 142px;
+            height: 75px;
+          }
+        }
+
+        .words__input {
+          @include container-style;
+          font-family: "pretendard";
+          height: 157px;
+          padding: 22px 29px;
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+    }
+
+    &__title {
+      text-align: left;
+      margin-bottom: 14px;
+    }
+  }
+}

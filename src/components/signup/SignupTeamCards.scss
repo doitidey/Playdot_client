@@ -1,0 +1,102 @@
+@import "@/styles/colors.scss";
+
+.teamcard-block {
+  position: relative;
+  width: 285px;
+  height: 350px;
+
+  .teamcard-content {
+    border-radius: 20px;
+    height: 100%;
+    position: relative;
+    border: 2px solid #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+    cursor: pointer;
+    overflow: hidden;
+
+    &--active {
+      width: 100%;
+      position: absolute;
+      border: none;
+      background: $main;
+      z-index: 99;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    &--active:hover {
+      opacity: 0.9;
+    }
+
+    &__backgrounds {
+      position: absolute;
+      bottom: 90px;
+      left: 60px;
+      z-index: 1;
+      display: flex;
+      transform: rotate(45deg);
+      .square {
+        width: 150px;
+        height: 450px;
+      }
+      .first-square {
+        margin-top: 80px;
+      }
+      .second-square {
+        margin-top: -20px;
+      }
+      .third-square {
+        width: 40px;
+        margin-top: -12px;
+        opacity: 0.2;
+      }
+      .square--lions {
+        background: linear-gradient(#fff 20%, $lions1 75%, rgba(1, 1, 1, 0));
+      }
+      .square--twins {
+        background: linear-gradient(#fff 20%, $twins1 75%, rgba(1, 1, 1, 0));
+      }
+      .square--tigers {
+        background: linear-gradient(#fff 20%, $tigers1 75%, rgba(1, 1, 1, 0));
+      }
+      .square--giants {
+        background: linear-gradient(#fff 20%, $gients3 75%, rgba(1, 1, 1, 0));
+      }
+      .square--eagles {
+        background: linear-gradient(#fff 20%, $eagles1 75%, rgba(1, 1, 1, 0));
+      }
+      .square--heroes {
+        background: linear-gradient(#fff 20%, $heroes1 75%, rgba(1, 1, 1, 0));
+      }
+      .square--landers {
+        background: linear-gradient(#fff 20%, $landers1 75%, rgba(1, 1, 1, 0));
+      }
+      .square--bears {
+        background: linear-gradient(#fff 20%, blue 75%, rgba(1, 1, 1, 0));
+      }
+      .square--dinos {
+        background: linear-gradient(#fff 20%, $dinos2 75%, rgba(1, 1, 1, 0));
+      }
+      .square--wiz {
+        background: linear-gradient(#fff 20%, gray 75%, rgba(1, 1, 1, 0));
+      }
+    }
+
+    .teamname {
+      position: relative;
+      z-index: 9;
+      font-size: 30px;
+    }
+
+    img {
+      position: relative;
+      z-index: 9;
+      width: 216px;
+      height: 350px;
+    }
+  }
+}
