@@ -137,7 +137,7 @@ function Comment() {
     <section className="comment-block">
       <form className="comment-block__content" onSubmit={onSubmit}>
         <div className="comment-header">
-          <Title medium>댓글 1000개</Title>
+          <Title medium>댓글 {comment.length}개</Title>
           <button type="submit">
             <MdRefresh />
           </button>

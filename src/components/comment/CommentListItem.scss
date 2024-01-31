@@ -60,7 +60,7 @@
   }
 }
 
-.like-btn {
+.active-like-btn {
   width: 22px;
   height: 22px;
   background: $like-bg;
@@ -70,8 +70,48 @@
   border-radius: 50%;
   cursor: pointer;
   margin-left: 8px;
+  animation: like-active 0.3s normal;
+  svg {
+    font-size: 14px;
+    color: #fff;
+  }
+  @keyframes like-active {
+    0% {
+      transform: none;
+    }
+    50% {
+      transform: scale(2);
+    }
+    100% {
+      transform: none;
+    }
+  }
+}
+
+.inactive-like-btn {
+  width: 22px;
+  height: 22px;
+  background: $like-bg;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-left: 8px;
+  animation: like-inactive 0.3s ease-in-out;
   svg {
     font-size: 14px;
     color: $like-obj;
+  }
+  @keyframes like-inactive {
+    0% {
+      transform: none;
+    }
+    50% {
+      transform: scale(2);
+    }
+    100% {
+      transform: none;
+    }
   }
 }

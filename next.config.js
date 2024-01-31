@@ -13,7 +13,7 @@ const nextConfig = {
       {
         source: "/",
         destination: "/match/today",
-        permanent: true,
+        permanent: false,
       },
     ];
   },

@@ -1,21 +1,28 @@
 "use client";
 
-import Text from "../common/Text";
-import TeamTag from "../tag/TeamTag";
-import { CommentData } from "./Comment";
-import "./CommentListItem.scss";
-import { FiThumbsUp } from "react-icons/fi";
-
 import { ChangeEvent, useCallback, useState } from "react";
-import Reply from "./Reply";
+import { FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
+import Text from "@/components/common/Text";
+import TeamTag from "@/components/tag/TeamTag";
+import { CommentData } from "@/components/comment/Comment";
+import "@/components/comment/CommentListItem.scss";
+import Reply from "@/components/reply/Reply";
+import classNames from "classnames";
 
 function CommentListItem({ username, team, comment }: CommentData) {
   const [visibleReply, setVisibleReply] = useState(false);
+  const [visibleReplyList, setVisibleReplyList] = useState(false);
+  const [like, setLike] = useState(false);
   const [reply, setReply] = useState("");
 
-  const onVisible = useCallback(() => {
+  const onVisible = () => {
     setVisibleReply(!visibleReply);
-  }, [visibleReply]);
+    setVisibleReplyList(!visibleReplyList);
+  };
+
+  const onLike = () => {
+    setLike(!like);
+  };
 
   const onChange = useCallback((event: ChangeEvent) => {
     const { value } = event.target as HTMLInputElement;
@@ -26,7 +33,7 @@ function CommentListItem({ username, team, comment }: CommentData) {
     <>
       <li className="item-block">
         <div className="item-block__comment">
-          <div className="profile-image"></div>
+          <div className="profile-image" />
           <div className="content">
             <div className="content__profile">
               <Text medium>{username}</Text>
@@ -34,7 +41,7 @@ function CommentListItem({ username, team, comment }: CommentData) {
             </div>
             <Text medium>{comment}</Text>
             <div className="content__reply">
-              <span>답글 20</span>
+              <span onClick={onVisible}>답글 20</span>
               <span onClick={onVisible}>답글쓰기</span>
             </div>
           </div>
@@ -47,12 +54,18 @@ function CommentListItem({ username, team, comment }: CommentData) {
           <div className="item-block__button__like">
             <Text>좋아요</Text>
             <span>15</span>
-            <div className="like-btn">
-              <FiThumbsUp />
+            <div
+              className={classNames(
+                `${like ? "active-like-btn" : "inactive-like-btn"}`,
+              )}
+              onClick={onLike}
+            >
+              {like ? <FaThumbsUp /> : <FaRegThumbsUp />}
             </div>
           </div>
         </div>
       </li>
+      {visibleReplyList && <span>테스트</span>}
       {visibleReply && <Reply reply={reply} onChange={onChange} />}
     </>
   );

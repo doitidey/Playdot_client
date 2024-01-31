@@ -3,7 +3,7 @@
 .score-item-block {
   height: 80px;
   background: $surface;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   border-radius: 8px;
   display: flex;
   justify-content: space-between;
@@ -48,6 +48,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  img {
+    width: 55px;
+    height: 55px;
+  }
 }
 
 .team-info-left {
