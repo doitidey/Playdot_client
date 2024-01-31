@@ -4,17 +4,18 @@ import Image from "next/image";
 
 import "@/components/login/LoginButton.scss";
 
+type ButtonInfo = Array<{
+  name: string;
+  text: string;
+  img: string;
+}>;
+const BUTTON_INFO: ButtonInfo = [
+  { name: "naver", text: "네이버 로그인", img: "/images/naver.svg" },
+  { name: "kakao", text: "카카오톡 로그인", img: "/images/kakao.svg" },
+  { name: "google", text: "구글 로그인", img: "/images/google.svg" },
+];
+
 function LoginButton() {
-  type TButtonInfo = Array<{
-    name: string;
-    text: string;
-    img: string;
-  }>;
-  const BUTTON_INFO: TButtonInfo = [
-    { name: "naver", text: "네이버 로그인", img: "/images/naver.svg" },
-    { name: "kakao", text: "카카오톡 로그인", img: "/images/kakao.svg" },
-    { name: "google", text: "구글 로그인", img: "/images/google.svg" },
-  ];
   const onClickButton = () => {
     console.log("onClickButton");
   };
@@ -30,13 +31,7 @@ function LoginButton() {
           )}
         >
           <div className="description">
-            <Image
-              src={img}
-              alt={name}
-              width={0}
-              height={0}
-              style={{ width: "30px", height: "auto" }}
-            />
+            <Image src={img} alt={name} width={0} height={0} />
             <p>{text}</p>
           </div>
         </div>
