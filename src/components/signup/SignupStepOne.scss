@@ -1,0 +1,21 @@
+@import "@/styles/colors.scss";
+
+.stepOne__block {
+  text-align: center;
+
+  &--title {
+    color: $login-text;
+  }
+  &--text {
+    line-height: 34px;
+    margin-top: 25px;
+    color: $login-text;
+  }
+  .teamcards-block {
+    margin-top: 80px;
+    width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+}

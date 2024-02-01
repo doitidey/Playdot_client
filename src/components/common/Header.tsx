@@ -58,7 +58,8 @@ function Header() {
         </div>
         {pathname === "/community" ||
           pathname === "/match/chat" ||
-          pathname === "/login" || <SubMenu />}
+          pathname === "/login" ||
+          pathname === "/signup" || <SubMenu />}
       </header>
       <div className="space" />
     </>
