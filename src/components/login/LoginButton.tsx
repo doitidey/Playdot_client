@@ -3,6 +3,7 @@ import classNames from "classnames";
 import Image from "next/image";
 
 import "@/components/login/LoginButton.scss";
+import { login } from "@/lib/api/authAPI";
 
 type ButtonInfo = Array<{
   name: string;
@@ -17,6 +18,7 @@ const BUTTON_INFO: ButtonInfo = [
 
 function LoginButton() {
   const onClickButton = () => {
+    login();
     console.log("onClickButton");
   };
   return (

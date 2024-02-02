@@ -6,7 +6,7 @@ import { fetchData } from "./commonAPI";
 export const login = () => {
   try {
     const requestBody = {
-      email: "playdot2",
+      username: "playdot2",
       password: "test",
     };
     const res = fetchData("login", "post", requestBody);
