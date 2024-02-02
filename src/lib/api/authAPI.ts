@@ -3,7 +3,7 @@ import { fetchData } from "./commonAPI";
 // 로그인
 // POST
 // requestBody - email: string, password: string
-export const login = () => {
+export const login = async () => {
   try {
     const requestBody = {
       username: "playdot2",
