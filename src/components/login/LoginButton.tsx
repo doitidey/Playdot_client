@@ -22,7 +22,7 @@ function LoginButton() {
   return (
     <div className="buttons-block">
       {BUTTON_INFO.map(({ name, text, img }) => (
-        <div
+        <button
           onClick={onClickButton}
           key={name}
           className={classNames(
@@ -34,7 +34,7 @@ function LoginButton() {
             <Image src={img} alt={name} width={0} height={0} />
             <p>{text}</p>
           </div>
-        </div>
+        </button>
       ))}
     </div>
   );
