@@ -2,6 +2,9 @@
 import classNames from "classnames";
 import Image from "next/image";
 
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 import "@/components/login/LoginButton.scss";
 import { login } from "@/lib/api/authAPI";
 
@@ -17,10 +20,25 @@ const BUTTON_INFO: ButtonInfo = [
 ];
 
 function LoginButton() {
-  const onClickButton = () => {
-    login();
-    console.log("onClickButton");
+  const router = useRouter();
+
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+    if (authToken) {
+      router.push("/match/today");
+    }
+  }, []);
+
+  const onClickButton = async () => {
+    try {
+      const res = await login();
+      localStorage.setItem("authToken", res.data.token);
+      router.push("/match/today");
+    } catch (error) {
+      console.error("로그인 실패:", error);
+    }
   };
+
   return (
     <div className="buttons-block">
       {BUTTON_INFO.map(({ name, text, img }) => (
