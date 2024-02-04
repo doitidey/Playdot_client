@@ -15,10 +15,10 @@
     justify-content: center;
     align-items: center;
     padding: 40px 0;
-    cursor: pointer;
     overflow: hidden;
 
     &--active {
+      cursor: pointer;
       width: 100%;
       position: absolute;
       border: none;
@@ -39,17 +39,24 @@
       z-index: 1;
       display: flex;
       transform: rotate(45deg);
+      width: 340px;
+      height: 530px;
+      overflow: hidden;
+      box-sizing: border-box;
       .square {
         width: 150px;
         height: 450px;
       }
       .first-square {
+        transition: 0.5s;
         margin-top: 80px;
       }
       .second-square {
+        transition: 0.5s;
         margin-top: -20px;
       }
       .third-square {
+        transition: 0.3s;
         width: 40px;
         margin-top: -12px;
         opacity: 0.2;
@@ -97,6 +104,25 @@
       z-index: 9;
       width: 216px;
       height: 350px;
+      transition: 0.3s;
+    }
+  }
+  .teamcard-content--hover {
+    transition: 0.3s;
+    &:hover {
+      transform: scale(1.03);
+      .first-square {
+        margin-top: 30px;
+      }
+      .second-square {
+        margin-top: 60px;
+      }
+      .third-square {
+        margin-top: 42px;
+      }
+      img {
+        transform: scale(1.08);
+      }
     }
   }
 }

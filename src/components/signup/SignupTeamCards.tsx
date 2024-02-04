@@ -9,13 +9,25 @@ interface TeamProps {
   color: string;
 }
 
-function SignupTeamCards(team: TeamProps) {
+interface TeamCardsProps {
+  team: TeamProps;
+  selected?: boolean;
+}
+
+function SignupTeamCards({ team, selected }: TeamCardsProps) {
   return (
     <div className="teamcard-block">
-      <div className="teamcard-content teamcard-content--active">
-        <p className="teamname">선택하기</p>
-      </div>
-      <div className="teamcard-content">
+      {selected || (
+        <div className="teamcard-content teamcard-content--active">
+          <p className="teamname">선택하기</p>
+        </div>
+      )}
+      <div
+        className={classNames(
+          "teamcard-content",
+          selected && "teamcard-content--hover",
+        )}
+      >
         <Image src={team.img} alt={team.name} width={0} height={0} />
         <p className="teamname">{team.name}</p>
         <div className="teamcard-content__backgrounds">
