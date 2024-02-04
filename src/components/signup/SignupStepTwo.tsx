@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
 
 import "@/components/signup/SignupStepTwo.scss";
@@ -9,9 +9,23 @@ import { TEAMS_INFO } from "./TeamsInfo";
 
 function SignupStepTwo() {
   const imageInputRef = useRef<HTMLInputElement | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
+  //버튼이 클릭 될 때 인풋을 연결시켜주는 함수
   const handleClickUpload = () => {
     imageInputRef.current.click();
+  };
+
+  //파일 업로드시 대응하는 함수
+  const handleFileChange = () => {
+    const reader = new FileReader();
+    const file = imageInputRef.current.files[0];
+
+    //파일 변환
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      setPreviewUrl(reader.result);
+    };
   };
 
   return (
@@ -26,18 +40,29 @@ function SignupStepTwo() {
         <div className="stepTwo-content__cards">
           <SignupTeamCards {...TEAMS_INFO[1]} />
           <div className="cards__upload">
-            <Image
-              onClick={handleClickUpload}
-              src={"/images/signupIcon.svg"}
-              alt={"plusIcon"}
-              width={0}
-              height={0}
-            />
+            {previewUrl ? (
+              <Image
+                className="uploadedImage"
+                src={previewUrl}
+                width={0}
+                height={0}
+              />
+            ) : (
+              <Image
+                className="uploadButton"
+                onClick={handleClickUpload}
+                src={"/images/signupIcon.svg"}
+                alt={"plusIcon"}
+                width={0}
+                height={0}
+              />
+            )}
             <input
               type="file"
               accept="image/*"
               className="cards__input"
               ref={imageInputRef}
+              onChange={handleFileChange}
             />
           </div>
         </div>

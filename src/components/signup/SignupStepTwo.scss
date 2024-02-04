@@ -36,11 +36,17 @@
         border-radius: 20px;
         background: $signup-back;
         border: 2px solid $signup-border;
+        overflow: hidden;
 
-        img {
+        .uploadButton {
           cursor: pointer;
           width: 90px;
           height: 90px;
+        }
+        .uploadedImage {
+          cursor: pointer;
+          height: 100%;
+          width: auto;
         }
 
         .cards__input {
