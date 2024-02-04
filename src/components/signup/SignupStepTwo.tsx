@@ -1,3 +1,4 @@
+import React, { useRef } from "react";
 import Image from "next/image";
 
 import "@/components/signup/SignupStepTwo.scss";
@@ -7,6 +8,12 @@ import SignupTeamCards from "@/components/signup/SignupTeamCards";
 import { TEAMS_INFO } from "./TeamsInfo";
 
 function SignupStepTwo() {
+  const imageInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleClickUpload = () => {
+    imageInputRef.current.click();
+  };
+
   return (
     <div className="stepTwo-block">
       <Title largest className="stepTwo-block__title">
@@ -20,12 +27,18 @@ function SignupStepTwo() {
           <SignupTeamCards {...TEAMS_INFO[1]} />
           <div className="cards__upload">
             <Image
+              onClick={handleClickUpload}
               src={"/images/signupIcon.svg"}
               alt={"plusIcon"}
               width={0}
               height={0}
             />
-            <input type="file" accept="image/*" className="cards__input" />
+            <input
+              type="file"
+              accept="image/*"
+              className="cards__input"
+              ref={imageInputRef}
+            />
           </div>
         </div>
         <div className="stepTwo-content__info">
