@@ -38,12 +38,13 @@ function SignupStepTwo() {
       </Title>
       <div className="stepTwo-content">
         <div className="stepTwo-content__cards">
-          <SignupTeamCards {...TEAMS_INFO[1]} />
+          <SignupTeamCards team={...TEAMS_INFO[1]} selected={true} />
           <div className="cards__upload">
             {previewUrl ? (
               <Image
                 className="uploadedImage"
                 src={previewUrl}
+                alt={"previewImage"}
                 width={0}
                 height={0}
               />
