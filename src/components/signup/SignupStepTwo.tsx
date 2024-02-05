@@ -6,10 +6,14 @@ import Title from "@/components/common/Title";
 
 import SignupTeamCards from "@/components/signup/SignupTeamCards";
 import { TEAMS_INFO } from "./TeamsInfo";
+import { nicknameCheck } from "@/lib/api/signupAPI";
+import useSignupStore from "@/lib/store/signup/signupStore";
 
 function SignupStepTwo() {
+  const { setFormData } = useSignupStore();
   const imageInputRef = useRef<HTMLInputElement | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [dataTexts, setDataTexts] = useState<Object>({});
 
   //버튼이 클릭 될 때 인풋을 연결시켜주는 함수
   const handleClickUpload = () => {
@@ -20,13 +24,37 @@ function SignupStepTwo() {
   const handleFileChange = () => {
     const reader = new FileReader();
     const file = imageInputRef.current.files[0];
+    console.log(file);
 
     //파일 변환
     reader.readAsDataURL(file);
     reader.onload = () => {
       setPreviewUrl(reader.result);
+      console.log(previewUrl);
     };
+
+    setFormData("image", imageInputRef.current.files[0]);
   };
+
+  const handleClickNicknameCheck = () => {
+    if ("nickname" in dataTexts) {
+      nicknameCheck(dataTexts.nickname);
+    }
+  };
+
+  const handleChangeNickname = (e) => {
+    const nickname = e.target.value;
+    setDataTexts({ ...dataTexts, nickname: nickname });
+    console.log(nickname);
+  };
+
+  const handleChangeWords = (e) => {
+    const words = e.target.value;
+    setDataTexts({ ...dataTexts, comment: words });
+    console.log(words);
+  };
+
+  console.log(dataTexts);
 
   return (
     <div className="stepTwo-block">
@@ -38,7 +66,7 @@ function SignupStepTwo() {
       </Title>
       <div className="stepTwo-content">
         <div className="stepTwo-content__cards">
-          <SignupTeamCards team={...TEAMS_INFO[1]} selected={true} />
+          <SignupTeamCards team={{ ...TEAMS_INFO[1] }} selected={true} />
           <div className="cards__upload">
             {previewUrl ? (
               <Image
@@ -77,8 +105,14 @@ function SignupStepTwo() {
                 type="text"
                 className="nickname__input"
                 placeholder="닉네임을 입력해줘!"
+                onChange={handleChangeNickname}
               />
-              <button className="nickname__button">중복확인</button>
+              <button
+                className="nickname__button"
+                onClick={handleClickNicknameCheck}
+              >
+                중복확인
+              </button>
             </div>
           </div>
           <div className="info-content">
@@ -88,6 +122,7 @@ function SignupStepTwo() {
             <textarea
               className="words__input"
               placeholder="한마디를 입력해줘!"
+              onChange={handleChangeWords}
             ></textarea>
           </div>
         </div>
