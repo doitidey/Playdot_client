@@ -1,19 +1,32 @@
 import { create } from "zustand";
 
-interface SignupState {
-  formData: FormData;
-  setFormData: (key: string, value: string) => void;
-  clearFormData: () => void;
+interface FormData {
+  image?: File;
+  data: {
+    nickname: string;
+    comment: string;
+  };
 }
 
-const useSignupStore = create<SignupState>((set) => ({
-  formData: new FormData(),
-  setFormData: (key, value) =>
-    set((state) => {
-      state.formData.set(key, value);
-      return { formData: state.formData };
-    }),
-  clearFormData: () => set({ formData: new FormData() }),
+interface SignupStore {
+  formData: FormData;
+  setFormData: (data: FormData) => void;
+}
+
+const useSignupStore = create<SignupStore>((set) => ({
+  formData: {
+    data: {
+      nickname: "",
+      comment: "",
+    },
+  },
+  setFormData: (data) =>
+    set((state) => ({
+      formData: {
+        ...state.formData,
+        ...data,
+      },
+    })),
 }));
 
 export default useSignupStore;

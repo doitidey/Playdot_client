@@ -16,7 +16,7 @@ function SignupStepOne() {
       </Title>
       <div className="teamcards-block">
         {TEAMS_INFO.map((team) => (
-          <SignupTeamCards key={team.name} team={...team} />
+          <SignupTeamCards key={team.name} team={{ ...team }} />
         ))}
       </div>
     </div>

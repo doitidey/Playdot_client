@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, ChangeEvent, useEffect } from "react";
 import Image from "next/image";
 
 import "@/components/signup/SignupStepTwo.scss";
@@ -9,52 +9,78 @@ import { TEAMS_INFO } from "./TeamsInfo";
 import { nicknameCheck } from "@/lib/api/signupAPI";
 import useSignupStore from "@/lib/store/signup/signupStore";
 
+interface FormData {
+  profileImage?: File;
+  data: {
+    nickname: string;
+    comment: string;
+  };
+}
+
 function SignupStepTwo() {
-  const { setFormData } = useSignupStore();
+  const { formData, setFormData } = useSignupStore();
   const imageInputRef = useRef<HTMLInputElement | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [dataTexts, setDataTexts] = useState<Object>({});
+  const [previewUrl, setPreviewUrl] = useState<string | undefined>();
+  const [formDraftData, setFormDraftData] = useState<FormData>({
+    data: {
+      nickname: "",
+      comment: "",
+    },
+  });
 
-  //버튼이 클릭 될 때 인풋을 연결시켜주는 함수
   const handleClickUpload = () => {
-    imageInputRef.current.click();
-  };
-
-  //파일 업로드시 대응하는 함수
-  const handleFileChange = () => {
-    const reader = new FileReader();
-    const file = imageInputRef.current.files[0];
-    console.log(file);
-
-    //파일 변환
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      setPreviewUrl(reader.result);
-      console.log(previewUrl);
-    };
-
-    setFormData("image", imageInputRef.current.files[0]);
-  };
-
-  const handleClickNicknameCheck = () => {
-    if ("nickname" in dataTexts) {
-      nicknameCheck(dataTexts.nickname);
+    if (imageInputRef.current) {
+      imageInputRef.current.click();
     }
   };
 
-  const handleChangeNickname = (e) => {
+  const handleFileChange = () => {
+    const file = imageInputRef.current?.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        setPreviewUrl(reader.result as string);
+      };
+      setFormDraftData((prevData) => ({
+        profileImage: file,
+        ...prevData,
+      }));
+    }
+  };
+
+  const handleClickNicknameCheck = async () => {
+    if (formDraftData.data.nickname) {
+      await nicknameCheck(formDraftData.data.nickname);
+    }
+  };
+
+  const handleChangeNickname = (e: ChangeEvent<HTMLInputElement>) => {
     const nickname = e.target.value;
-    setDataTexts({ ...dataTexts, nickname: nickname });
-    console.log(nickname);
+    setFormDraftData((prevData) => ({
+      ...prevData,
+      data: {
+        ...prevData.data,
+        nickname,
+      },
+    }));
   };
 
-  const handleChangeWords = (e) => {
-    const words = e.target.value;
-    setDataTexts({ ...dataTexts, comment: words });
-    console.log(words);
+  const handleChangeWords = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const comment = e.target.value;
+    setFormDraftData((prevData) => ({
+      ...prevData,
+      data: {
+        ...prevData.data,
+        comment,
+      },
+    }));
   };
 
-  console.log(dataTexts);
+  useEffect(() => {
+    setFormData(formDraftData);
+    console.log(formData);
+  }, [formDraftData]);
 
   return (
     <div className="stepTwo-block">
@@ -66,13 +92,13 @@ function SignupStepTwo() {
       </Title>
       <div className="stepTwo-content">
         <div className="stepTwo-content__cards">
-          <SignupTeamCards team={{ ...TEAMS_INFO[1] }} selected={true} />
+          <SignupTeamCards team={TEAMS_INFO[1]} selected={true} />
           <div className="cards__upload">
             {previewUrl ? (
               <Image
                 className="uploadedImage"
                 src={previewUrl}
-                alt={"previewImage"}
+                alt="previewImage"
                 width={0}
                 height={0}
               />
@@ -80,8 +106,8 @@ function SignupStepTwo() {
               <Image
                 className="uploadButton"
                 onClick={handleClickUpload}
-                src={"/images/signupIcon.svg"}
-                alt={"plusIcon"}
+                src="/images/signupIcon.svg"
+                alt="plusIcon"
                 width={0}
                 height={0}
               />
