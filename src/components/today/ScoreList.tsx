@@ -1,5 +1,9 @@
+"use client";
+
+import { useCallback, useEffect } from "react";
 import "./ScoreList.scss";
 import ScoreListItem from "./ScoreListItem";
+import { todayGames } from "@/lib/api/todayAPI";
 
 const match = [
   {
@@ -40,6 +44,17 @@ const match = [
 ];
 
 function ScoreList() {
+  const getTodayGames = useCallback(() => {
+    todayGames()?.then((res) => console.log(res.data));
+  }, []);
+
+  useEffect(() => {
+    getTodayGames();
+    return () => {
+      getTodayGames();
+    };
+  }, [getTodayGames]);
+
   return (
     <section className="score-block">
       <ul className="score-block__content">
