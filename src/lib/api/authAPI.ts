@@ -3,7 +3,7 @@ import { fetchData } from "./commonAPI";
 // 로그인
 // POST
 // requestBody - email: string, password: string
-export const login = async () => {
+export const login = () => {
   try {
     const requestBody = {
       username: "playdot2",
@@ -18,7 +18,7 @@ export const login = async () => {
 
 // 구단 조회
 // GET
-export const teams = async () => {
+export const teams = () => {
   try {
     return fetchData("teams", "get");
   } catch (error) {
@@ -29,6 +29,6 @@ export const teams = async () => {
 // 로그아웃
 // POST
 // requestBody - X
-export const logout = async () => {
+export const logout = () => {
   return fetchData("logout", "post");
 };
