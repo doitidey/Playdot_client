@@ -20,11 +20,11 @@ export const fetchData = async (
 // interceptor
 instance.interceptors.request.use(
   function (config) {
-    const accessToken = getAccessTokenCookie();
+    const accessToken = localStorage.getItem("authToken");
     if (!accessToken) {
       return config;
     }
-    config.headers.Authorization = `Bearer ${accessToken}`;
+    config.headers.Authorization = accessToken;
     return config;
   },
   function (error) {
