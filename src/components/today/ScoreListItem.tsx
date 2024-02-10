@@ -43,7 +43,6 @@ function ScoreListItem({ homeTeam, awayTeam, gameTime }: ScoreListItemProps) {
   const [selectHome, setSelectHome] = useState(false);
   const [selectAway, setSelectAway] = useState(false);
 
-  // 추후 moment.js 라이브러리로 전환 예정
   const gameDate = (data: string) => {
     const rDataFormat = /[12][0-9]{3}-[0-9]{2}-[0-9]{2}/;
     if (data.search(rDataFormat) === -1) {
@@ -68,6 +67,7 @@ function ScoreListItem({ homeTeam, awayTeam, gameTime }: ScoreListItemProps) {
     setSelectHome(false);
   }, [selectAway]);
 
+  // 리팩토링 예정 => 조건문이 너무 많음, 같은 로직의 함수가 중복 됨
   const getHomeTeamSrc = (data: string) => {
     if (homeTeam.teamName === "LG 트윈스") {
       return TeamImgHref.twins;
