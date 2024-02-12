@@ -92,7 +92,7 @@ function SignupStepTwo() {
       </Title>
       <div className="stepTwo-content">
         <div className="stepTwo-content__cards">
-          <SignupTeamCards team={TEAMS_INFO[1]} selected={true} />
+          <SignupTeamCards team={TEAMS_INFO[1]} singleCard={true} />
           <div className="cards__upload">
             {previewUrl ? (
               <Image

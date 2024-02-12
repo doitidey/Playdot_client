@@ -16,6 +16,7 @@
     align-items: center;
     padding: 40px 0;
     overflow: hidden;
+    transition: 0.3s;
 
     &--active {
       cursor: pointer;
@@ -124,5 +125,8 @@
         transform: scale(1.08);
       }
     }
+  }
+  .teamcard-content--clicked {
+    border: 3px solid red;
   }
 }
