@@ -1,28 +1,29 @@
+@import "@/styles/colors.scss";
+
 .chat-header {
-  background-color: rgb(213, 213, 213);
+  background-color: $dark-bg;
   display: flex;
   position: fixed;
-  top: 50px;
+  top: 90px;
   justify-content: space-between;
   align-items: center;
-  height: 150px;
+  height: 130px;
   width: 100%;
-  max-width: 1200px;
-  padding: 0 20px;
+  padding: 0 86px;
+  color: $dark-text1;
+  font-family: "pretendard";
   &__button {
-    width: 30px;
-    height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: gray;
   }
   &__button:hover {
     cursor: pointer;
   }
   &__score {
     font-weight: 700;
-    font-size: 24px;
+    font-size: 48px;
+    color: $dark-text2;
   }
   &__info {
     display: flex;
@@ -32,16 +33,21 @@
     font-size: 24px;
     gap: 6px;
     .date {
-      font-size: 12px;
+      font-size: 18px;
+      margin-bottom: 12px;
     }
     .teams {
       display: flex;
       gap: 12px;
       &__name {
         font-weight: 700;
+        font-size: 36px;
+        color: $dark-text2;
       }
       &__vs {
-        color: gray;
+        font-weight: 700;
+        font-size: 36px;
+        margin: 0 86px;
       }
     }
   }
