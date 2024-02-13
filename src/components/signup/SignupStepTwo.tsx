@@ -8,6 +8,7 @@ import SignupTeamCards from "@/components/signup/SignupTeamCards";
 import { TEAMS_INFO } from "./TeamsInfo";
 import { nicknameCheck } from "@/lib/api/signupAPI";
 import useSignupStore from "@/lib/store/signup/signupStore";
+import useclickedCardStore from "@/lib/store/signup/clickedCardStore";
 
 interface FormData {
   profileImage?: File;
@@ -19,6 +20,8 @@ interface FormData {
 
 function SignupStepTwo() {
   const { formData, setFormData } = useSignupStore();
+  const { clickedCardStore } = useclickedCardStore();
+
   const imageInputRef = useRef<HTMLInputElement | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | undefined>();
   const [formDraftData, setFormDraftData] = useState<FormData>({
@@ -51,7 +54,8 @@ function SignupStepTwo() {
 
   const handleClickNicknameCheck = async () => {
     if (formDraftData.data.nickname) {
-      await nicknameCheck(formDraftData.data.nickname);
+      const res = await nicknameCheck(formDraftData.data.nickname);
+      console.log(formDraftData.data.nickname);
     }
   };
 
@@ -92,7 +96,10 @@ function SignupStepTwo() {
       </Title>
       <div className="stepTwo-content">
         <div className="stepTwo-content__cards">
-          <SignupTeamCards team={TEAMS_INFO[1]} singleCard={true} />
+          <SignupTeamCards
+            team={TEAMS_INFO[clickedCardStore]}
+            singleCard={true}
+          />
           <div className="cards__upload">
             {previewUrl ? (
               <Image
