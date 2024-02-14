@@ -2,13 +2,13 @@
 
 import "@/components/signup/SignupSection.scss";
 
-import useStore from "@/lib/store/signup/store";
+import useStepsStore from "@/lib/store/signup/stepsStore";
 import SignupStepOne from "@/components/signup/SignupStepOne";
 import SignupStepTwo from "@/components/signup/SignupStepTwo";
 import SignupButtons from "./Buttons/SignupButtons";
 
 function SignupSection() {
-  const { signUpStep, increaseStep, decreaseStep } = useStore();
+  const { signUpStep, increaseStep, decreaseStep } = useStepsStore();
 
   const handleOnclickNextButton = () => {
     increaseStep();
@@ -24,7 +24,7 @@ function SignupSection() {
           <SignupButtons title={"다음"} onClick={handleOnclickNextButton} />
         ) : (
           <>
-            <SignupButtons title={"다음"} onClick={handleOnclickNextButton} />
+            <SignupButtons title={"완료"} onClick={handleOnclickNextButton} />
             <SignupButtons
               title={"이전"}
               onClick={handleOnclickPreviousButton}

@@ -1,30 +1,20 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import Text from "../common/Text";
 import "./ScoreListItem.scss";
 import classNames from "classnames";
 import Image from "next/image";
 import Title from "../common/Title";
+import { TodayMatchData } from "./Today";
+import { getAwayLogo, getHomeLogo } from "@/lib/util/getLogo";
+import { gameDate } from "@/lib/util/getGameTime";
 
-interface ScoreListItemProps {
-  home: string;
-  away: string;
-  homeImg: string;
-  awayImg: string;
-}
+// Interface
+interface ScoreListItemProps extends TodayMatchData {}
 
-// 서버에서 크롤링한 날짜를 받아옴!
-// pc에서 받아온 날짜는 동기화가 안될 수 있음
-const today = new Date();
-const month = today.getMonth() + 1;
-const date = today.getDate();
-const week = ["일", "월", "화", "수", "목", "금", "토"];
-// time은 실제 경기시간 데이터를 불러올 예정(목 데이터)
-const time = "17:00";
-const matchDay = `${month}월 ${date}일 (${week[today.getDay()]}) ${time}`;
-
-function ScoreListItem({ home, away, homeImg, awayImg }: ScoreListItemProps) {
+// Component
+function ScoreListItem({ homeTeam, awayTeam, gameTime }: ScoreListItemProps) {
   const [selectHome, setSelectHome] = useState(false);
   const [selectAway, setSelectAway] = useState(false);
 
@@ -41,7 +31,7 @@ function ScoreListItem({ home, away, homeImg, awayImg }: ScoreListItemProps) {
   return (
     <>
       <Title className="match-day" small>
-        {matchDay}
+        {gameDate(gameTime)}
       </Title>
       <li className="score-item-block">
         <div
@@ -52,7 +42,7 @@ function ScoreListItem({ home, away, homeImg, awayImg }: ScoreListItemProps) {
         >
           <div className="team-img">
             <Image
-              src={homeImg}
+              src={getHomeLogo(homeTeam.teamName)}
               alt="lions"
               width={0}
               height={0}
@@ -60,8 +50,12 @@ function ScoreListItem({ home, away, homeImg, awayImg }: ScoreListItemProps) {
             />
           </div>
           <div className="team-info-left">
-            {selectHome ? <Text large>{home}</Text> : <Text large>{home}</Text>}
-            <Title medium>50%</Title>
+            {selectHome ? (
+              <Text large>{homeTeam.teamName}</Text>
+            ) : (
+              <Text large>{homeTeam.teamName}</Text>
+            )}
+            <Title medium>{homeTeam.voteRatio}%</Title>
           </div>
         </div>
         <div
@@ -72,7 +66,7 @@ function ScoreListItem({ home, away, homeImg, awayImg }: ScoreListItemProps) {
         >
           <div className="team-img">
             <Image
-              src={awayImg}
+              src={getAwayLogo(awayTeam.teamName)}
               alt="lions"
               width={0}
               height={0}
@@ -80,8 +74,12 @@ function ScoreListItem({ home, away, homeImg, awayImg }: ScoreListItemProps) {
             />
           </div>
           <div className="team-info-right">
-            {selectAway ? <Text small>{away}</Text> : <Text large>{away}</Text>}
-            <Title medium>50%</Title>
+            {selectAway ? (
+              <Text large>{awayTeam.teamName}</Text>
+            ) : (
+              <Text large>{awayTeam.teamName}</Text>
+            )}
+            <Title medium>{awayTeam.voteRatio}%</Title>
           </div>
         </div>
       </li>
@@ -89,4 +87,4 @@ function ScoreListItem({ home, away, homeImg, awayImg }: ScoreListItemProps) {
   );
 }
 
-export default ScoreListItem;
+export default memo(ScoreListItem);

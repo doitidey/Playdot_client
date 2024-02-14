@@ -82,7 +82,7 @@ function Comment() {
     },
     {
       id: 7,
-      username: "최강랜더스",
+      username: "인천SSG",
       team: {
         img: "/images/landers.svg",
         name: "SSG 랜더스",
@@ -112,7 +112,7 @@ function Comment() {
     },
     {
       id: 10,
-      username: "최강키움",
+      username: "히어로즈",
       team: {
         img: "/images/heroes.svg",
         name: "키움 히어로즈",
