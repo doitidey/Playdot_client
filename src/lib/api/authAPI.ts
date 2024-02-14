@@ -6,7 +6,7 @@ import { fetchData } from "./commonAPI";
 export const login = () => {
   try {
     const requestBody = {
-      email: "playdot2",
+      username: "playdot2",
       password: "test",
     };
     const res = fetchData("login", "post", requestBody);
@@ -18,7 +18,7 @@ export const login = () => {
 
 // 구단 조회
 // GET
-export const teams = async () => {
+export const teams = () => {
   try {
     return fetchData("teams", "get");
   } catch (error) {
@@ -29,6 +29,6 @@ export const teams = async () => {
 // 로그아웃
 // POST
 // requestBody - X
-export const logout = async () => {
+export const logout = () => {
   return fetchData("logout", "post");
 };
