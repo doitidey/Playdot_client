@@ -30,15 +30,20 @@ export interface TodayMatchData {
 
 function Today() {
   const [game, setGame] = useState<TodayMatchData[]>([]);
-  const { data = game } = useQuery({
+  useQuery({
     queryKey: ["today"],
-    queryFn: () => todayGames()?.then((res) => setGame(res.data)),
+    queryFn: () =>
+      todayGames()?.then((res) => {
+        console.log(res.data);
+        setGame(res.data);
+      }),
+    refetchOnWindowFocus: false,
   });
 
   return (
     <div className="today-block">
       <DateSection />
-      <ScoreList game={data} />
+      <ScoreList game={game} />
       <Comment />
     </div>
   );
