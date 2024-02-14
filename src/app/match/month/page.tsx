@@ -1,3 +1,4 @@
+import Month from "@/components/month/Month";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -5,11 +6,7 @@ export const metadata: Metadata = {
 };
 
 function MonthPage() {
-  return (
-    <>
-      <div>월간 승리요정</div>
-    </>
-  );
+  return <Month />;
 }
 
 export default MonthPage;
