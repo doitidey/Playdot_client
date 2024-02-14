@@ -40,3 +40,107 @@ export const TEAMS_INFO: TeamInfo = [
     color: "heroes",
   },
 ];
+
+// Interface
+interface TeamImg {
+  lions: string;
+  twins: string;
+  landers: string;
+  bears: string;
+  tigers: string;
+  eagles: string;
+  heroes: string;
+  gients: string;
+  wiz: string;
+  dinos: string;
+}
+
+// Constants
+const TEAMIMG_HREF: TeamImg = {
+  lions: "/images/lions.svg",
+  tigers: "/images/tigers.svg",
+  twins: "/images/twins.svg",
+  bears: "/images/bears.svg",
+  gients: "/images/giants.svg",
+  dinos: "/images/dinos.svg",
+  landers: "/images/landers.svg",
+  wiz: "/images/wiz.svg",
+  eagles: "/images/eagles.svg",
+  heroes: "/images/heroes.svg",
+};
+
+export const getLogo = (name: string) => {
+  switch (name) {
+    case "LG 트윈스": {
+      return TEAMIMG_HREF.twins;
+    }
+    case "삼성 라이온즈": {
+      return TEAMIMG_HREF.lions;
+    }
+    case "한화 이글스": {
+      return TEAMIMG_HREF.eagles;
+    }
+    case "KIA 타이거즈": {
+      return TEAMIMG_HREF.tigers;
+    }
+    case "키움 히어로즈": {
+      return TEAMIMG_HREF.heroes;
+    }
+    case "롯데 자이언츠": {
+      return TEAMIMG_HREF.gients;
+    }
+    case "SSG 랜더스": {
+      return TEAMIMG_HREF.landers;
+    }
+    case "두산 베어스": {
+      return TEAMIMG_HREF.bears;
+    }
+    case "KT 위즈": {
+      return TEAMIMG_HREF.wiz;
+    }
+    case "NC 다이노스": {
+      return TEAMIMG_HREF.dinos;
+    }
+    default: {
+      return TEAMIMG_HREF.twins;
+    }
+  }
+};
+
+export const getClassName = (name: string) => {
+  switch (name) {
+    case "LG 트윈스": {
+      return "twins";
+    }
+    case "삼성 라이온즈": {
+      return "lions";
+    }
+    case "한화 이글스": {
+      return "eagles";
+    }
+    case "KIA 타이거즈": {
+      return "tigers";
+    }
+    case "키움 히어로즈": {
+      return "heroes";
+    }
+    case "롯데 자이언츠": {
+      return "giants";
+    }
+    case "SSG 랜더스": {
+      return "landers";
+    }
+    case "두산 베어스": {
+      return "bears";
+    }
+    case "KT 위즈": {
+      return "wiz";
+    }
+    case "NC 다이노스": {
+      return "dinos";
+    }
+    default: {
+      return "twins";
+    }
+  }
+};

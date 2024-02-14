@@ -9,6 +9,7 @@ import { TEAMS_INFO } from "./TeamsInfo";
 import { nicknameCheck } from "@/lib/api/signupAPI";
 import useSignupStore from "@/lib/store/signup/signupStore";
 import useclickedCardStore from "@/lib/store/signup/clickedCardStore";
+import useTeamsStore from "@/lib/store/signup/teamsStore";
 
 interface FormData {
   profileImage?: File;
@@ -21,6 +22,7 @@ interface FormData {
 function SignupStepTwo() {
   const { setFormData } = useSignupStore();
   const { clickedCardStore } = useclickedCardStore();
+  const { teamStore } = useTeamsStore();
 
   const imageInputRef = useRef<HTMLInputElement | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | undefined>();
@@ -95,7 +97,7 @@ function SignupStepTwo() {
       <div className="stepTwo-content">
         <div className="stepTwo-content__cards">
           <SignupTeamCards
-            team={TEAMS_INFO[clickedCardStore]}
+            team={teamStore[clickedCardStore]}
             singleCard={true}
           />
           <div className="cards__upload">
