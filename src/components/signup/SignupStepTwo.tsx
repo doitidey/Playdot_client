@@ -1,3 +1,4 @@
+import React, { useState, useRef, ChangeEvent, useEffect } from "react";
 import Image from "next/image";
 
 import "@/components/signup/SignupStepTwo.scss";
@@ -5,8 +6,86 @@ import Title from "@/components/common/Title";
 
 import SignupTeamCards from "@/components/signup/SignupTeamCards";
 import { TEAMS_INFO } from "./TeamsInfo";
+import { nicknameCheck } from "@/lib/api/signupAPI";
+import useSignupStore from "@/lib/store/signup/signupStore";
+import useclickedCardStore from "@/lib/store/signup/clickedCardStore";
+
+interface FormData {
+  profileImage?: File;
+  data: {
+    nickname: string;
+    comment: string;
+  };
+}
 
 function SignupStepTwo() {
+  const { formData, setFormData } = useSignupStore();
+  const { clickedCardStore } = useclickedCardStore();
+
+  const imageInputRef = useRef<HTMLInputElement | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | undefined>();
+  const [formDraftData, setFormDraftData] = useState<FormData>({
+    data: {
+      nickname: "",
+      comment: "",
+    },
+  });
+
+  const handleClickUpload = () => {
+    if (imageInputRef.current) {
+      imageInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = () => {
+    const file = imageInputRef.current?.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        setPreviewUrl(reader.result as string);
+      };
+      setFormDraftData((prevData) => ({
+        profileImage: file,
+        ...prevData,
+      }));
+    }
+  };
+
+  const handleClickNicknameCheck = async () => {
+    if (formDraftData.data.nickname) {
+      const res = await nicknameCheck(formDraftData.data.nickname);
+      console.log(formDraftData.data.nickname);
+    }
+  };
+
+  const handleChangeNickname = (e: ChangeEvent<HTMLInputElement>) => {
+    const nickname = e.target.value;
+    setFormDraftData((prevData) => ({
+      ...prevData,
+      data: {
+        ...prevData.data,
+        nickname,
+      },
+    }));
+  };
+
+  const handleChangeWords = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const comment = e.target.value;
+    setFormDraftData((prevData) => ({
+      ...prevData,
+      data: {
+        ...prevData.data,
+        comment,
+      },
+    }));
+  };
+
+  useEffect(() => {
+    setFormData(formDraftData);
+    console.log(formData);
+  }, [formDraftData]);
+
   return (
     <div className="stepTwo-block">
       <Title largest className="stepTwo-block__title">
@@ -17,15 +96,36 @@ function SignupStepTwo() {
       </Title>
       <div className="stepTwo-content">
         <div className="stepTwo-content__cards">
-          <SignupTeamCards {...TEAMS_INFO[1]} />
+          <SignupTeamCards
+            team={TEAMS_INFO[clickedCardStore]}
+            singleCard={true}
+          />
           <div className="cards__upload">
-            <Image
-              src={"/images/signupIcon.svg"}
-              alt={"plusIcon"}
-              width={0}
-              height={0}
+            {previewUrl ? (
+              <Image
+                className="uploadedImage"
+                src={previewUrl}
+                alt="previewImage"
+                width={0}
+                height={0}
+              />
+            ) : (
+              <Image
+                className="uploadButton"
+                onClick={handleClickUpload}
+                src="/images/signupIcon.svg"
+                alt="plusIcon"
+                width={0}
+                height={0}
+              />
+            )}
+            <input
+              type="file"
+              accept="image/*"
+              className="cards__input"
+              ref={imageInputRef}
+              onChange={handleFileChange}
             />
-            <input type="file" accept="image/*" className="cards__input" />
           </div>
         </div>
         <div className="stepTwo-content__info">
@@ -38,8 +138,14 @@ function SignupStepTwo() {
                 type="text"
                 className="nickname__input"
                 placeholder="닉네임을 입력해줘!"
+                onChange={handleChangeNickname}
               />
-              <button className="nickname__button">중복확인</button>
+              <button
+                className="nickname__button"
+                onClick={handleClickNicknameCheck}
+              >
+                중복확인
+              </button>
             </div>
           </div>
           <div className="info-content">
@@ -49,6 +155,7 @@ function SignupStepTwo() {
             <textarea
               className="words__input"
               placeholder="한마디를 입력해줘!"
+              onChange={handleChangeWords}
             ></textarea>
           </div>
         </div>

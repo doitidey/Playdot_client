@@ -6,7 +6,7 @@ interface StepState {
   decreaseStep: () => void;
 }
 
-const useStore = create<StepState>((set) => ({
+const useStepsStore = create<StepState>((set) => ({
   signUpStep: 1,
   increaseStep: () =>
     set((state) => ({ signUpStep: Math.min(2, state.signUpStep + 1) })),
@@ -14,4 +14,4 @@ const useStore = create<StepState>((set) => ({
     set((state) => ({ signUpStep: Math.max(1, state.signUpStep - 1) })),
 }));
 
-export default useStore;
+export default useStepsStore;
