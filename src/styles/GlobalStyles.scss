@@ -118,6 +118,9 @@ body {
   line-height: 1;
   box-sizing: inherit;
   background: $dark-bg;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 ol,
 ul {
