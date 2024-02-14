@@ -8,3 +8,12 @@ export const todayGames = () => {
     console.error(e);
   }
 };
+
+export const todayGamesComment = () => {
+  try {
+    const res = fetchData("games/daily-replies", "get");
+    return res;
+  } catch (e) {
+    console.error(e);
+  }
+};
