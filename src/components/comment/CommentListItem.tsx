@@ -1,19 +1,31 @@
 "use client";
 
-import { ChangeEvent, useCallback, useState } from "react";
+import { useState } from "react";
+// import { ChangeEvent, useCallback } from "react";
 import { FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
 import Text from "@/components/common/Text";
 import TeamTag from "@/components/tag/TeamTag";
-import { CommentData } from "@/components/comment/Comment";
 import "@/components/comment/CommentListItem.scss";
-import Reply from "@/components/reply/Reply";
+// import Reply from "@/components/reply/Reply";
 import classNames from "classnames";
 
-function CommentListItem({ username, team, comment }: CommentData) {
+interface CommentListItemProps {
+  nickname: string;
+  teamName: string;
+  comment: string;
+  createdAt: string;
+}
+
+function CommentListItem({
+  nickname,
+  teamName,
+  comment,
+  createdAt,
+}: CommentListItemProps) {
   const [visibleReply, setVisibleReply] = useState(false);
   const [visibleReplyList, setVisibleReplyList] = useState(false);
   const [like, setLike] = useState(false);
-  const [reply, setReply] = useState("");
+  // const [reply, setReply] = useState("");
 
   const onVisible = () => {
     setVisibleReply(!visibleReply);
@@ -24,10 +36,10 @@ function CommentListItem({ username, team, comment }: CommentData) {
     setLike(!like);
   };
 
-  const onChange = useCallback((event: ChangeEvent) => {
-    const { value } = event.target as HTMLInputElement;
-    setReply(value);
-  }, []);
+  // const onChange = useCallback((event: ChangeEvent) => {
+  //   const { value } = event.target as HTMLInputElement;
+  //   setReply(value);
+  // }, []);
 
   return (
     <>
@@ -36,8 +48,8 @@ function CommentListItem({ username, team, comment }: CommentData) {
           <div className="profile-image" />
           <div className="content">
             <div className="content__profile">
-              <Text medium>{username}</Text>
-              <TeamTag team={team} />
+              <Text medium>{nickname}</Text>
+              <TeamTag teamName={teamName} />
             </div>
             <Text medium>{comment}</Text>
             <div className="content__reply">
@@ -48,7 +60,7 @@ function CommentListItem({ username, team, comment }: CommentData) {
         </div>
         <div className="item-block__button">
           <div className="item-block__button__date">
-            <span>2023.12.15</span>
+            <span>{createdAt}</span>
             <span>신고</span>
           </div>
           <div className="item-block__button__like">
@@ -65,8 +77,8 @@ function CommentListItem({ username, team, comment }: CommentData) {
           </div>
         </div>
       </li>
-      {visibleReplyList && <span>테스트</span>}
-      {visibleReply && <Reply reply={reply} onChange={onChange} />}
+      {/* {visibleReplyList && <span>테스트</span>}
+      {visibleReply && <Reply reply={reply} onChange={onChange} />} */}
     </>
   );
 }

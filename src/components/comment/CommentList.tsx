@@ -1,6 +1,6 @@
 import { CommentData } from "./Comment";
-import "./CommentList.scss";
-import CommentListItem from "./CommentListItem";
+import "@/components/comment/CommentList.scss";
+import CommentListItem from "@/components/comment/CommentListItem";
 
 interface CommentListProps {
   comment: CommentData[];
@@ -9,12 +9,13 @@ interface CommentListProps {
 function CommentList({ comment }: CommentListProps) {
   return (
     <ul className="comment-list-block">
-      {comment.map((item) => (
+      {comment.map((item, index) => (
         <CommentListItem
-          key={item.id}
-          username={item.username}
-          team={item.team}
-          comment={item.comment}
+          key={index}
+          nickname={item.profile.nickname}
+          teamName={item.profile.teamName}
+          comment={item.reply.content}
+          createdAt={item.reply.createdAt}
         />
       ))}
     </ul>

@@ -1,32 +1,21 @@
-// Interface
-export interface TeamImg {
-  lions: string;
-  twins: string;
-  landers: string;
-  bears: string;
-  tigers: string;
-  eagles: string;
-  heroes: string;
-  giants: string;
-  wiz: string;
-  dinos: string;
-}
+import { TeamImg, TeamImgHref } from "./getLogo";
 
-// Constants
-export const TeamImgHref: TeamImg = {
-  lions: "/images/lions.svg",
-  tigers: "/images/tigers.svg",
-  twins: "/images/twins.svg",
-  bears: "/images/bears.svg",
-  giants: "/images/giants.svg",
-  dinos: "/images/dinos.svg",
-  landers: "/images/landers.svg",
-  wiz: "/images/wiz.svg",
-  eagles: "/images/eagles.svg",
-  heroes: "/images/heroes.svg",
+export interface TeamColor extends TeamImg {}
+
+export const TeamColor: TeamColor = {
+  lions: "lions",
+  tigers: "tigers",
+  twins: "twins",
+  bears: "bears",
+  landers: "landers",
+  wiz: "wiz",
+  giants: "giants",
+  dinos: "dinos",
+  eagles: "eagles",
+  heroes: "heroes",
 };
 
-export const getHomeLogo = (data: string) => {
+export const getTeamLogo = (data: string) => {
   switch (data) {
     case "LG 트윈스": {
       return TeamImgHref.twins;
@@ -62,37 +51,37 @@ export const getHomeLogo = (data: string) => {
   return data;
 };
 
-export const getAwayLogo = (data: string) => {
+export const getTeamColor = (data: string) => {
   switch (data) {
     case "LG 트윈스": {
-      return TeamImgHref.twins;
+      return TeamColor.twins;
     }
     case "삼성 라이온즈": {
-      return TeamImgHref.lions;
+      return TeamColor.lions;
     }
     case "한화 이글스": {
-      return TeamImgHref.eagles;
+      return TeamColor.eagles;
     }
     case "KIA 타이거즈": {
-      return TeamImgHref.tigers;
+      return TeamColor.tigers;
     }
     case "키움 히어로즈": {
-      return TeamImgHref.heroes;
+      return TeamColor.heroes;
     }
     case "롯데 자이언츠": {
-      return TeamImgHref.giants;
+      return TeamColor.giants;
     }
     case "SSG 랜더스": {
-      return TeamImgHref.landers;
+      return TeamColor.landers;
     }
     case "두산 베어스": {
-      return TeamImgHref.bears;
+      return TeamColor.bears;
     }
     case "KT 위즈": {
-      return TeamImgHref.wiz;
+      return TeamColor.wiz;
     }
     case "NC 다이노스": {
-      return TeamImgHref.dinos;
+      return TeamColor.dinos;
     }
   }
   return data;
