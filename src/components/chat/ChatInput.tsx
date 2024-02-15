@@ -1,11 +1,26 @@
+"use client";
+import classNames from "classnames";
+
 import "@/components/chat/ChatInput.scss";
+import useMenuModalState from "@/lib/store/chat/menuModalState";
 import Image from "next/image";
 
 function ChatInput() {
+  const { menuModalState, setMenuModalState } = useMenuModalState();
+
+  const handleClickMenu = () => {
+    setMenuModalState();
+  };
+
   return (
     <div className="input-container">
-      <div className="input-container__button">
-        {" "}
+      <div
+        className={classNames(
+          menuModalState && "input-container__button--active",
+          "input-container__button",
+        )}
+        onClick={handleClickMenu}
+      >
         <Image
           src={"/images/inputmodalbutton.svg"}
           alt={"inputmodalbutton"}

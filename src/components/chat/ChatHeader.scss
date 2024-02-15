@@ -1,6 +1,7 @@
 @import "@/styles/colors.scss";
 
 .chat-header {
+  z-index: 999;
   background-color: $dark-bg;
   display: flex;
   position: fixed;
