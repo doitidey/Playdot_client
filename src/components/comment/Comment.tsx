@@ -9,14 +9,17 @@ import { useQuery } from "react-query";
 import { todayGamesComment } from "@/lib/api/todayAPI";
 
 export interface CommentData {
-  id?: number;
-  username?: string;
-  team: {
-    img: string;
-    name: string;
-    color: string;
+  profile: {
+    profileImageUrl?: null;
+    nickname: string;
+    teamName: string;
   };
-  comment?: string;
+  reply: {
+    replyId?: number;
+    content: string;
+    count: number;
+    createdAt: string;
+  };
 }
 
 export interface Team {
@@ -29,11 +32,11 @@ function Comment() {
   const [value, setValue] = useState("");
   const [comment, setComment] = useState<CommentData[]>([]);
 
-  useQuery({
+  const { data = comment } = useQuery({
     queryKey: ["today-comment"],
     queryFn: () =>
       todayGamesComment()?.then((res) => {
-        console.log(res.data);
+        setComment(res.data.content);
       }),
   });
 
@@ -50,13 +53,14 @@ function Comment() {
       setComment([
         ...comment,
         {
-          id: comment.length + 1,
-          username: "하하",
-          comment: value,
-          team: {
-            img: "/images/lions.svg",
-            color: "lions",
-            name: "삼성 라이온즈",
+          profile: {
+            nickname: "aaa",
+            teamName: "삼성 라이온즈",
+          },
+          reply: {
+            content: value,
+            count: 0,
+            createdAt: "",
           },
         },
       ]);
@@ -69,7 +73,7 @@ function Comment() {
     <section className="comment-block">
       <form className="comment-block__content" onSubmit={onSubmit}>
         <div className="comment-header">
-          <Title medium>댓글 {comment.length}개</Title>
+          <Title medium>댓글 {data.length}개</Title>
           <button type="submit">
             <MdRefresh />
           </button>
@@ -81,7 +85,7 @@ function Comment() {
           onChange={onChange}
           placeholder="댓글을 입력해주세요."
         />
-        <CommentList comment={comment} />
+        <CommentList comment={data} />
       </form>
     </section>
   );
