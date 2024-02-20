@@ -1,4 +1,4 @@
-import { fetchData } from "./commonAPI";
+import { fetchAuth } from "./commonAPI";
 
 // 로그인
 // POST
@@ -9,7 +9,7 @@ export const login = () => {
       username: "playdot2",
       password: "test",
     };
-    const res = fetchData("login", "post", requestBody);
+    const res = fetchAuth("login", "post", requestBody);
     return res;
   } catch (error) {
     console.error(error);
@@ -20,7 +20,7 @@ export const login = () => {
 // GET
 export const teams = () => {
   try {
-    return fetchData("teams", "get");
+    return fetchAuth("teams", "get");
   } catch (error) {
     console.error(error);
   }
@@ -30,5 +30,5 @@ export const teams = () => {
 // POST
 // requestBody - X
 export const logout = () => {
-  return fetchData("logout", "post");
+  return fetchAuth("logout", "post");
 };
