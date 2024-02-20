@@ -1,16 +1,28 @@
-import { getAccessTokenCookie } from "../cookies/cookies";
-import { instance } from "./instance";
+import { authInstance, todayInstance } from "./instance";
 
 type Method = "get" | "post" | "put" | "delete";
 
-// 공용 fetch 함수
-export const fetchData = async (
+// fetch
+export const fetchAuth = async (
   url: string,
   method: Method,
   reqData?: unknown,
 ) => {
   try {
-    const { data } = await instance({ url, method, data: reqData });
+    const { data } = await authInstance({ url, method, data: reqData });
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const fetchToday = async (
+  url: string,
+  method: Method,
+  reqData?: unknown,
+) => {
+  try {
+    const { data } = await todayInstance({ url, method, data: reqData });
     return data;
   } catch (error) {
     console.error(error);
@@ -18,13 +30,13 @@ export const fetchData = async (
 };
 
 // interceptor
-instance.interceptors.request.use(
+authInstance.interceptors.request.use(
   function (config) {
     const accessToken = localStorage.getItem("authToken");
     if (!accessToken) {
       return config;
     }
-    config.headers.Authorization = accessToken;
+    config.headers.authorization = accessToken;
     return config;
   },
   function (error) {
@@ -32,7 +44,7 @@ instance.interceptors.request.use(
   },
 );
 
-instance.interceptors.response.use(
+authInstance.interceptors.response.use(
   function (config) {
     if (config.status === 404) {
       console.log("404 Not Found");
@@ -43,6 +55,9 @@ instance.interceptors.response.use(
     } else if (config.status === 500) {
       console.log("500 Internal Error");
     }
+    localStorage.setItem("authToken", config.headers.authorization);
+    localStorage.setItem("nickname", config.data.data.nickname);
+    localStorage.setItem("teamName", config.data.data.teamName);
     return config;
   },
   function (error) {
