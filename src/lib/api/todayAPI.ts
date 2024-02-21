@@ -21,7 +21,7 @@ export const todayGamesComment = () => {
 export const postTodayComment = (comment: string) => {
   try {
     const requestBody = {
-      comment: comment,
+      content: comment,
     };
     const res = fetchToday("games/daily-reply", "post", requestBody);
     return res;
