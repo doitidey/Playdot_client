@@ -39,6 +39,14 @@
     }
     &:hover {
       background: #ccc;
+      svg {
+        animation: rotate 1s infinite;
+        @keyframes rotate {
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+      }
     }
     &:active {
       background: #333;
