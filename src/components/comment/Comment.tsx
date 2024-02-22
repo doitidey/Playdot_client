@@ -5,7 +5,7 @@ import { ChangeEvent, FormEvent, useCallback, useState } from "react";
 import { MdRefresh } from "react-icons/md";
 import Title from "../common/Title";
 import CommentList from "./CommentList";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { postTodayComment, todayGamesComment } from "@/lib/api/todayAPI";
 
 export interface CommentData {
@@ -29,6 +29,7 @@ export interface Team {
 }
 
 function Comment() {
+  const queryClient = useQueryClient();
   const [value, setValue] = useState("");
   const [comment, setComment] = useState<CommentData[]>([]);
 
@@ -42,20 +43,8 @@ function Comment() {
     refetchOnWindowFocus: false,
   });
 
-  const mutation = useMutation("todayComment", async (comment: string) =>
-    postTodayComment(comment),
-  );
-
-  const onChange = useCallback((event: ChangeEvent) => {
-    event.preventDefault();
-    const { value } = event.target as HTMLInputElement;
-    setValue(value);
-    console.log(value);
-  }, []);
-
-  const onSubmit = useCallback(
-    (event: FormEvent) => {
-      event.preventDefault();
+  const { mutate: post } = useMutation(async () => postTodayComment(value), {
+    onMutate: () => {
       setComment([
         ...comment,
         {
@@ -70,7 +59,32 @@ function Comment() {
       ]);
       setValue("");
     },
-    [value, comment],
+    onSuccess: (result, variables, context) => {
+      console.log(`성공: ${result}`);
+      console.log(`변수: ${variables}`);
+      console.log(`반환 값: ${context}`);
+    },
+    onError: (error) => {
+      console.log(`오류: ${error}`);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries("todayComment");
+    },
+  });
+
+  const onChange = useCallback((event: ChangeEvent) => {
+    event.preventDefault();
+    const { value } = event.target as HTMLInputElement;
+    setValue(value);
+    console.log(value);
+  }, []);
+
+  const onSubmit = useCallback(
+    async (event: FormEvent) => {
+      event.preventDefault();
+      post();
+    },
+    [post],
   );
 
   return (
