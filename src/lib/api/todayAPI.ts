@@ -23,7 +23,11 @@ export const postTodayComment = (comment: string) => {
     const requestBody = {
       content: comment,
     };
-    const res = fetchToday("games/daily-reply", "post", requestBody);
+    const res = fetchToday("games/daily-reply", "post", requestBody).then(
+      (res) => {
+        console.log(res);
+      },
+    );
     return res;
   } catch (e) {
     console.error(e);
