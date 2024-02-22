@@ -64,3 +64,17 @@ authInstance.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+
+todayInstance.interceptors.request.use(
+  function (config) {
+    const accessToken = localStorage.getItem("authToken") as string;
+    if (!accessToken) {
+      return config;
+    }
+    config.headers.authorization = accessToken;
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  },
+);
