@@ -25,7 +25,7 @@ export const postTodayComment = (comment: string) => {
     };
     const res = fetchData("games/daily-reply", "post", requestBody).then(
       (res) => {
-        console.log(res);
+        console.warn(res);
       },
     );
     return res;
