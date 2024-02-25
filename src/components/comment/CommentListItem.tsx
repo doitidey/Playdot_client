@@ -13,7 +13,7 @@ interface CommentListItemProps {
   nickname: string;
   teamName: string;
   comment: string;
-  createdAt: string;
+  createdAt?: string;
 }
 
 function CommentListItem({

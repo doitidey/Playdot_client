@@ -34,7 +34,6 @@ function Today() {
     queryKey: ["today"],
     queryFn: () =>
       todayGames()?.then((res) => {
-        console.log(res.data);
         setGame(res.data);
       }),
     refetchOnWindowFocus: false,

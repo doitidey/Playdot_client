@@ -64,13 +64,13 @@ authInstance.interceptors.request.use(
 authInstance.interceptors.response.use(
   function (config) {
     if (config.status === 404) {
-      console.log("404 Not Found");
+      console.error("404 Not Found");
     } else if (config.status === 403) {
-      console.log("403 Forbidden");
+      console.error("403 Forbidden");
     } else if (config.status === 401) {
-      console.log("401 Unauthorized");
+      console.error("401 Unauthorized");
     } else if (config.status === 500) {
-      console.log("500 Internal Error");
+      console.error("500 Internal Error");
     }
     localStorage.setItem("authToken", config.headers.authorization);
     localStorage.setItem("nickname", config.data.data.nickname);
