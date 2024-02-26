@@ -5,7 +5,7 @@ import "@/components/signup/SignupSection.scss";
 import useStepsStore from "@/lib/store/signup/stepsStore";
 import SignupStepOne from "@/components/signup/SignupStepOne";
 import SignupStepTwo from "@/components/signup/SignupStepTwo";
-import SignupButtons from "./Buttons/SignupButtons";
+import SignupButtons from "@/components/signup/Buttons/SignupButtons";
 
 function SignupSection() {
   const { signUpStep, increaseStep, decreaseStep } = useStepsStore();
