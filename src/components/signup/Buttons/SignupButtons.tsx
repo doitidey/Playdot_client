@@ -1,6 +1,6 @@
 "use client";
 
-import "@/Components/signup/Buttons/SignupButtons.scss";
+import "@/components/signup/Buttons/SignupButtons.scss";
 
 interface TextProps {
   title: string;
