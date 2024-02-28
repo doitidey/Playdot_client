@@ -38,7 +38,7 @@ function Comment() {
     queryFn: () =>
       todayGamesComment()?.then((res) => {
         setComment(res.data.content);
-        console.log(res.data.content);
+        console.warn(res.data.content);
       }),
     refetchOnWindowFocus: false,
   });
@@ -60,12 +60,14 @@ function Comment() {
       setValue("");
     },
     onSuccess: (result, variables, context) => {
-      console.log(`성공: ${result}`);
-      console.log(`변수: ${variables}`);
-      console.log(`반환 값: ${context}`);
-    },
     onError: (error) => {
       console.log(`오류: ${error}`);
+      console.warn(`성공: ${result}`);
+      console.warn(`변수: ${variables}`);
+      console.warn(`반환 값: ${context}`);
+    },
+    onError: (error) => {
+      console.warn(`오류: ${error}`);
     },
     onSettled: () => {
       queryClient.invalidateQueries("todayComment");
@@ -76,7 +78,7 @@ function Comment() {
     event.preventDefault();
     const { value } = event.target as HTMLInputElement;
     setValue(value);
-    console.log(value);
+    console.warn(value);
   }, []);
 
   const onSubmit = useCallback(

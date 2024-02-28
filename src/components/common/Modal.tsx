@@ -8,7 +8,6 @@ function Modal() {
   const { modalData, closeModal } = useModal();
 
   const handleOnClickClose = () => {
-    console.log(modalData);
     closeModal();
   };
   return (

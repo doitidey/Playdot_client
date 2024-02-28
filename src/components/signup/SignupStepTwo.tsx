@@ -19,7 +19,7 @@ interface FormData {
 }
 
 function SignupStepTwo() {
-  const { formData, setFormData } = useSignupStore();
+  const { setFormData } = useSignupStore();
   const { clickedCardStore } = useclickedCardStore();
 
   const imageInputRef = useRef<HTMLInputElement | null>(null);
@@ -54,8 +54,7 @@ function SignupStepTwo() {
 
   const handleClickNicknameCheck = async () => {
     if (formDraftData.data.nickname) {
-      const res = await nicknameCheck(formDraftData.data.nickname);
-      console.log(formDraftData.data.nickname);
+      await nicknameCheck(formDraftData.data.nickname);
     }
   };
 
@@ -83,7 +82,6 @@ function SignupStepTwo() {
 
   useEffect(() => {
     setFormData(formDraftData);
-    console.log(formData);
   }, [formDraftData]);
 
   return (
