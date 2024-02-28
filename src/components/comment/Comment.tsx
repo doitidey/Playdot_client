@@ -39,7 +39,7 @@ function Comment() {
     queryFn: () =>
       todayGamesComment()?.then((res) => {
         setComment(res.data.content);
-        console.log(res.data.content);
+        console.warn(res.data.content);
       }),
     refetchOnWindowFocus: false,
   });

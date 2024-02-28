@@ -1,18 +1,18 @@
 import axios, { AxiosRequestConfig } from "axios";
 
-const BASE_URL = "https://api.tmbservice.net/";
-
-const authConfig: AxiosRequestConfig = {
-  baseURL: BASE_URL,
+// 공용 컨피그
+const instanceConfig: AxiosRequestConfig = {
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 };
 
-const todayConfig: AxiosRequestConfig = {
-  baseURL: BASE_URL,
+// 로그인 컨피그
+const authConfig: AxiosRequestConfig = {
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 };
 
 export const authInstance = axios.create(authConfig);
-export const todayInstance = axios.create(todayConfig);
+export const instance = axios.create(instanceConfig);

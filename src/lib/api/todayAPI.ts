@@ -1,8 +1,8 @@
-import { fetchToday } from "./commonAPI";
+import { fetchData } from "./commonAPI";
 
 export const todayGames = () => {
   try {
-    const res = fetchToday("games", "get");
+    const res = fetchData("games", "get");
     return res;
   } catch (e) {
     console.error(e);
@@ -11,7 +11,7 @@ export const todayGames = () => {
 
 export const todayGamesComment = () => {
   try {
-    const res = fetchToday("games/daily-replies", "get");
+    const res = fetchData("games/daily-replies", "get");
     return res;
   } catch (e) {
     console.error(e);
@@ -23,9 +23,9 @@ export const postTodayComment = (comment: string) => {
     const requestBody = {
       content: comment,
     };
-    const res = fetchToday("games/daily-reply", "post", requestBody).then(
+    const res = fetchData("games/daily-reply", "post", requestBody).then(
       (res) => {
-        console.log(res);
+        console.warn(res);
       },
     );
     return res;

@@ -1,4 +1,4 @@
-import { fetchAuth } from "./commonAPI";
+import { fetchAuth, fetchData } from "./commonAPI";
 
 // 로그인
 // POST
@@ -20,7 +20,7 @@ export const login = () => {
 // GET
 export const teams = () => {
   try {
-    return fetchAuth("teams", "get");
+    return fetchData("teams", "get");
   } catch (error) {
     console.error(error);
   }
@@ -30,5 +30,5 @@ export const teams = () => {
 // POST
 // requestBody - X
 export const logout = () => {
-  return fetchAuth("logout", "post");
+  return fetchData("logout", "post");
 };
