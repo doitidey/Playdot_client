@@ -1,23 +1,18 @@
-"use client";
-
-import Header from "@/components/common/Header";
 import { ReactNode } from "react";
 import "@/styles/GlobalStyles.scss";
-import { QueryClient, QueryClientProvider } from "react-query";
-import Modal from "@/components/common/Modal";
+import Layout from "@/components/common/Layout";
+import { Metadata } from "next";
 
-const queryClient = new QueryClient();
+export const metadata: Metadata = {
+  title: "플레이닷",
+};
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <>
       <html lang="ko">
         <body>
-          <QueryClientProvider client={queryClient}>
-            <Modal />
-            <Header />
-            <div>{children}</div>
-          </QueryClientProvider>
+          <Layout>{children}</Layout>
         </body>
       </html>
     </>
