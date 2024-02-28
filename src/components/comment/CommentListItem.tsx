@@ -8,6 +8,7 @@ import TeamTag from "@/components/tag/TeamTag";
 import "@/components/comment/CommentListItem.scss";
 // import Reply from "@/components/reply/Reply";
 import classNames from "classnames";
+import { commentDate } from "@/lib/util/getGameTime";
 
 interface CommentListItemProps {
   nickname: string;
@@ -25,7 +26,6 @@ function CommentListItem({
   const [visibleReply, setVisibleReply] = useState(false);
   const [visibleReplyList, setVisibleReplyList] = useState(false);
   const [like, setLike] = useState(false);
-  // const [reply, setReply] = useState("");
 
   const onVisible = () => {
     setVisibleReply(!visibleReply);
@@ -36,10 +36,14 @@ function CommentListItem({
     setLike(!like);
   };
 
-  // const onChange = useCallback((event: ChangeEvent) => {
-  //   const { value } = event.target as HTMLInputElement;
-  //   setReply(value);
-  // }, []);
+  // const commentDate = () => {
+  //   const postDate = createdAt;
+  //   const year = postDate?.substring(0, 4);
+  //   const month = postDate?.substring(5, 7);
+  //   const day = postDate?.substring(10, 8);
+
+  //   return `${year}.${month}.${day}`;
+  // };
 
   return (
     <>
@@ -60,7 +64,7 @@ function CommentListItem({
         </div>
         <div className="item-block__button">
           <div className="item-block__button__date">
-            <span>{createdAt}</span>
+            <span>{commentDate(createdAt)}</span>
             <span>신고</span>
           </div>
           <div className="item-block__button__like">

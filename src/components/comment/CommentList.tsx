@@ -1,6 +1,6 @@
-import { CommentData } from "./Comment";
 import "@/components/comment/CommentList.scss";
 import CommentListItem from "@/components/comment/CommentListItem";
+import { CommentData } from "@/components/comment/Comment";
 
 interface CommentListProps {
   comment: CommentData[];

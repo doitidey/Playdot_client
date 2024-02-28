@@ -30,8 +30,9 @@ export interface Team {
 
 function Comment() {
   const queryClient = useQueryClient();
-  const [value, setValue] = useState("");
   const [comment, setComment] = useState<CommentData[]>([]);
+  const [value, setValue] = useState("");
+  // const { value, setValue, comment, setComment } = useCommentStore();
 
   const { data: commentData = comment } = useQuery({
     queryKey: ["todayComment"],
@@ -59,25 +60,19 @@ function Comment() {
       ]);
       setValue("");
     },
-    onSuccess: (result, variables, context) => {
-      console.warn(`성공: ${result}`);
-      console.warn(`변수: ${variables}`);
-      console.warn(`반환 값: ${context}`);
-    },
-    onError: (error) => {
-      console.warn(`오류: ${error}`);
-    },
     onSettled: () => {
       queryClient.invalidateQueries("todayComment");
     },
   });
 
-  const onChange = useCallback((event: ChangeEvent) => {
-    event.preventDefault();
-    const { value } = event.target as HTMLInputElement;
-    setValue(value);
-    console.warn(value);
-  }, []);
+  const onChange = useCallback(
+    (event: ChangeEvent) => {
+      event.preventDefault();
+      const { value } = event.target as HTMLInputElement;
+      setValue(value);
+    },
+    [setValue],
+  );
 
   const onSubmit = useCallback(
     async (event: FormEvent) => {
