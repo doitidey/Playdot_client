@@ -2,12 +2,12 @@ import React from "react";
 import Image from "next/image";
 import classNames from "classnames";
 
-import "@/components/signup/SignupTeamCards.scss";
+import "@/components/common/TeamCards.scss";
+import { getTeamColor, getTeamLogo } from "@/lib/util/TeamTagLogo";
 
 interface TeamProps {
-  img: string;
-  name: string;
-  color: string;
+  teamId: number;
+  teamName: string;
 }
 
 interface TeamCardsProps {
@@ -30,6 +30,9 @@ function SignupTeamCards(props: SignupTeamCardsProps) {
   const isSelectedInProps = "isSelected" in props;
   const isSelected = "isSelected" in props && props.isSelected;
 
+  const getImgSrc = getTeamLogo(props.team.teamName);
+  const getClassTeamName = getTeamColor(props.team.teamName);
+
   return (
     <div className="teamcard-block">
       {isSelectedInProps && (
@@ -47,33 +50,28 @@ function SignupTeamCards(props: SignupTeamCardsProps) {
           isSelected && "teamcard-content--clicked",
         )}
       >
-        <Image
-          src={props.team.img}
-          alt={props.team.name}
-          width={0}
-          height={0}
-        />
-        <p className="teamname">{props.team.name}</p>
+        <Image src={getImgSrc} alt={props.team.teamName} width={0} height={0} />
+        <p className="teamname">{props.team.teamName}</p>
         <div className="teamcard-content__backgrounds">
           <div
             className={classNames(
               "square",
               "first-square",
-              `square--${props.team.color}`,
+              `square--${getClassTeamName}`,
             )}
           ></div>
           <div
             className={classNames(
               "square",
               "second-square",
-              `square--${props.team.color}`,
+              `square--${getClassTeamName}`,
             )}
           ></div>
           <div
             className={classNames(
               "square",
               "third-square",
-              `square--${props.team.color}`,
+              `square--${getClassTeamName}`,
             )}
           ></div>
         </div>
