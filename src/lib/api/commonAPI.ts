@@ -29,7 +29,6 @@ export const fetchAuth = async (
     console.error(error);
   }
 };
-
 // 공용 request interceptor
 instance.interceptors.request.use(
   function (config) {

@@ -3,7 +3,7 @@ import Image from "next/image";
 import classNames from "classnames";
 
 import "@/components/signup/SignupTeamCards.scss";
-import { getClassName, getLogo } from "./TeamsInfo";
+import { getTeamColor, getTeamLogo } from "@/lib/util/TeamTagLogo";
 
 interface TeamProps {
   teamId: number;
@@ -30,8 +30,8 @@ function SignupTeamCards(props: SignupTeamCardsProps) {
   const isSelectedInProps = "isSelected" in props;
   const isSelected = "isSelected" in props && props.isSelected;
 
-  const getImgSrc = getLogo(props.team.teamName);
-  const getClassTeamName = getClassName(props.team.teamName);
+  const getImgSrc = getTeamLogo(props.team.teamName);
+  const getClassTeamName = getTeamColor(props.team.teamName);
 
   return (
     <div className="teamcard-block">

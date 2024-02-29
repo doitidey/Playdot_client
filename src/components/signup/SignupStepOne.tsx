@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import "@/components/signup/SignupStepOne.scss";
 import Title from "@/components/common/Title";
 import SignupTeamCards from "@/components/signup/SignupTeamCards";
-import { TEAMS_INFO } from "./TeamsInfo";
 import useclickedCardStore from "@/lib/store/signup/clickedCardStore";
 import { getTeams } from "@/lib/api/signupAPI";
 import useTeamsStore from "@/lib/store/signup/teamsStore";
@@ -16,17 +15,16 @@ type TeamInfo = {
 
 function SignupStepOne() {
   const { setClickedCardStore } = useclickedCardStore();
-  const { setTeamStore } = useTeamsStore();
+  const { teamStore, setTeamStore } = useTeamsStore();
 
   const [selectedTeam, setSelectedTeam] = useState(
-    TEAMS_INFO.slice(0).map(() => false),
+    teamStore.slice(0).map(() => false),
   );
-  const [teamsinfo, setTeamsinfo] = useState();
 
   useEffect(() => {
     const getTeamsInfo = async () => {
       const res = await getTeams();
-      setTeamsinfo(res.data);
+      //카드 데이터 store에 저장
       setTeamStore(res.data);
     };
     getTeamsInfo();
@@ -51,8 +49,8 @@ function SignupStepOne() {
         <br />팀 뱃지를 부여받고 커뮤니티에서 소통할 수 있어.
       </Title>
       <div className="teamcards-block">
-        {teamsinfo &&
-          teamsinfo
+        {teamStore &&
+          teamStore
             .slice(0)
             .map((team: TeamInfo, index: number) => (
               <SignupTeamCards
