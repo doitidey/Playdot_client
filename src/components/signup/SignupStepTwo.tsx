@@ -4,7 +4,7 @@ import Image from "next/image";
 import "@/components/signup/SignupStepTwo.scss";
 import Title from "@/components/common/Title";
 
-import SignupTeamCards from "@/components/signup/SignupTeamCards";
+import SignupTeamCards from "@/components/common/TeamCards";
 import { nicknameCheck } from "@/lib/api/signupAPI";
 import useSignupStore from "@/lib/store/signup/signupStore";
 import useclickedCardStore from "@/lib/store/signup/clickedCardStore";

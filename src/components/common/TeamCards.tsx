@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import classNames from "classnames";
 
-import "@/components/signup/SignupTeamCards.scss";
+import "@/components/common/TeamCards.scss";
 import { getTeamColor, getTeamLogo } from "@/lib/util/TeamTagLogo";
 
 interface TeamProps {
