@@ -1,4 +1,4 @@
-import { authInstance, instance } from "./instance";
+import { authInstance, instance } from "@/lib/api/instance";
 
 type Method = "get" | "post" | "put" | "delete";
 
