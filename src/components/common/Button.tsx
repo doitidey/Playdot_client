@@ -1,12 +1,28 @@
 import { ButtonHTMLAttributes } from "react";
 
-// TODO: 버튼 템플릿이 나오는대로 props 추가
+import "@/components/common/Button.scss";
+import classNames from "classnames";
+
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  onClick: () => void;
+  label: string;
+  size: "small" | "medium" | "large";
+  variant: "primary" | "secondary" | "active";
+  onClick?: () => void;
 }
 
-function Button({ ...rest }: ButtonProps) {
-  return <button {...rest} />;
+function Button(props: ButtonProps) {
+  return (
+    <button
+      className={classNames(
+        "button-block",
+        `button-block__${props.size}`,
+        `button-block__${props.variant}`,
+      )}
+      onClick={props.onClick}
+    >
+      {props.label}
+    </button>
+  );
 }
 
 export default Button;
