@@ -1,9 +1,7 @@
-import { ButtonHTMLAttributes } from "react";
-
 import "@/components/common/Button.scss";
 import classNames from "classnames";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps {
   label: string;
   size: "small" | "medium" | "large";
   variant: "primary" | "secondary" | "active";
