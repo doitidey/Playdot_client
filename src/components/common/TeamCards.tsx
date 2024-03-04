@@ -11,15 +11,19 @@ interface TeamProps {
 }
 
 interface TeamCardsProps {
+  /** 기본적으로 필요한 팀 정보 입니다. */
   team: TeamProps;
 }
 
 interface SingleTeamCard extends TeamCardsProps {
+  /** 카드가 혼자 쓰이는지 판단합니다. */
   singleCard: boolean;
 }
 
 interface MultipleCards extends TeamCardsProps {
+  /** SingleTeamCard가 아닐시 선택된 카드에 border 효과를 줍니다. */
   isSelected: boolean;
+  /** SingleTeamCard가 아닐시 클릭시 실행되는 함수를 콜백으로 받아옵니다. */
   onClick: () => void;
 }
 
