@@ -10,26 +10,26 @@ interface TeamProps {
   teamName: string;
 }
 
-interface TeamCardsProps {
+interface BasicTeamCardsProps {
   /** 기본적으로 필요한 팀 정보 입니다. */
   team: TeamProps;
 }
 
-interface SingleTeamCard extends TeamCardsProps {
+interface SingleTeamCard extends BasicTeamCardsProps {
   /** 카드가 혼자 쓰이는지 판단합니다. */
   singleCard: boolean;
 }
 
-interface MultipleCards extends TeamCardsProps {
+interface MultipleCards extends BasicTeamCardsProps {
   /** SingleTeamCard가 아닐시 선택된 카드에 border 효과를 줍니다. */
   isSelected: boolean;
   /** SingleTeamCard가 아닐시 클릭시 실행되는 함수를 콜백으로 받아옵니다. */
   onClick: () => void;
 }
 
-type SignupTeamCardsProps = SingleTeamCard | MultipleCards;
+type TeamCardsProps = SingleTeamCard | MultipleCards;
 
-function SignupTeamCards(props: SignupTeamCardsProps) {
+function TeamCards(props: TeamCardsProps) {
   const isForSingleCard = "singleCard" in props && props.singleCard;
   const isSelectedInProps = "isSelected" in props;
   const isSelected = "isSelected" in props && props.isSelected;
@@ -84,4 +84,4 @@ function SignupTeamCards(props: SignupTeamCardsProps) {
   );
 }
 
-export default SignupTeamCards;
+export default TeamCards;
