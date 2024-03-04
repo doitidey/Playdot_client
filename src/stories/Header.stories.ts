@@ -2,6 +2,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import Header from "@/components/common/Header";
 
 const meta: Meta<typeof Header> = {
+  title: "components/Header",
   tags: ["autodocs"],
   component: Header,
 };

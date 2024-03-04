@@ -68,7 +68,7 @@ export const SmallButton: Story = {
   parameters: {
     docs: {
       description: {
-        story: "small 크기의 button 입니다.",
+        story: "small 크기의 button 입니다. 142px의 가로 사이즈를 가집니다.",
       },
     },
   },
@@ -83,7 +83,7 @@ export const MediumButton: Story = {
   parameters: {
     docs: {
       description: {
-        story: "medium 크기의 button 입니다.",
+        story: "medium 크기의 button 입니다. 224px의 가로 사이즈를 가집니다.",
       },
     },
   },
@@ -98,7 +98,7 @@ export const LargeButton: Story = {
   parameters: {
     docs: {
       description: {
-        story: "large 크기의 button 입니다.",
+        story: "large 크기의 button 입니다. 506px의 가로 사이즈를 가집니다.",
       },
     },
   },
