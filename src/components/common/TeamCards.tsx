@@ -16,14 +16,14 @@ interface BasicTeamCardsProps {
 }
 
 interface SingleTeamCard extends BasicTeamCardsProps {
-  /** 카드가 혼자 쓰이는지 판단합니다. */
+  /** 카드가 SingleTeamCard로 쓰이는지 판단합니다. */
   singleCard: boolean;
 }
 
 interface MultipleCards extends BasicTeamCardsProps {
-  /** SingleTeamCard가 아닐시 선택된 카드에 border 효과를 줍니다. */
+  /** MultipleCards일시 선택된 카드에 border 효과를 줍니다. */
   isSelected: boolean;
-  /** SingleTeamCard가 아닐시 클릭시 실행되는 함수를 콜백으로 받아옵니다. */
+  /** MultipleCards일시 클릭시 실행되는 함수를 콜백으로 받아옵니다. */
   onClick: () => void;
 }
 

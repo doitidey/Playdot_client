@@ -1,41 +1,59 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import TeamCards from "@/components/common/TeamCards";
 
-// 메타 데이터, 제네릭에 컴포넌트의 타입을 넘겨준다.
 const meta: Meta<typeof TeamCards> = {
-  title: "TeamCards",
-  // 컴포넌트
+  title: "COMPONENTS/TeamCards",
   component: TeamCards,
-  // 컴포넌트에 대한 문서를 자동으로 생성
   tags: ["autodocs"],
+  argTypes: {
+    singleCard: { control: true },
+  },
+  parameters: {
+    layout: "centered",
+    componentSubtitle: "팀 카드를 보여주는 컴포넌트 입니다.",
+    docs: {
+      description: {
+        component: "`SingleTeamCard`와 `MultipleCards`를 구분하여 출력합니다.",
+      },
+    },
+  },
 };
 
-// 메타 데이터를 디폴트로 export
 export default meta;
 
-// 스토리 타입, StoryObj의 제네릭에 컴포넌트의 타입을 넘겨준다.
 type Story = StoryObj<typeof TeamCards>;
 
-// 하나의 스토리, 스토리는 named export 해준다
-// 스토리 이름도 사이드바 카테고리에 표시된다
+const TEAM_DATA = {
+  teamId: 1,
+  teamName: "LG 트윈스",
+};
+
 export const SingleTeamCard: Story = {
-  // 컴포넌트에 필요한 arguments, 리액트 컴포넌트에게는 Props
-  args: {
-    team: {
-      teamId: 1,
-      teamName: "LG 트윈스",
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "`SingleTeamCard`는 홀로 쓰이는 카드로 마우스 hover 인터랙션이 있습니다.",
+      },
     },
+  },
+  args: {
+    team: TEAM_DATA,
     singleCard: true,
   },
 };
 
 export const MultipleCards: Story = {
-  // 컴포넌트에 필요한 arguments, 리액트 컴포넌트에게는 Props
-  args: {
-    team: {
-      teamId: 1,
-      teamName: "LG 트윈스",
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "`MultipleCards`는 리스트 형식에 쓰이는 카드로 hover, click 인터랙션 및 함수 실행이 가능합니다.",
+      },
     },
+  },
+  args: {
+    team: TEAM_DATA,
     isSelected: false,
   },
 };
