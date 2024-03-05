@@ -33,22 +33,37 @@
     align-items: center;
     font-size: 24px;
     gap: 6px;
-    .date {
-      font-size: 18px;
-      margin-bottom: 12px;
-    }
+    width: 720px;
     .teams {
+      width: 100%;
       display: flex;
-      gap: 12px;
+      justify-content: space-between;
+      display: flex;
+      &__desc {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .date {
+          position: absolute;
+          top: 21px;
+          font-size: 18px;
+        }
+        .vs {
+          font-weight: 700;
+          font-size: 36px;
+        }
+      }
       &__name {
         font-weight: 700;
         font-size: 36px;
         color: $dark-text2;
-      }
-      &__vs {
-        font-weight: 700;
-        font-size: 36px;
-        margin: 0 86px;
+        display: flex;
+        gap: 28px;
+        align-items: center;
+        img {
+          width: fit-content;
+        }
       }
     }
   }
