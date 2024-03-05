@@ -1,22 +1,42 @@
 "use client";
+import Image from "next/image";
+import { useState } from "react";
 import classNames from "classnames";
 
 import "@/components/chat/ChatInput.scss";
 import useMenuModalState from "@/lib/store/chat/menuModalState";
-import Image from "next/image";
 
 function ChatInput() {
-  const { menuModalState, setMenuModalState } = useMenuModalState();
+  const {
+    menuModalState,
+    setMenuModalClicked,
+    setMenuModalStateOpen,
+    setMenuModalStateClose,
+  } = useMenuModalState();
+
+  let closeModalTimer: ReturnType<typeof setTimeout>;
+
+  const CloseModal = () => {
+    closeModalTimer = setTimeout(() => {
+      setMenuModalStateClose();
+    }, 200);
+  };
+
+  const OpenModal = () => {
+    clearTimeout(closeModalTimer);
+    setMenuModalStateOpen();
+  };
 
   const handleClickMenu = () => {
-    setMenuModalState();
+    setMenuModalClicked();
+    menuModalState.isOpen ? CloseModal() : OpenModal();
   };
 
   return (
     <div className="input-container">
       <div
         className={classNames(
-          menuModalState && "input-container__button--active",
+          menuModalState.isClicked && "input-container__button--active",
           "input-container__button",
         )}
         onClick={handleClickMenu}

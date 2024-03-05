@@ -18,7 +18,7 @@ function ChatSection() {
       <div className="chat__inside">
         <div className="float">
           <div className="float__contents">
-            {menuModalState && <MenuModal />}
+            {menuModalState.isOpen && <MenuModal />}
             <VoteModal />
           </div>
           <ChatInput />

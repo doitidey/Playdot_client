@@ -2,11 +2,20 @@ import React from "react";
 import Image from "next/image";
 
 import "@/components/chat/modals/MenuModal.scss";
+import useMenuModalState from "@/lib/store/chat/menuModalState";
 
 function MenuModal() {
+  const { menuModalState } = useMenuModalState();
+
   return (
-    <div className="menu-container">
-      <div className="menu-container__box">
+    <div
+      className={`menu__block ${
+        menuModalState.isClicked
+          ? "menu__block--active"
+          : "menu__block--disactive"
+      }`}
+    >
+      <div className="menu__content">
         <Image
           src={"/images/chatvote.svg"}
           alt={"chatvote"}
@@ -15,7 +24,7 @@ function MenuModal() {
         />
         <p>미니투표</p>
       </div>
-      <div className="menu-container__box">
+      <div className="menu__content">
         <Image
           src={"/images/chatspeaker.svg"}
           alt={"chatspeaker"}
@@ -23,15 +32,6 @@ function MenuModal() {
           height={37}
         />
         <p>외치기</p>
-      </div>
-      <div className="menu-container__box">
-        <Image
-          src={"/images/chatgift.svg"}
-          alt={"chatgift"}
-          width={32}
-          height={32}
-        />
-        <p>선물하기</p>
       </div>
     </div>
   );
