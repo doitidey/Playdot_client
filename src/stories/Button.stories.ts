@@ -7,7 +7,7 @@ const meta: Meta<typeof Button> = {
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
-    componentSubtype: "특정 이벤트를 실행하기 위한 컴포넌트입니다.",
+    componentSubtitle: "특정 이벤트를 실행하기 위한 버튼 컴포넌트입니다.",
     docs: {
       description: {
         component: "label, variant, size가 필요합니다.",
