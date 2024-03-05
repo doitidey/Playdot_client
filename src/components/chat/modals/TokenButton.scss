@@ -1,0 +1,14 @@
+@import "@/styles/colors.scss";
+
+.token__block {
+  width: 172px;
+  height: 50px;
+  border-radius: 12px;
+  border: $token-border solid 2px;
+  color: $like-obj;
+  font-size: 22px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 0 6px;
+}

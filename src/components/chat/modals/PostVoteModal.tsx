@@ -1,3 +1,5 @@
+import TokenButton from "./TokenButton";
+
 function PostVoteModal() {
   return (
     <>
@@ -12,6 +14,7 @@ function PostVoteModal() {
           <input placeholder="옵션2" />
         </div>
       </div>
+      <TokenButton />
     </>
   );
 }
