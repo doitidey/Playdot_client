@@ -32,4 +32,10 @@
   &--disactive {
     animation: slide-out 0.2s ease-in-out;
   }
+  &:after {
+    content: url("/images/chatmenumodalshape.svg");
+    position: absolute;
+    bottom: -30px;
+    left: 50px;
+  }
 }
