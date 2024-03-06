@@ -1,0 +1,46 @@
+@import "@/styles/colors.scss";
+
+.post-vote {
+  display: flex;
+  flex-direction: column;
+  input {
+    border: none;
+    background-color: transparent;
+    color: $dark-text2;
+    &:focus {
+      outline: none;
+    }
+  }
+  &__title {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 58px;
+  }
+  &__block {
+    margin-bottom: 25px;
+  }
+  &__content {
+    display: flex;
+    background-color: $surface;
+    border-radius: 17px;
+    overflow: hidden;
+    font-size: 22px;
+    height: 85px;
+    &__title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $dark-text2;
+      width: 53px;
+      background-color: $dark-bg;
+    }
+    &__input {
+      font-size: 22px;
+      width: 100%;
+      padding: 0 20px;
+    }
+    &:first-child {
+      margin-bottom: 20px;
+    }
+  }
+}
