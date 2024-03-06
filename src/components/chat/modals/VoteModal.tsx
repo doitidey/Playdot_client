@@ -7,7 +7,7 @@ import classNames from "classnames";
 function VoteModal() {
   const [voteActive, setVoteActive] = useState(false);
 
-  const onVote = (e) => {
+  const onVote = () => {
     // console.log(e.target.value);
     // todo: api 연동
     setVoteActive(true);
