@@ -21,6 +21,15 @@
       display: flex;
       justify-content: center;
       gap: 8px;
+      position: relative;
+      span {
+        &:nth-child(2) {
+          cursor: pointer;
+        }
+        &:nth-child(3) {
+          cursor: pointer;
+        }
+      }
     }
     &__like {
       display: flex;
@@ -112,6 +121,50 @@
     }
     100% {
       transform: none;
+    }
+  }
+}
+
+.balloon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  position: absolute;
+  background: $dark-bg;
+  color: white;
+  border-radius: 5px;
+  padding: 12px 16px;
+  top: -100px;
+  right: -10px;
+  width: 200px;
+  &::after {
+    border-top: 10px solid $dark-bg;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 0px solid transparent;
+    content: "";
+    position: absolute;
+    top: 84px;
+    right: 10px;
+  }
+  &__button {
+    display: flex;
+    gap: 10px;
+    span {
+      border: none;
+      outline: none;
+      font-size: 14px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      &:first-child {
+        background: $main;
+      }
+      &:last-child {
+        background: #fff;
+        color: $text;
+      }
     }
   }
 }
