@@ -1,25 +1,21 @@
 "use client";
 
-import "./Comment.scss";
+import "@/components/comment/Comment.scss";
 import { ChangeEvent, FormEvent, useCallback, useState } from "react";
 import { MdRefresh } from "react-icons/md";
-import Title from "../common/Title";
-import CommentList from "./CommentList";
+import Title from "@/components/common/Title";
+import CommentList from "@/components/comment/CommentList";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { postTodayComment, todayGamesComment } from "@/lib/api/todayAPI";
 
 export interface CommentData {
-  profile: {
-    profileImageUrl?: null;
-    nickname: string;
-    teamName: string;
-  };
-  reply: {
-    replyId?: number;
-    content: string;
-    count?: number;
-    createdAt?: string;
-  };
+  profileImageUrl?: null;
+  nickname: string;
+  teamName: string;
+  replyId?: number;
+  content: string;
+  likeCount?: number;
+  createdAt?: string;
 }
 
 export interface Team {
@@ -30,15 +26,16 @@ export interface Team {
 
 function Comment() {
   const queryClient = useQueryClient();
-  const [comment, setComment] = useState<CommentData[]>([]);
+  const [comments, setComments] = useState<CommentData[]>([]);
   const [value, setValue] = useState("");
+
   // const { value, setValue, comment, setComment } = useCommentStore();
 
-  const { data: commentData = comment } = useQuery({
+  const { data: commentData = comments, refetch } = useQuery({
     queryKey: ["todayComment"],
     queryFn: () =>
       todayGamesComment()?.then((res) => {
-        setComment(res.data.content);
+        setComments(res.data.content);
         console.warn(res.data.content);
       }),
     refetchOnWindowFocus: false,
@@ -46,16 +43,12 @@ function Comment() {
 
   const { mutate: post } = useMutation(async () => postTodayComment(value), {
     onMutate: () => {
-      setComment([
-        ...comment,
+      setComments([
+        ...comments,
         {
-          profile: {
-            teamName: localStorage.getItem("teamName") as string,
-            nickname: localStorage.getItem("nickname") as string,
-          },
-          reply: {
-            content: value,
-          },
+          teamName: localStorage.getItem("teamName") as string,
+          nickname: localStorage.getItem("nickname") as string,
+          content: value,
         },
       ]);
       setValue("");
@@ -64,6 +57,10 @@ function Comment() {
       queryClient.invalidateQueries("todayComment");
     },
   });
+
+  const onRefresh = useCallback(() => {
+    refetch();
+  }, [refetch]);
 
   const onChange = useCallback(
     (event: ChangeEvent) => {
@@ -87,9 +84,9 @@ function Comment() {
       <form className="comment-block__content" onSubmit={onSubmit}>
         <div className="comment-header">
           <Title medium>댓글 {commentData.length}개</Title>
-          <button type="submit">
+          <div onClick={onRefresh}>
             <MdRefresh />
-          </button>
+          </div>
         </div>
         <input
           className="comment-input"
@@ -98,7 +95,11 @@ function Comment() {
           onChange={onChange}
           placeholder="댓글을 입력해주세요."
         />
-        <CommentList comment={commentData} />
+        <CommentList
+          comment={commentData}
+          setComments={setComments}
+          queryClient={queryClient}
+        />
       </form>
     </section>
   );
