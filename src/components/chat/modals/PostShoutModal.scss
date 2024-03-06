@@ -1,0 +1,16 @@
+@import "@/styles/colors.scss";
+
+.post-shout {
+  &__input {
+    text-align: center;
+    width: 100%;
+    font-size: 36px;
+    border: none;
+    background-color: transparent;
+    color: $dark-text2;
+    margin-bottom: 41px;
+    &:focus {
+      outline: none;
+    }
+  }
+}
