@@ -1,58 +1,110 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
+import Button from "@/components/common/Button";
 
-import { Button } from './Button';
-
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
-const meta = {
-  title: 'Example/Button',
+const meta: Meta<typeof Button> = {
+  title: "Components/Button",
   component: Button,
+  tags: ["autodocs"],
   parameters: {
-    // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
-    layout: 'centered',
+    layout: "centered",
+    componentSubtitle: "특정 이벤트를 실행하기 위한 버튼 컴포넌트입니다.",
+    docs: {
+      description: {
+        component: "label, variant, size가 필요합니다.",
+      },
+    },
   },
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
-  tags: ['autodocs'],
-  // More on argTypes: https://storybook.js.org/docs/api/argtypes
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
-} satisfies Meta<typeof Button>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Button>;
 
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Primary: Story = {
+export const DefaultButton: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "메인 색상을 가지는 button 입니다.",
+      },
+    },
+  },
   args: {
-    primary: true,
-    label: 'Button',
+    label: "button",
+    size: "medium",
+    variant: "primary",
   },
 };
 
-export const Secondary: Story = {
+export const SecondaryButton: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "두 번째 메인 색상을 가지는 button 입니다.",
+      },
+    },
+  },
   args: {
-    label: 'Button',
+    label: "button",
+    size: "medium",
+    variant: "secondary",
   },
 };
 
-export const Large: Story = {
+export const ActiveButton: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "활성화 된 button 입니다.",
+      },
+    },
+  },
   args: {
-    size: 'large',
-    label: 'Button',
+    label: "button",
+    size: "medium",
+    variant: "active",
   },
 };
 
-export const Small: Story = {
+export const SmallButton: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "small 크기의 button 입니다. 142px의 가로 사이즈를 가집니다.",
+      },
+    },
+  },
   args: {
-    size: 'small',
-    label: 'Button',
+    label: "button",
+    size: "small",
+    variant: "primary",
   },
 };
 
-export const Warning: Story = {
+export const MediumButton: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "medium 크기의 button 입니다. 224px의 가로 사이즈를 가집니다.",
+      },
+    },
+  },
   args: {
-    primary: true,
-    label: 'Delete now',
-    backgroundColor: 'red',
-  }
+    label: "button",
+    size: "medium",
+    variant: "primary",
+  },
+};
+
+export const LargeButton: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "large 크기의 button 입니다. 506px의 가로 사이즈를 가집니다.",
+      },
+    },
+  },
+  args: {
+    label: "button",
+    size: "large",
+    variant: "primary",
+  },
 };

@@ -4,7 +4,7 @@ import Image from "next/image";
 import "@/components/signup/SignupStepTwo.scss";
 import Title from "@/components/common/Title";
 
-import SignupTeamCards from "@/components/common/TeamCards";
+import TeamCards from "@/components/common/TeamCards";
 import { nicknameCheck } from "@/lib/api/signupAPI";
 import useSignupStore from "@/lib/store/signup/signupStore";
 import useclickedCardStore from "@/lib/store/signup/clickedCardStore";
@@ -95,10 +95,7 @@ function SignupStepTwo() {
       </Title>
       <div className="stepTwo-content">
         <div className="stepTwo-content__cards">
-          <SignupTeamCards
-            team={teamStore[clickedCardStore]}
-            singleCard={true}
-          />
+          <TeamCards team={teamStore[clickedCardStore]} singleCard={true} />
           <div className="cards__upload">
             {previewUrl ? (
               <Image

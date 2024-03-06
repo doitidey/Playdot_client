@@ -1,0 +1,37 @@
+@import "@/styles/colors.scss";
+
+.button-block {
+  height: 75px;
+  color: $dark-text2;
+  border-radius: 16px;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  transition: 0.2s;
+
+  //variant
+  &__primary {
+    background-color: $signup-back;
+  }
+  &__secondary {
+    background-color: $button-bg;
+    color: $button-disabled;
+  }
+  &__active {
+    background: $main;
+  }
+
+  //size
+  &__small {
+    width: 142px;
+  }
+  &__medium {
+    width: 224px;
+  }
+  &__large {
+    width: 506px;
+  }
+  &:hover {
+    opacity: 80%;
+  }
+}
