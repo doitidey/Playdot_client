@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-// import { ChangeEvent, useCallback } from "react";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
 import Text from "@/components/common/Text";
 import TeamTag from "@/components/tag/TeamTag";
@@ -9,12 +8,19 @@ import "@/components/comment/CommentListItem.scss";
 // import Reply from "@/components/reply/Reply";
 import classNames from "classnames";
 import { commentDate } from "@/lib/util/getGameTime";
+import { QueryClient, useMutation } from "react-query";
+import { removeTodayComment } from "@/lib/api/todayAPI";
+import { CommentData } from "./Comment";
 
 interface CommentListItemProps {
   nickname: string;
   teamName: string;
   comment: string;
   createdAt?: string;
+  count?: number;
+  replyId?: number;
+  setComments: Dispatch<SetStateAction<CommentData[]>>;
+  queryClient: QueryClient;
 }
 
 function CommentListItem({
@@ -22,10 +28,14 @@ function CommentListItem({
   teamName,
   comment,
   createdAt,
+  count,
+  replyId,
+  setComments,
 }: CommentListItemProps) {
   const [visibleReply, setVisibleReply] = useState(false);
   const [visibleReplyList, setVisibleReplyList] = useState(false);
   const [like, setLike] = useState(false);
+  const [visibleBalloon, setVisibleBalloon] = useState(false);
 
   const onVisible = () => {
     setVisibleReply(!visibleReply);
@@ -36,14 +46,26 @@ function CommentListItem({
     setLike(!like);
   };
 
-  // const commentDate = () => {
-  //   const postDate = createdAt;
-  //   const year = postDate?.substring(0, 4);
-  //   const month = postDate?.substring(5, 7);
-  //   const day = postDate?.substring(10, 8);
+  const { mutate: remove } = useMutation(
+    async () => removeTodayComment(replyId as number),
+    {
+      onMutate: (commentId: number) => {
+        console.warn(`댓글 ${replyId}: 댓글 삭제 완료`);
+        setComments((prevComments) =>
+          prevComments.filter((comment) => comment.replyId !== commentId),
+        );
+      },
+    },
+  );
 
-  //   return `${year}.${month}.${day}`;
-  // };
+  const onBalloon = useCallback(() => {
+    setVisibleBalloon(!visibleBalloon);
+  }, [visibleBalloon]);
+
+  const onRemove = useCallback(() => {
+    remove(replyId as number);
+    setVisibleBalloon(false);
+  }, [remove, replyId]);
 
   return (
     <>
@@ -64,12 +86,22 @@ function CommentListItem({
         </div>
         <div className="item-block__button">
           <div className="item-block__button__date">
+            {visibleBalloon && (
+              <div className="balloon">
+                <Text small>삭제 하시겠습니까?</Text>
+                <div className="balloon__button">
+                  <span onClick={onRemove}>삭제</span>
+                  <span onClick={onBalloon}>취소</span>
+                </div>
+              </div>
+            )}
             <span>{commentDate(createdAt)}</span>
             <span>신고</span>
+            <span onClick={onBalloon}>삭제</span>
           </div>
           <div className="item-block__button__like">
             <Text>좋아요</Text>
-            <span>15</span>
+            <span>{count}</span>
             <div
               className={classNames(
                 `${like ? "active-like-btn" : "inactive-like-btn"}`,

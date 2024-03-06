@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import "@/components/signup/SignupStepOne.scss";
 import Title from "@/components/common/Title";
-import SignupTeamCards from "@/components/common/TeamCards";
+import TeamCards from "@/components/common/TeamCards";
 import useclickedCardStore from "@/lib/store/signup/clickedCardStore";
 import { getTeams } from "@/lib/api/signupAPI";
 import useTeamsStore from "@/lib/store/signup/teamsStore";
@@ -53,7 +53,7 @@ function SignupStepOne() {
           teamStore
             .slice(0)
             .map((team: TeamInfo, index: number) => (
-              <SignupTeamCards
+              <TeamCards
                 key={team.teamId}
                 team={{ ...team }}
                 isSelected={selectedTeam[index]}
