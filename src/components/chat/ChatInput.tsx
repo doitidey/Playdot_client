@@ -1,6 +1,4 @@
-"use client";
 import Image from "next/image";
-import { useState } from "react";
 import classNames from "classnames";
 
 import "@/components/chat/ChatInput.scss";
@@ -27,7 +25,7 @@ function ChatInput() {
     setMenuModalStateOpen();
   };
 
-  const handleClickMenu = () => {
+  const onClickMenu = () => {
     setMenuModalClicked();
     menuModalState.isOpen ? CloseModal() : OpenModal();
   };
@@ -39,7 +37,7 @@ function ChatInput() {
           menuModalState.isClicked && "input-container__button--active",
           "input-container__button",
         )}
-        onClick={handleClickMenu}
+        onClick={onClickMenu}
       >
         <Image
           src={"/images/inputmodalbutton.svg"}
