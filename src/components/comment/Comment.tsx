@@ -41,7 +41,7 @@ function Comment() {
     refetchOnWindowFocus: false,
   });
 
-  const { mutate: post } = useMutation(async () => postTodayComment(value), {
+  const { mutate: postComment } = useMutation(async () => postTodayComment(value), {
     onMutate: () => {
       setComments([
         ...comments,
@@ -74,9 +74,9 @@ function Comment() {
   const onSubmit = useCallback(
     async (event: FormEvent) => {
       event.preventDefault();
-      post();
+      postComment();
     },
-    [post],
+    [postComment],
   );
 
   return (
