@@ -12,9 +12,9 @@ export default function usePath() {
     mypage: "/mypage",
   };
 
-  const ACTIVE_PAGE = "active-page";
+  const ACTIVE_PAGE = "pagelink--active";
 
-  const UNDER_BAR = "underbar";
+  const UNDER_BAR = "underbar--active";
 
   const ACTIVE_MATCH_CLASSNAME = `${
     pathname === PATH.today ? ACTIVE_PAGE : ""
@@ -33,7 +33,7 @@ export default function usePath() {
   }`;
 
   const UNDERBAR_COMMUNITY_CLASSNAME = `${
-    pathname === PATH.community ? ACTIVE_PAGE : ""
+    pathname === PATH.community ? UNDER_BAR : ""
   }`;
 
   return {

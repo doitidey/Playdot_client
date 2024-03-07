@@ -44,16 +44,21 @@ function Header() {
           </h1>
           <nav className="header-block__navigation">
             <div>
-              <Link href={PATH.today} className={ACTIVE_MATCH_CLASSNAME}>
+              <Link
+                href={PATH.today}
+                className={`pagelink ${ACTIVE_MATCH_CLASSNAME}`}
+              >
                 승부예측
-                <div className={UNDERBAR_MATCH_CLASSNAME} />
+                <div className={`underbar ${UNDERBAR_MATCH_CLASSNAME}`} />
               </Link>
               <Link
                 href={PATH.community}
-                className={ACTIVE_COMMUNITY_CLASSNAME}
+                className={`pagelink ${ACTIVE_COMMUNITY_CLASSNAME}`}
               >
                 커뮤니티
-                <div className={UNDERBAR_COMMUNITY_CLASSNAME}></div>
+                <div
+                  className={`underbar ${UNDERBAR_COMMUNITY_CLASSNAME}`}
+                ></div>
               </Link>
             </div>
           </nav>
@@ -63,7 +68,7 @@ function Header() {
                 {getLocalProfileImage === "null" ? (
                   <Image
                     className="profile__logo__basictitle"
-                    src={"/images/logo.svg"}
+                    src="/images/logo.svg"
                     alt="프로필이미지 로고"
                     width={0}
                     height={0}
@@ -84,7 +89,7 @@ function Header() {
               <div className="profile__logo">
                 <Image
                   className="profile__logo__basictitle"
-                  src={"/images/logo.svg"}
+                  src="/images/logo.svg"
                   alt="프로필이미지 로고"
                   width={25.33}
                   height={5.72}
