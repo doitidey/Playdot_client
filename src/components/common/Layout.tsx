@@ -1,6 +1,7 @@
 "use client";
 
 import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 import Modal from "@/components/common/Modal";
 import Header from "@/components/common/Header";
 import { ReactNode } from "react";
@@ -18,6 +19,7 @@ function Layout({ children }: LayoutProps) {
         <Modal />
         <Header />
         <div>{children}</div>
+        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
       </QueryClientProvider>
     </div>
   );
