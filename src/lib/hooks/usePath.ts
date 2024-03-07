@@ -9,6 +9,7 @@ export default function usePath() {
     previous: "/match/previous",
     community: "/community",
     login: "/login",
+    mypage: "/mypage",
   };
 
   const ACTIVE_PAGE = "active-page";

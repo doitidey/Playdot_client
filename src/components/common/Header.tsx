@@ -6,7 +6,10 @@ import SubMenu from "./SubMenu";
 import "./Header.scss";
 import usePath from "@/lib/hooks/usePath";
 import Image from "next/image";
-import { FaUser } from "react-icons/fa6";
+import {
+  getLocalNickname,
+  getLocalProfileImage,
+} from "@/lib/util/getLocalStorage";
 
 function Header() {
   const pathname = usePathname();
@@ -18,6 +21,11 @@ function Header() {
     UNDERBAR_MATCH_CLASSNAME,
     PATH,
   } = usePath();
+
+  const isSubMenuRequired =
+    pathname === "/match/today" ||
+    pathname === "/match/month" ||
+    pathname === "/match/previous";
 
   return (
     <>
@@ -49,17 +57,44 @@ function Header() {
               </Link>
             </div>
           </nav>
-          <Link href={PATH.login} className="login">
-            <div className="login__logo">
-              <FaUser />
-            </div>
-            <span>로그인</span>
-          </Link>
+          {getLocalNickname ? (
+            <Link href={PATH.mypage} className="profile">
+              <div className="profile__logo">
+                {getLocalProfileImage === "null" ? (
+                  <Image
+                    className="profile__logo__basictitle"
+                    src={"/images/logo.svg"}
+                    alt="프로필이미지 로고"
+                    width={0}
+                    height={0}
+                  />
+                ) : (
+                  <Image
+                    alt="profileimg"
+                    src={`${getLocalProfileImage}`}
+                    width={24}
+                    height={24}
+                  />
+                )}
+              </div>
+              <span className="profile__myname">{getLocalNickname}</span>
+            </Link>
+          ) : (
+            <Link href={PATH.login} className="profile">
+              <div className="profile__logo">
+                <Image
+                  className="profile__logo__basictitle"
+                  src={"/images/logo.svg"}
+                  alt="프로필이미지 로고"
+                  width={25.33}
+                  height={5.72}
+                />
+              </div>
+              <span className="profile__login">로그인</span>
+            </Link>
+          )}
         </div>
-        {pathname === "/community" ||
-          pathname === "/match/chat" ||
-          pathname === "/login" ||
-          pathname === "/signup" || <SubMenu />}
+        {isSubMenuRequired && <SubMenu />}
       </header>
       <div className="space" />
     </>
