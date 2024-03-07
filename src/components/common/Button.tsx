@@ -1,9 +1,11 @@
-import "@/components/common/Button.scss";
 import classNames from "classnames";
+import { ButtonHTMLAttributes } from "react";
 
-interface ButtonProps {
+import "@/components/common/Button.scss";
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** 버튼 내용을 받아옵니다. */
-  label: string;
+  label?: string;
   /** 버튼 사이즈를 지정합니다. */
   size: "small" | "medium" | "large";
   /** 버튼 타입을 지정합니다. */
@@ -12,9 +14,10 @@ interface ButtonProps {
   onClick?: () => void;
 }
 
-function Button(props: ButtonProps) {
+function Button({ ...props }: ButtonProps) {
   return (
     <button
+      {...props}
       className={classNames(
         "button-block",
         `button-block__${props.size}`,
