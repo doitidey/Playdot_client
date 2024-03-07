@@ -86,3 +86,21 @@ export const removeTodayComment = (replyId: number) => {
     console.error(e);
   }
 };
+
+// 댓글 좋아요
+export const likeTodayComment = (replyId: number) => {
+  try {
+    const requestBody = {
+      replyId: replyId,
+    };
+    const res = fetchData(
+      `games/daily-reply/${replyId}/like`,
+      "post",
+      requestBody,
+    );
+    console.warn(res);
+    return res;
+  } catch (e) {
+    console.error(e);
+  }
+};
