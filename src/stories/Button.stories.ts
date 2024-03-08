@@ -45,7 +45,7 @@ export const SecondaryButton: Story = {
   args: {
     label: "button",
     size: "medium",
-    variant: "secondary",
+    variant: "disactive",
   },
 };
 
@@ -60,6 +60,22 @@ export const ActiveButton: Story = {
   args: {
     label: "button",
     size: "medium",
+    variant: "active",
+  },
+};
+
+export const XsmallButton: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "x-small 크기의 button 입니다. 댓글 등록 input에 사용되며 74px의 가로 사이즈를 가집니다.",
+      },
+    },
+  },
+  args: {
+    label: "button",
+    size: "x-small",
     variant: "active",
   },
 };
