@@ -1,7 +1,11 @@
-export const getLocalNickname = localStorage.getItem("nickname");
+export const getLocalNickname =
+  typeof window !== "undefined" && localStorage.getItem("nickname");
 
-export const getLocalToken = localStorage.getItem("authToken");
+export const getLocalToken =
+  typeof window !== "undefined" && localStorage.getItem("authToken");
 
-export const getLocalTeamName = localStorage.getItem("teamName");
+export const getLocalTeamName =
+  typeof window !== "undefined" && localStorage.getItem("teamName");
 
-export const getLocalProfileImage = localStorage.getItem("profileImageUrl");
+export const getLocalProfileImage =
+  typeof window !== "undefined" && localStorage.getItem("profileImageUrl");
