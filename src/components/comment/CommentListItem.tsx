@@ -17,7 +17,7 @@ interface CommentListItemProps {
   teamName: string;
   comment: string;
   createdAt?: string;
-  count?: number;
+  likeCount?: number;
   replyId?: number;
   setComments: Dispatch<SetStateAction<CommentData[]>>;
   queryClient: QueryClient;
@@ -28,25 +28,17 @@ function CommentListItem({
   teamName,
   comment,
   createdAt,
-  count,
+  likeCount,
   replyId,
   setComments,
 }: CommentListItemProps) {
   const [visibleReply, setVisibleReply] = useState(false);
   const [visibleReplyList, setVisibleReplyList] = useState(false);
   const [like, setLike] = useState(false);
+  // const [count = likeCount, setCount] = useState(0);
   const [visibleBalloon, setVisibleBalloon] = useState(false);
 
-  const onVisible = () => {
-    setVisibleReply(!visibleReply);
-    setVisibleReplyList(!visibleReplyList);
-  };
-
-  const onLike = () => {
-    setLike(!like);
-  };
-
-  const { mutate: remove } = useMutation(
+  const { mutate: removeComment } = useMutation(
     async () => removeTodayComment(replyId as number),
     {
       onMutate: (commentId: number) => {
@@ -58,14 +50,24 @@ function CommentListItem({
     },
   );
 
+  const onVisible = () => {
+    setVisibleReply(!visibleReply);
+    setVisibleReplyList(!visibleReplyList);
+  };
+
+  // 좋아요 기능 작업 중
+  const onLike = () => {
+    setLike(!like);
+  };
+
   const onBalloon = useCallback(() => {
     setVisibleBalloon(!visibleBalloon);
   }, [visibleBalloon]);
 
   const onRemove = useCallback(() => {
-    remove(replyId as number);
+    removeComment(replyId as number);
     setVisibleBalloon(false);
-  }, [remove, replyId]);
+  }, [removeComment, replyId]);
 
   return (
     <>
@@ -101,7 +103,7 @@ function CommentListItem({
           </div>
           <div className="item-block__button__like">
             <Text>좋아요</Text>
-            <span>{count}</span>
+            <span>{likeCount}</span>
             <div
               className={classNames(
                 `${like ? "active-like-btn" : "inactive-like-btn"}`,

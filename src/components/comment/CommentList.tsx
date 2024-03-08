@@ -24,7 +24,7 @@ function CommentList({
           teamName={item.teamName}
           comment={item.content}
           createdAt={item.createdAt}
-          count={item.likeCount}
+          likeCount={item.likeCount}
           replyId={item.replyId}
           setComments={setComments}
           queryClient={queryClient}

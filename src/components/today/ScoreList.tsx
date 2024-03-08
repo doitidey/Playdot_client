@@ -18,6 +18,7 @@ function ScoreList({ game }: ScoreListProps) {
             homeTeam={item.homeTeam}
             awayTeam={item.awayTeam}
             gameTime={item.gameTime}
+            gameId={item.gameId}
           />
         ))}
       </ul>
