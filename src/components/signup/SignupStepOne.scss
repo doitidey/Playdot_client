@@ -1,12 +1,11 @@
 @import "@/styles/colors.scss";
 
-.stepOne__block {
+.stepone {
   text-align: center;
-
-  &--title {
+  &__title {
     color: $login-text;
   }
-  &--text {
+  &__desc {
     line-height: 34px;
     margin-top: 24px;
     color: $login-text;

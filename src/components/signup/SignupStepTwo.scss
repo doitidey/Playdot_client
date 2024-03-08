@@ -10,15 +10,15 @@
   color: $dark-text2;
 }
 
-.stepTwo-block {
+.steptwo {
   width: 1200px;
   text-align: center;
 
-  &__text {
-    margin-top: 24px;
+  &__desc {
+    margin-top: 25px;
   }
 
-  .stepTwo-content {
+  &__content {
     display: flex;
     gap: 30px;
     margin-top: 152px;
@@ -45,7 +45,7 @@
         }
         .uploadedImage {
           cursor: pointer;
-          height: 100%;
+          height: auto;
           width: auto;
         }
 
@@ -57,13 +57,15 @@
 
     &__info {
       width: 568px;
+      display: flex;
+      flex-direction: column;
       justify-content: space-between;
 
-      .info-content {
+      .info__block {
         display: flex;
         flex-direction: column;
 
-        &__nickname {
+        .info__nickname {
           width: 100%;
           display: flex;
           justify-content: space-between;

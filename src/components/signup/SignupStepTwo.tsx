@@ -9,6 +9,8 @@ import { nicknameCheck } from "@/lib/api/signupAPI";
 import useSignupStore from "@/lib/store/signup/signupStore";
 import useclickedCardStore from "@/lib/store/signup/clickedCardStore";
 import useTeamsStore from "@/lib/store/signup/teamsStore";
+import Button from "../common/Button";
+import useStepsStore from "@/lib/store/signup/stepsStore";
 
 interface FormData {
   profileImage?: File;
@@ -22,6 +24,7 @@ function SignupStepTwo() {
   const { setFormData } = useSignupStore();
   const { clickedCardStore } = useclickedCardStore();
   const { teamStore } = useTeamsStore();
+  const { decreaseStep } = useStepsStore();
 
   const imageInputRef = useRef<HTMLInputElement | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | undefined>();
@@ -54,8 +57,12 @@ function SignupStepTwo() {
   };
 
   const handleClickNicknameCheck = async () => {
-    if (formDraftData.data.nickname) {
-      await nicknameCheck(formDraftData.data.nickname);
+    try {
+      if (formDraftData.data.nickname) {
+        await nicknameCheck(formDraftData.data.nickname);
+      }
+    } catch {
+      console.error("닉네임 체크 APi 오류");
     }
   };
 
@@ -85,16 +92,29 @@ function SignupStepTwo() {
     setFormData(formDraftData);
   }, [formDraftData]);
 
+  const onClickPreviousButton = () => {
+    decreaseStep();
+  };
+
   return (
-    <div className="stepTwo-block">
-      <Title largest className="stepTwo-block__title">
+    <section className="steptwo">
+      <div>
+        <Button
+          label="이전"
+          variant="primary"
+          size="small"
+          onClick={onClickPreviousButton}
+        />
+        <Button label="다음" variant="primary" size="small" />
+      </div>
+      <Title largest className="steptwo__title">
         프로필 설정하기
       </Title>
-      <Title small className="stepTwo-block__text">
+      <Title small className="steptwo__desc">
         나만의 프로필을 만들어봐!
       </Title>
-      <div className="stepTwo-content">
-        <div className="stepTwo-content__cards">
+      <div className="steptwo__content">
+        <div className="steptwo__content__cards">
           <TeamCards team={teamStore[clickedCardStore]} singleCard={true} />
           <div className="cards__upload">
             {previewUrl ? (
@@ -124,28 +144,29 @@ function SignupStepTwo() {
             />
           </div>
         </div>
-        <div className="stepTwo-content__info">
-          <div className="info-content">
-            <Title small className="stepTwo-content__title">
+        <div className="steptwo__content__info">
+          <div className="info__block">
+            <Title small className="steptwo__content__title">
               닉네임
             </Title>
-            <div className="info-content__nickname">
+            <div className="info__nickname">
               <input
                 type="text"
                 className="nickname__input"
                 placeholder="닉네임을 입력해줘!"
                 onChange={handleChangeNickname}
               />
-              <button
-                className="nickname__button"
+              <div className="info__nickname--validation"></div>
+              <Button
+                label="중복확인"
+                size="small"
+                variant="primary"
                 onClick={handleClickNicknameCheck}
-              >
-                중복확인
-              </button>
+              />
             </div>
           </div>
-          <div className="info-content">
-            <Title small className="stepTwo-content__title">
+          <div className="info__block">
+            <Title small className="steptwo__content__title">
               한마디
             </Title>
             <textarea
@@ -156,7 +177,7 @@ function SignupStepTwo() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
