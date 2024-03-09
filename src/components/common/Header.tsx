@@ -6,9 +6,17 @@ import SubMenu from "./SubMenu";
 import "./Header.scss";
 import usePath from "@/lib/hooks/usePath";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 function Header() {
   const pathname = usePathname();
+  const [localNick, setLocalNick] = useState<String | null>("");
+  const [localURL, setLocalURL] = useState<String | null>("");
+
+  useEffect(() => {
+    setLocalNick(localStorage.getItem("nickname"));
+    setLocalURL(localStorage.getItem("profileImageUrl"));
+  }, []);
 
   const {
     ACTIVE_MATCH_CLASSNAME,
@@ -58,10 +66,10 @@ function Header() {
               </Link>
             </div>
           </nav>
-          {localStorage.getItem("nickname") ? (
+          {localNick ? (
             <Link href={PATH.mypage} className="profile">
               <div className="profile__logo">
-                {localStorage.getItem("profileImageUrl") === "null" ? (
+                {localURL === "null" ? (
                   <Image
                     className="profile__logo__basictitle"
                     src="/images/logo.svg"
@@ -72,15 +80,13 @@ function Header() {
                 ) : (
                   <Image
                     alt="profileimg"
-                    src={`${localStorage.getItem("profileImageUrl")}`}
+                    src={`${localURL}`}
                     width={24}
                     height={24}
                   />
                 )}
               </div>
-              <span className="profile__myname">
-                {localStorage.getItem("nickname")}
-              </span>
+              <span className="profile__myname">{localNick}</span>
             </Link>
           ) : (
             <Link href={PATH.login} className="profile">
