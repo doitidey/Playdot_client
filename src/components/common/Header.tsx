@@ -6,13 +6,17 @@ import SubMenu from "./SubMenu";
 import "./Header.scss";
 import usePath from "@/lib/hooks/usePath";
 import Image from "next/image";
-import {
-  getLocalNickname,
-  getLocalProfileImage,
-} from "@/lib/util/getLocalStorage";
+import { useEffect, useState } from "react";
 
 function Header() {
   const pathname = usePathname();
+  const [localNick, setLocalNick] = useState<String | null>("");
+  const [localURL, setLocalURL] = useState<String | null>("");
+
+  useEffect(() => {
+    setLocalNick(localStorage.getItem("nickname"));
+    setLocalURL(localStorage.getItem("profileImageUrl"));
+  }, []);
 
   const {
     ACTIVE_MATCH_CLASSNAME,
@@ -62,10 +66,10 @@ function Header() {
               </Link>
             </div>
           </nav>
-          {getLocalNickname ? (
+          {localNick ? (
             <Link href={PATH.mypage} className="profile">
               <div className="profile__logo">
-                {getLocalProfileImage ? (
+                {localURL === "null" ? (
                   <Image
                     className="profile__logo__basictitle"
                     src="/images/logo.svg"
@@ -76,13 +80,13 @@ function Header() {
                 ) : (
                   <Image
                     alt="profileimg"
-                    src={`${getLocalProfileImage}`}
+                    src={`${localURL}`}
                     width={24}
                     height={24}
                   />
                 )}
               </div>
-              <span className="profile__myname">{getLocalNickname}</span>
+              <span className="profile__myname">{localNick}</span>
             </Link>
           ) : (
             <Link href={PATH.login} className="profile">
@@ -91,8 +95,8 @@ function Header() {
                   className="profile__logo__basictitle"
                   src="/images/logo.svg"
                   alt="프로필이미지 로고"
-                  width={25.33}
-                  height={5.72}
+                  width={25}
+                  height={5}
                 />
               </div>
               <span className="profile__login">로그인</span>
