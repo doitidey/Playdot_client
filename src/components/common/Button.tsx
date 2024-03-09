@@ -10,8 +10,6 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size: "x-small" | "small" | "medium" | "large";
   /** 버튼 타입을 지정합니다. */
   variant: "primary" | "disactive" | "active";
-  /** 버튼 이벤트 함수를 받아옵니다. */
-  onClick?: () => void;
 }
 
 function Button({ ...props }: ButtonProps) {
