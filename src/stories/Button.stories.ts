@@ -84,7 +84,8 @@ export const SmallButton: Story = {
   parameters: {
     docs: {
       description: {
-        story: "small 크기의 button 입니다. 142px의 가로 사이즈를 가집니다.",
+        story:
+          "small 크기의 button 입니다. 말풍선에 사용되며 142px의 가로 사이즈를 가집니다.",
       },
     },
   },

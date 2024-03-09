@@ -28,13 +28,15 @@
     font-size: 14px;
   }
   &__small {
-    width: 142px;
+    width: 76px;
+    height: 30px;
+    font-size: 14px;
   }
   &__medium {
-    width: 224px;
+    width: 140px;
   }
   &__large {
-    width: 506px;
+    width: 316px;
   }
   &:hover {
     opacity: 80%;
