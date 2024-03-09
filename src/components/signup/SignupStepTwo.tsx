@@ -27,6 +27,7 @@ function SignupStepTwo() {
   const { decreaseStep } = useStepsStore();
 
   const imageInputRef = useRef<HTMLInputElement | null>(null);
+  const [nicknameValid, setNicknameValid] = useState<number>(0);
   const [previewUrl, setPreviewUrl] = useState<string | undefined>();
   const [formDraftData, setFormDraftData] = useState<FormData>({
     data: {
@@ -56,10 +57,37 @@ function SignupStepTwo() {
     }
   };
 
+  const getNickNameValid = () => {
+    switch (nicknameValid) {
+      default:
+        return;
+      case 0:
+        return;
+      case 1:
+        return "중복된 닉네임이야!";
+      case 2:
+        return "사용 가능한 닉네임이야!";
+    }
+  };
+
+  const getNickNameClass = () => {
+    switch (nicknameValid) {
+      default:
+        return;
+      case 0:
+        return;
+      case 1:
+        return "nickname__validation--duplication";
+      case 2:
+        return "nickname__validation--avaliable";
+    }
+  };
+
   const handleClickNicknameCheck = async () => {
     try {
       if (formDraftData.data.nickname) {
-        await nicknameCheck(formDraftData.data.nickname);
+        const res = await nicknameCheck(formDraftData.data.nickname);
+        res.data.exist ? setNicknameValid(1) : setNicknameValid(2);
       }
     } catch {
       console.error("닉네임 체크 APi 오류");
@@ -120,10 +148,9 @@ function SignupStepTwo() {
             {previewUrl ? (
               <Image
                 className="uploadedImage"
+                onClick={handleClickUpload}
                 src={previewUrl}
                 alt="previewImage"
-                width={0}
-                height={0}
               />
             ) : (
               <Image
@@ -131,8 +158,6 @@ function SignupStepTwo() {
                 onClick={handleClickUpload}
                 src="/images/signupIcon.svg"
                 alt="plusIcon"
-                width={0}
-                height={0}
               />
             )}
             <input
@@ -150,13 +175,21 @@ function SignupStepTwo() {
               닉네임
             </Title>
             <div className="info__nickname">
-              <input
-                type="text"
-                className="nickname__input"
-                placeholder="닉네임을 입력해줘!"
-                onChange={handleChangeNickname}
-              />
-              <div className="info__nickname--validation"></div>
+              <div className="nickname">
+                <input
+                  type="text"
+                  className="nickname__input"
+                  placeholder="닉네임을 입력해줘!"
+                  onChange={handleChangeNickname}
+                />
+                {nicknameValid !== 0 && (
+                  <span
+                    className={`nickname__validation ${getNickNameClass()}`}
+                  >
+                    {getNickNameValid()}
+                  </span>
+                )}
+              </div>
               <Button
                 label="중복확인"
                 size="small"
