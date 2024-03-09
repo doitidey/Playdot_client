@@ -69,7 +69,7 @@ export const XsmallButton: Story = {
     docs: {
       description: {
         story:
-          "x-small 크기의 button 입니다. 댓글 등록 input에 사용되며 74px의 가로 사이즈를 가집니다.",
+          "x-small 크기의 button 입니다. 댓글 등록 input에 사용되며 74px의 가로 사이즈, 26px의 세로 사이즈를 가집니다.",
       },
     },
   },
@@ -85,7 +85,7 @@ export const SmallButton: Story = {
     docs: {
       description: {
         story:
-          "small 크기의 button 입니다. 말풍선에 사용되며 142px의 가로 사이즈를 가집니다.",
+          "small 크기의 button 입니다. 말풍선에 사용되며 76px의 가로 사이즈, 30px의 세로 사이즈를 가집니다.",
       },
     },
   },
@@ -100,7 +100,7 @@ export const MediumButton: Story = {
   parameters: {
     docs: {
       description: {
-        story: "medium 크기의 button 입니다. 224px의 가로 사이즈를 가집니다.",
+        story: "medium 크기의 button 입니다. 140px의 가로 사이즈를 가집니다.",
       },
     },
   },
@@ -110,12 +110,27 @@ export const MediumButton: Story = {
     variant: "primary",
   },
 };
+export const XmediumButton: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "x-medium 크기의 button 입니다. 회원가입/마이페이지에 쓰이며 140px의 가로 사이즈와 75px의 세로 사이즈를 가집니다.",
+      },
+    },
+  },
+  args: {
+    label: "button",
+    size: "x-medium",
+    variant: "primary",
+  },
+};
 
 export const LargeButton: Story = {
   parameters: {
     docs: {
       description: {
-        story: "large 크기의 button 입니다. 506px의 가로 사이즈를 가집니다.",
+        story: "large 크기의 button 입니다. 316px의 가로 사이즈를 가집니다.",
       },
     },
   },
