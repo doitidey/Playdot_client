@@ -65,7 +65,7 @@ function Header() {
           {getLocalNickname ? (
             <Link href={PATH.mypage} className="profile">
               <div className="profile__logo">
-                {getLocalProfileImage ? (
+                {getLocalProfileImage === "null" ? (
                   <Image
                     className="profile__logo__basictitle"
                     src="/images/logo.svg"
@@ -91,8 +91,8 @@ function Header() {
                   className="profile__logo__basictitle"
                   src="/images/logo.svg"
                   alt="프로필이미지 로고"
-                  width={25.33}
-                  height={5.72}
+                  width={25}
+                  height={5}
                 />
               </div>
               <span className="profile__login">로그인</span>
