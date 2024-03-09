@@ -6,10 +6,6 @@ import SubMenu from "./SubMenu";
 import "./Header.scss";
 import usePath from "@/lib/hooks/usePath";
 import Image from "next/image";
-import {
-  getLocalNickname,
-  getLocalProfileImage,
-} from "@/lib/util/getLocalStorage";
 
 function Header() {
   const pathname = usePathname();
@@ -62,10 +58,10 @@ function Header() {
               </Link>
             </div>
           </nav>
-          {getLocalNickname ? (
+          {localStorage.getItem("nickname") ? (
             <Link href={PATH.mypage} className="profile">
               <div className="profile__logo">
-                {getLocalProfileImage === "null" ? (
+                {localStorage.getItem("profileImageUrl") === "null" ? (
                   <Image
                     className="profile__logo__basictitle"
                     src="/images/logo.svg"
@@ -76,13 +72,15 @@ function Header() {
                 ) : (
                   <Image
                     alt="profileimg"
-                    src={`${getLocalProfileImage}`}
+                    src={`${localStorage.getItem("profileImageUrl")}`}
                     width={24}
                     height={24}
                   />
                 )}
               </div>
-              <span className="profile__myname">{getLocalNickname}</span>
+              <span className="profile__myname">
+                {localStorage.getItem("nickname")}
+              </span>
             </Link>
           ) : (
             <Link href={PATH.login} className="profile">
