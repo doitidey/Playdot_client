@@ -1,0 +1,117 @@
+@import "@/styles/colors.scss";
+
+@mixin box-default {
+  font-size: 22px;
+  border: $signup-back 2px solid;
+  border-radius: 16px;
+  background-color: $dark-bg;
+  height: 80px;
+  filter: drop-shadow(1px 5px 11px rgba(0, 0, 0, 0.15));
+}
+
+.profile-box {
+  color: #fff;
+  margin-bottom: 92px;
+
+  &__title {
+    margin-bottom: 22px;
+  }
+  &__block {
+    width: 1200px;
+    height: 536px;
+    background-color: #272727;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 102px;
+    border: orange solid 2px;
+  }
+  .detail-box {
+    color: $dark-text1;
+    &__block {
+      display: flex;
+      gap: 14px;
+    }
+    &__list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+    &__item {
+      @include box-default;
+      display: flex;
+      align-items: center;
+    }
+    &__title {
+      height: 32px;
+      width: 130px;
+      border-right: 2px solid #272727;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    &__desc {
+      text-align: center;
+      flex: 1;
+    }
+    &__img {
+      @include box-default;
+      width: 212px;
+      height: 260px;
+    }
+    &__line {
+      @include box-default;
+      width: 612px;
+      height: 146px;
+      margin-top: 16px;
+      padding: 22px 32px;
+      text-align: left;
+    }
+  }
+  .level-box {
+    text-align: center;
+    &__title {
+      margin-bottom: 20px;
+    }
+    &__desc {
+      margin-bottom: 34px;
+    }
+    &__block {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .graph {
+      margin-top: 46px;
+      margin-bottom: 14px;
+      &__content {
+        width: 360px;
+        height: 16px;
+        border-radius: 20px;
+        background-color: $dark-bg;
+        &--detail {
+          position: absolute;
+          background-color: orange;
+        }
+      }
+      &__desc {
+        color: $dark-text1;
+        text-align: right;
+      }
+    }
+  }
+
+  &__bg {
+    width: 100%;
+    height: 1340px;
+    position: absolute;
+    z-index: -999;
+    border-radius: 100% / 800px;
+    background-color: $header;
+    top: -80%;
+    left: 0;
+  }
+}
