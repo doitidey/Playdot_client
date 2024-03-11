@@ -1,0 +1,27 @@
+@import "@/styles/colors.scss";
+
+.mypage-menu {
+  width: 1200px;
+  .mypage-nav {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    &__item {
+      cursor: pointer;
+      width: 190px;
+      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &--active {
+        border-bottom: 2px solid $dark-text2;
+      }
+    }
+    &__title {
+      color: $dark-text1;
+      &--active {
+        color: $dark-text2;
+      }
+    }
+  }
+}
