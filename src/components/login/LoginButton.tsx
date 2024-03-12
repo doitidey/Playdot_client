@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 import "@/components/login/LoginButton.scss";
-import { login } from "@/lib/api/authAPI";
 
 type ButtonInfo = Array<{
   name: string;
@@ -21,6 +20,8 @@ const BUTTON_INFO: ButtonInfo = [
 
 function LoginButton() {
   const router = useRouter();
+  const link = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code
+  `;
 
   useEffect(() => {
     const authToken = localStorage.getItem("authToken");
@@ -31,9 +32,7 @@ function LoginButton() {
 
   const onClickButton = async () => {
     try {
-      await login();
-      localStorage.getItem("authToken");
-      router.push("/match/today");
+      window.location.href = link;
     } catch (error) {
       console.error("로그인 실패:", error);
     }
