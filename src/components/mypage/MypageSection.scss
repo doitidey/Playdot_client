@@ -4,4 +4,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  &__btn {
+    width: 100%;
+    text-align: right;
+    padding: 54px 72px 0 72px;
+  }
 }
