@@ -12,9 +12,13 @@
 .profile-box {
   color: #fff;
   margin-bottom: 62px;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   &__title {
     margin-bottom: 22px;
+    width: 100%;
   }
   &__block {
     width: 1200px;
@@ -105,13 +109,12 @@
   }
 
   &__bg {
-    width: 100%;
+    width: 130%;
     height: 1340px;
     position: absolute;
     z-index: -999;
-    border-radius: 100% / 800px;
+    border-radius: 100% / 100%;
     background-color: $header;
     top: -80%;
-    left: 0;
   }
 }

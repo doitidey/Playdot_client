@@ -1,35 +1,61 @@
+"use client";
 import Image from "next/image";
 import Text from "../common/Text";
 import Title from "../common/Title";
 import "@/components/mypage/MypageProfile.scss";
+import { getProfileDetails } from "@/lib/api/mypageAPI";
+import { useEffect, useState } from "react";
 
+type ProfileData = {
+  comment: string;
+  level: number;
+  nickname: string;
+  profileImageUrl: string;
+  teamName: string;
+  token: number;
+};
 function MypageProfile() {
+  const [profileData, setProfileData] = useState<ProfileData>();
+  const getUserProfile = async () => {
+    try {
+      const res = await getProfileDetails();
+      setProfileData(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    getUserProfile();
+  }, []);
+
   return (
     <section className="profile-box">
       <div className="profile-box__bg"></div>
-      <Title large className="profile-box__title">
-        프로필
-      </Title>
+      <div className="profile-box__title">
+        <Title large>프로필</Title>
+      </div>
       <div className="profile-box__block">
         <div className="profile-box__content detail-box">
           <div className="detail-box__block">
-            <div className="detail-box__img">이미지</div>
+            <div className="detail-box__img">
+              {/* <Image src={profileData.profileImageUrl} /> */}
+            </div>
             <ol className="detail-box__list">
               <li className="detail-box__item">
                 <div className="detail-box__title">닉네임</div>
-                <div className="detail-box__desc"> 기아탱고라니</div>
+                <div className="detail-box__desc">{profileData?.nickname}</div>
               </li>
               <li className="detail-box__item">
                 <div className="detail-box__title">구단</div>
-                <div className="detail-box__desc"> 기아 타이거스</div>
+                <div className="detail-box__desc"> {profileData?.teamName}</div>
               </li>
               <li className="detail-box__item">
                 <div className="detail-box__title">보유토큰</div>
-                <div className="detail-box__desc"> 12tk</div>
+                <div className="detail-box__desc"> {profileData?.token}</div>
               </li>
             </ol>
           </div>
-          <div className=" detail-box__line">호돌이는 어디가서 지지 않아@!</div>
+          <div className=" detail-box__line">{profileData?.comment}</div>
         </div>
         <div className="profile-box__content level-box">
           <Title large className="level-box__title">
@@ -39,7 +65,7 @@ function MypageProfile() {
             당신은 진정한 야구러버!
           </Text>
           <Image
-            src={"images/levelicon_one.svg"}
+            src={`images/levelicon_${profileData?.level}.svg`}
             alt="레벨 아이콘"
             width={220}
             height={227}
