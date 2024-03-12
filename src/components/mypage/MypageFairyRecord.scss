@@ -1,0 +1,46 @@
+@import "@/styles/colors.scss";
+
+.fairy {
+  display: flex;
+  justify-content: space-between;
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 562px;
+    height: 707px;
+    background: linear-gradient(120deg, #272727 0%, transparent 120%);
+    border-radius: 20px;
+    .medal {
+      width: 300px;
+      height: 420px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 32px;
+      &__confeti {
+        position: absolute;
+        z-index: 3;
+        top: 0;
+      }
+      &__number {
+        position: relative;
+        z-index: 2;
+      }
+      &__medalbg {
+        position: absolute;
+        z-index: 1;
+        top: 30px;
+      }
+    }
+    p {
+      color: $dark-text1;
+      font-size: 24px;
+    }
+  }
+  &__title {
+    margin-bottom: 26px;
+  }
+}
