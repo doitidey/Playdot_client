@@ -29,7 +29,7 @@
     div {
       display: flex;
       gap: 160px;
-      a {
+      .pagelink {
         color: $dark-text1;
         display: flex;
         flex-direction: column;
@@ -37,57 +37,58 @@
         gap: 24px;
         font-size: 24px;
         padding: 0 16px;
+        &--active {
+          color: $dark-text2;
+          font-weight: 600;
+        }
+      }
+      .underbar {
+        visibility: hidden;
+        width: 50px;
+        height: 8px;
+        background: $main;
+        border-radius: 4px 4px 0 0;
+        &--active {
+          visibility: visible;
+        }
       }
     }
   }
 }
 
-.login {
+.profile {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 12px;
-
+  font-weight: 500;
+  font-size: 24px;
   &__logo {
-    width: 24px;
-    height: 24px;
-    background: $login-bg;
+    width: 38px;
+    height: 38px;
+    background: $signup-back;
     border-radius: 50%;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
-    svg {
-      font-size: 20px;
-      border-radius: 43%;
-      color: $login-obj;
+    align-items: center;
+    &__basictitle {
+      height: 10px;
+      text-align: center;
+      opacity: 0.4;
     }
   }
-  span {
+  &__myname {
+    color: $dark-text2;
+  }
+  &__login {
     transition: color 0.2s ease-in-out;
     color: $dark-text1;
-    font-weight: 500;
-    font-size: 20px;
-  }
-  &:hover {
-    span {
+    &:hover {
       color: $dark-text2;
     }
   }
 }
 
-.active-page {
-  // important 구문 빼야 함
-  color: $dark-text2 !important;
-  font-weight: 600;
-}
-
 .space {
   margin-bottom: 100px;
-}
-
-.underbar {
-  width: 50px;
-  height: 8px;
-  background: $main;
-  border-radius: 4px 4px 0 0;
 }

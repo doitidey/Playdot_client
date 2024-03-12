@@ -29,7 +29,6 @@ export const fetchAuth = async (
     console.error(error);
   }
 };
-
 // 공용 request interceptor
 instance.interceptors.request.use(
   function (config) {
@@ -73,6 +72,7 @@ authInstance.interceptors.response.use(
       console.error("500 Internal Error");
     }
     localStorage.setItem("authToken", config.headers.authorization);
+    localStorage.setItem("profileImageUrl", config.data.data.profileImageUrl);
     localStorage.setItem("nickname", config.data.data.nickname);
     localStorage.setItem("teamName", config.data.data.teamName);
     return config;

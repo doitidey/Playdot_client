@@ -3,11 +3,17 @@ import "./Title.scss";
 import classNames from "classnames";
 
 interface TitleProps {
+  /** 화면에 출력할 글자를 받아옵니다. */
   children: ReactNode;
+  /** 출력할 제목의 크기가 largest인지 판단합니다. */
   largest?: boolean;
+  /** 출력할 제목의 크기가 large인지 판단합니다. */
   large?: boolean;
+  /** 출력할 제목의 크기가 medium인지 판단합니다. */
   medium?: boolean;
+  /** 출력할 제목의 크기가 small인지 판단합니다. */
   small?: boolean;
+  /** title에 필요한 classname을 받아옵니다. */
   className?: string;
 }
 
