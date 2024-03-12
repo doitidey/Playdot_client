@@ -14,7 +14,7 @@ function MypageFairyRecord() {
             className="medal__confeti"
             src={"images/confetti.svg"}
             alt={"컨페티"}
-            width={294}
+            width={394}
             height={132}
           />
           <Image
@@ -35,13 +35,15 @@ function MypageFairyRecord() {
         <p>총 3회 달성</p>
       </div>
       <div className="fairy__content">
-        <Title large> 패배요정 </Title>
+        <Title large className="fairy__title">
+          패배요정
+        </Title>
         <div className="medal">
           <Image
             className="medal__confeti"
             src={"images/confetti.svg"}
             alt={"컨페티"}
-            width={294}
+            width={394}
             height={132}
           />
           <Image
