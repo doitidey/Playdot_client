@@ -2,24 +2,36 @@
 
 .mypage-menu {
   width: 1200px;
+  margin-bottom: 216px;
   .mypage-nav {
     width: 100%;
     display: flex;
     align-items: center;
+    margin-bottom: 62px;
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      z-index: -1;
+      width: 1200px;
+      height: 1px;
+      background-color: $signup-back;
+      bottom: 4.5px;
+    }
     &__item {
       cursor: pointer;
+      background: transparent;
+      border: none;
       width: 190px;
       height: 80px;
       display: flex;
       justify-content: center;
       align-items: center;
+      color: $dark-text1;
+      font-size: 24px;
+      border-bottom: 2px solid transparent;
       &--active {
         border-bottom: 2px solid $dark-text2;
-      }
-    }
-    &__title {
-      color: $dark-text1;
-      &--active {
         color: $dark-text2;
       }
     }
