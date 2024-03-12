@@ -1,7 +1,6 @@
 "use client";
 
-import useStore from "@/lib/store/signup/stepsStore";
-import "@/Components/signup/Buttons/SignupButtons.scss";
+import "@/components/signup/Buttons/SignupButtons.scss";
 
 interface TextProps {
   title: string;

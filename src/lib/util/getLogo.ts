@@ -1,5 +1,5 @@
 // Interface
-interface TeamImg {
+export interface TeamImg {
   lions: string;
   twins: string;
   landers: string;
@@ -7,18 +7,18 @@ interface TeamImg {
   tigers: string;
   eagles: string;
   heroes: string;
-  gients: string;
+  giants: string;
   wiz: string;
   dinos: string;
 }
 
 // Constants
-const TeamImgHref: TeamImg = {
+export const TeamImgHref: TeamImg = {
   lions: "/images/lions.svg",
   tigers: "/images/tigers.svg",
   twins: "/images/twins.svg",
   bears: "/images/bears.svg",
-  gients: "/images/giants.svg",
+  giants: "/images/giants.svg",
   dinos: "/images/dinos.svg",
   landers: "/images/landers.svg",
   wiz: "/images/wiz.svg",
@@ -44,7 +44,7 @@ export const getHomeLogo = (data: string) => {
       return TeamImgHref.heroes;
     }
     case "롯데 자이언츠": {
-      return TeamImgHref.gients;
+      return TeamImgHref.giants;
     }
     case "SSG 랜더스": {
       return TeamImgHref.landers;
@@ -80,7 +80,7 @@ export const getAwayLogo = (data: string) => {
       return TeamImgHref.heroes;
     }
     case "롯데 자이언츠": {
-      return TeamImgHref.gients;
+      return TeamImgHref.giants;
     }
     case "SSG 랜더스": {
       return TeamImgHref.landers;

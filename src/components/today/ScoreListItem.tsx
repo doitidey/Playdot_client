@@ -9,24 +9,75 @@ import Title from "../common/Title";
 import { TodayMatchData } from "./Today";
 import { getAwayLogo, getHomeLogo } from "@/lib/util/getLogo";
 import { gameDate } from "@/lib/util/getGameTime";
+import { deleteTodayGameVote, todayGameVote } from "@/lib/api/todayAPI";
+import { useMutation } from "react-query";
 
 // Interface
 interface ScoreListItemProps extends TodayMatchData {}
 
 // Component
-function ScoreListItem({ homeTeam, awayTeam, gameTime }: ScoreListItemProps) {
+function ScoreListItem({
+  homeTeam,
+  awayTeam,
+  gameTime,
+  gameId,
+}: ScoreListItemProps) {
   const [selectHome, setSelectHome] = useState(false);
   const [selectAway, setSelectAway] = useState(false);
+  const [voteHome, setVoteHome] = useState(homeTeam.voteRatio);
+  const [voteAway, setVoteAway] = useState(awayTeam.voteRatio);
 
-  const onClickLeft = useCallback(() => {
+  const { mutate: home } = useMutation(
+    async () => todayGameVote(gameId as number, homeTeam.id),
+    {
+      onMutate: () => {
+        console.warn("홈 팀 선택 완료!");
+      },
+    },
+  );
+
+  const { mutate: homeDelete } = useMutation(
+    async () => deleteTodayGameVote(gameId as number),
+    {
+      onMutate: () => {
+        console.warn("홈 팀 삭제 완료");
+      },
+    },
+  );
+
+  const { mutate: away } = useMutation(
+    async () => todayGameVote(gameId as number, awayTeam.id),
+    {
+      onMutate: () => {
+        console.warn("원정 팀 선택 완료!");
+      },
+    },
+  );
+
+  const { mutate: awayDelete } = useMutation(
+    async () => deleteTodayGameVote(gameId as number),
+    {
+      onMutate: () => {
+        console.warn("원정 팀 삭제 완료");
+      },
+    },
+  );
+
+  const onClickHome = useCallback(() => {
+    // Toggle select home
     setSelectHome(!selectHome);
     setSelectAway(false);
-  }, [selectHome]);
+    !selectHome ? home() : homeDelete();
+    setVoteHome(homeTeam.voteRatio);
+  }, [home, homeDelete, selectHome, homeTeam.voteRatio]);
 
-  const onClickRight = useCallback(() => {
+  const onClickAway = useCallback(() => {
+    // Toggle select away
     setSelectAway(!selectAway);
     setSelectHome(false);
-  }, [selectAway]);
+    !selectAway ? away() : awayDelete();
+    setVoteAway(awayTeam.voteRatio);
+  }, [away, awayDelete, selectAway, awayTeam.voteRatio]);
 
   return (
     <>
@@ -38,12 +89,12 @@ function ScoreListItem({ homeTeam, awayTeam, gameTime }: ScoreListItemProps) {
           className={classNames(
             `score-item-block__left ${selectHome ? "active-left" : ""}`,
           )}
-          onClick={onClickLeft}
+          onClick={onClickHome}
         >
           <div className="team-img">
             <Image
               src={getHomeLogo(homeTeam.teamName)}
-              alt="lions"
+              alt={homeTeam.teamName}
               width={0}
               height={0}
               draggable={false}
@@ -55,19 +106,19 @@ function ScoreListItem({ homeTeam, awayTeam, gameTime }: ScoreListItemProps) {
             ) : (
               <Text large>{homeTeam.teamName}</Text>
             )}
-            <Title medium>{homeTeam.voteRatio}%</Title>
+            <Title medium>{voteHome}%</Title>
           </div>
         </div>
         <div
           className={classNames(
             `score-item-block__right ${selectAway ? "active-right" : ""}`,
           )}
-          onClick={onClickRight}
+          onClick={onClickAway}
         >
           <div className="team-img">
             <Image
               src={getAwayLogo(awayTeam.teamName)}
-              alt="lions"
+              alt={awayTeam.teamName}
               width={0}
               height={0}
               draggable={false}
@@ -79,7 +130,7 @@ function ScoreListItem({ homeTeam, awayTeam, gameTime }: ScoreListItemProps) {
             ) : (
               <Text large>{awayTeam.teamName}</Text>
             )}
-            <Title medium>{awayTeam.voteRatio}%</Title>
+            <Title medium>{voteAway}%</Title>
           </div>
         </div>
       </li>

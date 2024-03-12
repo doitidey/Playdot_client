@@ -27,12 +27,12 @@ function LoginButton() {
     if (authToken) {
       router.push("/match/today");
     }
-  }, []);
+  }, [router]);
 
   const onClickButton = async () => {
     try {
-      const res = await login();
-      localStorage.setItem("authToken", res.data.token);
+      await login();
+      localStorage.getItem("authToken");
       router.push("/match/today");
     } catch (error) {
       console.error("로그인 실패:", error);

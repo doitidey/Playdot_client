@@ -3,11 +3,17 @@ import "./Text.scss";
 import classNames from "classnames";
 
 interface TextProps {
+  /** 화면에 출력할 글자를 받아옵니다. */
   children: ReactNode;
+  /** 출력할 텍스트 크기가 large인지 판단합니다. */
   large?: boolean;
+  /** 출력할 텍스트 크기가 medium인지 판단합니다. */
   medium?: boolean;
+  /** 출력할 텍스트 크기가 small인지 판단합니다. */
   small?: boolean;
+  /** 출력할 텍스트 크기가 caption인지 판단합니다. */
   caption?: boolean;
+  /** text에 필요한 classname을 받아옵니다. */
   className?: string;
 }
 

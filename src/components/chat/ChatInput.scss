@@ -1,22 +1,45 @@
+@import "@/styles/colors.scss";
+
 .input-container {
+  max-width: 1140px;
   width: 100%;
-  height: 70px;
+  height: 100px;
   display: flex;
   justify-content: space-between;
-  background-color: #fff;
+  align-items: center;
+  background-color: $dark-bg;
   border-radius: 12px;
+  padding: 0 30px;
+  margin-top: 30px;
+  z-index: 2;
   &__button {
-    width: 70px;
+    width: 65px;
+    height: 65px;
     display: flex;
+    background-color: #262230;
+    border-radius: 50%;
     justify-content: center;
     align-items: center;
+    transition: 0.2s ease-in-out;
+    &--active {
+      transform: rotate(45deg);
+    }
   }
   &__button:hover {
     cursor: pointer;
   }
+  &__line {
+    height: 64px;
+    margin: 0 28px;
+    border-left: 1px solid $login-obj;
+  }
   &__input {
-    width: 100%;
+    flex: 1;
+    color: $dark-text2;
+    font-size: 22px;
+    font-family: "pretendard";
     border: none;
+    background-color: transparent;
   }
   &__input:focus {
     outline: none;

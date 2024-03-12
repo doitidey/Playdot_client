@@ -1,5 +1,4 @@
-import { getAccessTokenCookie } from "../cookies/cookies";
-import { instance } from "./instance";
+import { authInstance, instance } from "@/lib/api/instance";
 
 type Method = "get" | "post" | "put" | "delete";
 
@@ -17,14 +16,27 @@ export const fetchData = async (
   }
 };
 
-// interceptor
+// 로그인 fetch 함수
+export const fetchAuth = async (
+  url: string,
+  method: Method,
+  reqData?: unknown,
+) => {
+  try {
+    const { data } = await authInstance({ url, method, data: reqData });
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+// 공용 request interceptor
 instance.interceptors.request.use(
   function (config) {
-    const accessToken = localStorage.getItem("authToken");
+    const accessToken = localStorage.getItem("authToken") as string;
     if (!accessToken) {
       return config;
     }
-    config.headers.Authorization = accessToken;
+    config.headers.authorization = accessToken;
     return config;
   },
   function (error) {
@@ -32,17 +44,37 @@ instance.interceptors.request.use(
   },
 );
 
-instance.interceptors.response.use(
+// 로그인 request interceptor
+authInstance.interceptors.request.use(
+  function (config) {
+    const accessToken = localStorage.getItem("authToken");
+    if (!accessToken) {
+      return config;
+    }
+    config.headers.authorization = accessToken;
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  },
+);
+
+// 로그인 response interceptor
+authInstance.interceptors.response.use(
   function (config) {
     if (config.status === 404) {
-      console.log("404 Not Found");
+      console.error("404 Not Found");
     } else if (config.status === 403) {
-      console.log("403 Forbidden");
+      console.error("403 Forbidden");
     } else if (config.status === 401) {
-      console.log("401 Unauthorized");
+      console.error("401 Unauthorized");
     } else if (config.status === 500) {
-      console.log("500 Internal Error");
+      console.error("500 Internal Error");
     }
+    localStorage.setItem("authToken", config.headers.authorization);
+    localStorage.setItem("profileImageUrl", config.data.data.profileImageUrl);
+    localStorage.setItem("nickname", config.data.data.nickname);
+    localStorage.setItem("teamName", config.data.data.teamName);
     return config;
   },
   function (error) {

@@ -1,21 +1,25 @@
 import Image from "next/image";
-import Text from "../common/Text";
-import "./TeamTag.scss";
-import { CommentData } from "../comment/Comment";
+import Text from "@/components/common/Text";
+import "@/components/tag/TeamTag.scss";
+import { getTeamColor, getTeamLogo } from "@/lib/util/TeamTagLogo";
 
-function TeamTag({ team }: CommentData) {
+interface TeamTagProps {
+  teamName: string;
+}
+
+function TeamTag({ teamName }: TeamTagProps) {
   return (
-    <div className={`team-tag-block ${team.color}`}>
+    <div className={`team-tag-block ${getTeamColor(teamName)}`}>
       <div className="team-tag-block__img">
         <Image
-          src={team.img}
-          alt={team.name}
+          src={getTeamLogo(teamName)}
+          alt={teamName}
           width={0}
           height={0}
           draggable={false}
         />
       </div>
-      <Text caption>{team.name}</Text>
+      <Text caption>{teamName}</Text>
     </div>
   );
 }

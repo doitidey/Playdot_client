@@ -1,4 +1,4 @@
-import { fetchData } from "./commonAPI";
+import { fetchAuth, fetchData } from "./commonAPI";
 
 // 로그인
 // POST
@@ -9,7 +9,7 @@ export const login = () => {
       username: "playdot2",
       password: "test",
     };
-    const res = fetchData("login", "post", requestBody);
+    const res = fetchAuth("login", "post", requestBody);
     return res;
   } catch (error) {
     console.error(error);
