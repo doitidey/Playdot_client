@@ -9,7 +9,11 @@ import "@/components/comment/CommentListItem.scss";
 import classNames from "classnames";
 import { commentDate } from "@/lib/util/getGameTime";
 import { QueryClient, useMutation } from "react-query";
-import { removeTodayComment } from "@/lib/api/todayAPI";
+import {
+  // cancelLikeTodayComment,
+  // likeTodayComment,
+  removeTodayComment,
+} from "@/lib/api/todayAPI";
 import { CommentData } from "./Comment";
 
 interface CommentListItemProps {
@@ -19,6 +23,7 @@ interface CommentListItemProps {
   createdAt?: string;
   likeCount?: number;
   replyId?: number;
+  isLiked?: boolean;
   setComments: Dispatch<SetStateAction<CommentData[]>>;
   queryClient: QueryClient;
 }
@@ -31,11 +36,12 @@ function CommentListItem({
   likeCount,
   replyId,
   setComments,
+  isLiked,
 }: CommentListItemProps) {
   const [visibleReply, setVisibleReply] = useState(false);
   const [visibleReplyList, setVisibleReplyList] = useState(false);
-  const [like, setLike] = useState(false);
-  // const [count = likeCount, setCount] = useState(0);
+  const [like, setLike] = useState(isLiked);
+  const [count, setCount] = useState(likeCount);
   const [visibleBalloon, setVisibleBalloon] = useState(false);
 
   const { mutate: removeComment } = useMutation(
@@ -50,6 +56,26 @@ function CommentListItem({
     },
   );
 
+  // 좋아요 기능 작업 중
+  // const { mutate: likeComment } = useMutation(
+  //   async () => likeTodayComment(replyId as number),
+  //   {
+  //     onMutate: () => {
+  //       console.warn(replyId);
+  //       isLiked && setCount((count as number) + 1);
+  //     },
+  //   },
+  // );
+
+  // const { mutate: cancelLike } = useMutation(
+  //   async () => cancelLikeTodayComment(replyId as number),
+  //   {
+  //     onMutate: () => {
+  //       console.warn(replyId);
+  //     },
+  //   },
+  // );
+
   const onVisible = () => {
     setVisibleReply(!visibleReply);
     setVisibleReplyList(!visibleReplyList);
@@ -58,6 +84,7 @@ function CommentListItem({
   // 좋아요 기능 작업 중
   const onLike = () => {
     setLike(!like);
+    !like ? setCount(count as number + 1) : setCount(0);
   };
 
   const onBalloon = useCallback(() => {
@@ -103,7 +130,7 @@ function CommentListItem({
           </div>
           <div className="item-block__button__like">
             <Text>좋아요</Text>
-            <span>{likeCount}</span>
+            <span>{count}</span>
             <div
               className={classNames(
                 `${like ? "active-like-btn" : "inactive-like-btn"}`,
