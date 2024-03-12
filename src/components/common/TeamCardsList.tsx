@@ -28,7 +28,7 @@ function TeamCardsList() {
     teamStore.slice(0).map(() => false),
   );
 
-  const handleCardClick = (index: number) => {
+  const onCardClick = (index: number) => {
     const clearSelectedTeam = selectedTeam.map(() => false);
     const newSelected = [...clearSelectedTeam];
     newSelected[index] = !newSelected[index];
@@ -47,7 +47,7 @@ function TeamCardsList() {
               key={team.teamId}
               team={{ ...team }}
               isSelected={selectedTeam[index]}
-              onClick={() => handleCardClick(index)}
+              onClick={() => onCardClick(index)}
             />
           ))}
     </div>
