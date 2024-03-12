@@ -104,3 +104,21 @@ export const likeTodayComment = (replyId: number) => {
     console.error(e);
   }
 };
+
+// 댓글 좋아요 취소
+export const cancelLikeTodayComment = (replyId: number) => {
+  try {
+    const requestBody = {
+      replyId: replyId,
+    };
+    const res = fetchData(
+      `games/daily-reply/${replyId}/like`,
+      "delete",
+      requestBody,
+    );
+    console.warn(res);
+    return res;
+  } catch (e) {
+    console.error(e);
+  }
+};
