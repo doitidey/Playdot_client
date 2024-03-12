@@ -7,7 +7,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** 버튼 내용을 받아옵니다. */
   label?: string;
   /** 버튼 사이즈를 지정합니다. */
-  size: "x-small" | "small" | "medium" | "large";
+  size: "x-small" | "small" | "medium" | "x-medium" | "large";
   /** 버튼 타입을 지정합니다. */
   variant: "primary" | "disactive" | "active";
 }

@@ -13,34 +13,34 @@
   }
   &__title {
     text-align: center;
-    font-size: 36px;
-    margin-bottom: 58px;
+    font-size: 22px;
+    margin-bottom: 36px;
   }
   &__block {
-    margin-bottom: 25px;
+    margin-bottom: 16px;
   }
   &__content {
     display: flex;
     background-color: $surface;
-    border-radius: 17px;
+    border-radius: 10px;
     overflow: hidden;
-    font-size: 22px;
-    height: 85px;
+    font-size: 14px;
+    height: 52px;
     &__title {
       display: flex;
       justify-content: center;
       align-items: center;
       color: $dark-text2;
-      width: 53px;
+      width: 32px;
       background-color: $dark-bg;
     }
     &__input {
-      font-size: 22px;
+      font-size: 14px;
       width: 100%;
       padding: 0 20px;
     }
     &:first-child {
-      margin-bottom: 20px;
+      margin-bottom: 12px;
     }
   }
 }
