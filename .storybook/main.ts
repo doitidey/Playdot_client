@@ -18,6 +18,7 @@ const config: StorybookConfig = {
     getAbsolutePath("@storybook/addon-interactions"),
     getAbsolutePath("@storybook/addon-styling-webpack"),
   ],
+  staticDirs: ["../public"],
   framework: {
     name: getAbsolutePath("@storybook/nextjs"),
     options: {},

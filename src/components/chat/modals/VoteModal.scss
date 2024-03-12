@@ -1,28 +1,30 @@
 @import "@/styles/colors.scss";
 
-.vote-container {
-  position: absolute;
-  right: 0;
+.vote__block {
   width: 300px;
   height: 390px;
   padding: 18px 15px 34px 15px;
   background: $dark-bg;
-  color: #fff;
+  color: $dark-text2;
   border-radius: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  &__time {
+  position: absolute;
+  right: 30px;
+  overflow: hidden;
+  .vote__title {
     font-size: 14px;
+    z-index: 9;
   }
-  &__disc {
+  .vote__content-detail {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    &__sub {
+    &__nickname {
       font-size: 14px;
       color: $dark-text1;
     }
@@ -30,10 +32,10 @@
       font-size: 24px;
     }
   }
-  &__vote {
+  .vote__content-button {
     display: flex;
     gap: 10px;
-    &__button {
+    &__item {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -42,9 +44,42 @@
       border-radius: 8px;
       width: 130px;
       height: 150px;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+      color: $dark-text2;
+      position: relative;
+      overflow: hidden;
+      h3 {
+        display: block;
+        z-index: 9;
+      }
+      &__bg {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        bottom: 0;
+        background: $main;
+        display: none;
+        &--active {
+          display: block;
+          animation: slider 0.2s;
+        }
+      }
     }
   }
-  h1 {
-    font-size: 500px;
+  .vote__content-bg {
+    position: absolute;
+    top: -100px;
+    pointer-events: none;
+  }
+}
+
+@keyframes slider {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
   }
 }

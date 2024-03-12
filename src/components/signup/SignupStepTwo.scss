@@ -15,7 +15,7 @@
   text-align: center;
 
   &__text {
-    margin-top: 25px;
+    margin-top: 24px;
   }
 
   .stepTwo-content {
@@ -25,13 +25,13 @@
 
     &__cards {
       display: flex;
-      gap: 31px;
+      gap: 30px;
 
       .cards__upload {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 285px;
+        width: 284px;
         height: 350px;
         border-radius: 20px;
         background: $signup-back;
@@ -72,8 +72,8 @@
           .nickname__input {
             @include container-style;
             width: 380px;
-            height: 75px;
-            padding-left: 29px;
+            height: 74px;
+            padding-left: 28px;
             &:focus {
               outline: none;
             }
@@ -82,15 +82,15 @@
             @include container-style;
             cursor: pointer;
             width: 142px;
-            height: 75px;
+            height: 74px;
           }
         }
 
         .words__input {
           @include container-style;
           font-family: "pretendard";
-          height: 157px;
-          padding: 22px 29px;
+          height: 156px;
+          padding: 22px 28px;
           &:focus {
             outline: none;
           }
