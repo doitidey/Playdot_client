@@ -81,9 +81,19 @@ function ScoreListItem({
 
   return (
     <>
-      <Title className="match-day" small>
-        {gameDate(gameTime)}
-      </Title>
+      <div className="match-date-block">
+        <Title className="match-day" small>
+          {gameDate(gameTime)}
+        </Title>
+        <div className="match-date-block__left-time">
+          <Title className="time" small>
+            20:17
+          </Title>
+          <Text className="left" medium>
+            분 남았습니다.
+          </Text>
+        </div>
+      </div>
       <li className="score-item-block">
         <div
           className={classNames(

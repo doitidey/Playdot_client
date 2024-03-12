@@ -10,11 +10,7 @@ interface CommentListProps {
   queryClient: QueryClient;
 }
 
-function CommentList({
-  comment,
-  setComments,
-  queryClient,
-}: CommentListProps) {
+function CommentList({ comment, setComments, queryClient }: CommentListProps) {
   return (
     <ul className="comment-list-block">
       {comment.map((item, index) => (
@@ -28,6 +24,7 @@ function CommentList({
           replyId={item.replyId}
           setComments={setComments}
           queryClient={queryClient}
+          isLiked={item.isLiked}
         />
       ))}
     </ul>
