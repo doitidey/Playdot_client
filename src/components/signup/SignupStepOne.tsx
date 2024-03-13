@@ -3,21 +3,32 @@ import Title from "@/components/common/Title";
 import useStepsStore from "@/lib/store/signup/stepsStore";
 import Button from "../common/Button";
 import TeamCardsList from "@/components/common/TeamCardsList";
+import useclickedCardStore from "@/lib/store/signup/clickedCardStore";
 
 function SignupStepOne() {
   const { increaseStep } = useStepsStore();
+  const { clickedCardStore } = useclickedCardStore();
+
+  const isCardClicked = clickedCardStore > 0;
 
   const onClickNextButton = () => {
-    increaseStep();
+    if (isCardClicked) {
+      increaseStep();
+    } else {
+      alert("구단을 선택해주세요");
+    }
   };
+
   return (
     <section className="stepone">
-      <Button
-        label="다음"
-        size="small"
-        variant="primary"
-        onClick={onClickNextButton}
-      />
+      <div className="stepone__btn">
+        <Button
+          label="다음"
+          size="x-medium"
+          variant={isCardClicked ? "primary" : "disactive"}
+          onClick={onClickNextButton}
+        />
+      </div>
       <Title largest className="stepone__title">
         나의 구단 선택하기
       </Title>

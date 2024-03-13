@@ -2,6 +2,12 @@
 
 .stepone {
   text-align: center;
+  &__btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 154px 70px;
+  }
   &__title {
     color: $login-text;
   }
