@@ -39,6 +39,7 @@ function MypageProfile() {
           <div className="detail-box__block">
             <div className="detail-box__img">
               {/* <Image src={profileData.profileImageUrl} /> */}
+              이미지 추가예정 수정도 아직 안됩니다,,,
             </div>
             <ol className="detail-box__list">
               <li className="detail-box__item">
