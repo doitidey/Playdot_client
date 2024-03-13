@@ -7,7 +7,7 @@ function ShoutBubble({ onEnd }: { onEnd: () => void }) {
   const [top, setTop] = useState(0);
 
   useEffect(() => {
-    setTop(Math.floor(Math.random() * 99 + 1));
+    setTop(Math.floor(Math.random() * 90) + 1);
     const timer = setTimeout(() => {
       onEnd();
     }, 7000);
