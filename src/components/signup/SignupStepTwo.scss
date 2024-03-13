@@ -10,15 +10,25 @@
   color: $dark-text2;
 }
 
-.stepTwo-block {
+.steptwo {
   width: 1200px;
   text-align: center;
 
-  &__text {
-    margin-top: 24px;
+  &__btn {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    left: 0;
+    top: 0;
+    padding: 154px 70px;
   }
 
-  .stepTwo-content {
+  &__desc {
+    margin-top: 25px;
+  }
+
+  &__content {
     display: flex;
     gap: 30px;
     margin-top: 152px;
@@ -42,13 +52,33 @@
           cursor: pointer;
           width: 90px;
           height: 90px;
+          background-color: $button-bg;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          &::after {
+            content: "";
+            display: block;
+            width: 2px;
+            height: 30px;
+            background-color: $signup-border;
+          }
+          &::before {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 30px;
+            height: 2px;
+            background-color: $signup-border;
+          }
         }
         .uploadedImage {
           cursor: pointer;
+          width: 100%;
           height: 100%;
-          width: auto;
+          object-fit: cover;
         }
-
         .cards__input {
           display: none;
         }
@@ -57,25 +87,41 @@
 
     &__info {
       width: 568px;
+      display: flex;
+      flex-direction: column;
       justify-content: space-between;
 
-      .info-content {
+      .info__block {
         display: flex;
         flex-direction: column;
 
-        &__nickname {
+        .info__nickname {
           width: 100%;
           display: flex;
           justify-content: space-between;
           margin-bottom: 32px;
-
-          .nickname__input {
-            @include container-style;
-            width: 380px;
-            height: 74px;
-            padding-left: 28px;
-            &:focus {
-              outline: none;
+          .nickname {
+            position: relative;
+            &__input {
+              @include container-style;
+              width: 380px;
+              height: 74px;
+              padding-left: 28px;
+              &:focus {
+                outline: none;
+              }
+            }
+            &__validation {
+              position: absolute;
+              bottom: -32px;
+              right: 0;
+              font-size: 16px;
+              &--pass {
+                color: #4d8aff;
+              }
+              &--alert {
+                color: #ff5b5b;
+              }
             }
           }
           .nickname__button {
