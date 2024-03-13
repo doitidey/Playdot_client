@@ -1,3 +1,4 @@
+import MyPageSection from "@/components/mypage/MypageSection";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,7 +8,7 @@ export const metadata: Metadata = {
 function MyPage() {
   return (
     <>
-      <div>마이 페이지</div>
+      <MyPageSection />
     </>
   );
 }
