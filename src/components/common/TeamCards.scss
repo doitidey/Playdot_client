@@ -1,134 +1,141 @@
 @import "@/styles/colors.scss";
 
-.teamcard-block {
-  position: relative;
-  width: 285px;
-  height: 350px;
-  color: #fff;
+.teamcard {
+  color: $dark-text2;
 
-  .teamcard-content {
-    border-radius: 20px;
-    height: 100%;
+  &__block {
     position: relative;
-    border: 2px solid #fff;
+    width: 285px;
+    height: 350px;
+    border: 2px solid transparent;
+    border-radius: 20px;
+    background-image: linear-gradient(150deg, white 25%, $dark-bg 100%);
+    background-origin: border-box;
+    overflow: hidden;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 40px 0;
-    overflow: hidden;
-    transition: 0.3s;
-    background-color: $dark-bg;
 
     &--active {
       cursor: pointer;
-      width: 100%;
       position: absolute;
       border: none;
       background: $main;
       z-index: 99;
       opacity: 0;
       transition: opacity 0.2s;
-    }
-
-    &--active:hover {
-      opacity: 0.9;
-    }
-
-    &__backgrounds {
-      position: absolute;
-      bottom: 90px;
-      left: 60px;
-      z-index: 1;
-      display: flex;
-      transform: rotate(45deg);
-      width: 340px;
-      height: 530px;
-      overflow: hidden;
-      box-sizing: border-box;
-      .square {
-        width: 150px;
-        height: 450px;
-      }
-      .first-square {
-        transition: 0.5s;
-        margin-top: 80px;
-      }
-      .second-square {
-        transition: 0.5s;
-        margin-top: -20px;
-      }
-      .third-square {
-        transition: 0.3s;
-        width: 40px;
-        margin-top: -12px;
-        opacity: 0.2;
-      }
-      .square--lions {
-        background: linear-gradient(#fff 20%, $lions1 75%, rgba(1, 1, 1, 0));
-      }
-      .square--twins {
-        background: linear-gradient(#fff 20%, $twins1 75%, rgba(1, 1, 1, 0));
-      }
-      .square--tigers {
-        background: linear-gradient(#fff 20%, $tigers1 75%, rgba(1, 1, 1, 0));
-      }
-      .square--giants {
-        background: linear-gradient(#fff 20%, $gients3 75%, rgba(1, 1, 1, 0));
-      }
-      .square--eagles {
-        background: linear-gradient(#fff 20%, $eagles1 75%, rgba(1, 1, 1, 0));
-      }
-      .square--heroes {
-        background: linear-gradient(#fff 20%, $heroes1 75%, rgba(1, 1, 1, 0));
-      }
-      .square--landers {
-        background: linear-gradient(#fff 20%, $landers1 75%, rgba(1, 1, 1, 0));
-      }
-      .square--bears {
-        background: linear-gradient(#fff 20%, blue 75%, rgba(1, 1, 1, 0));
-      }
-      .square--dinos {
-        background: linear-gradient(#fff 20%, $dinos2 75%, rgba(1, 1, 1, 0));
-      }
-      .square--wiz {
-        background: linear-gradient(#fff 20%, gray 75%, rgba(1, 1, 1, 0));
+      &:hover {
+        opacity: 0.9;
       }
     }
 
-    .teamname {
-      position: relative;
-      z-index: 9;
-      font-size: 30px;
+    &--clicked {
+      background-image: $main;
     }
+  }
+
+  &__title {
+    position: relative;
+    margin-top: 34px;
+    z-index: 9;
+    font-size: 30px;
+  }
+
+  &__backgrounds {
+    position: absolute;
+    bottom: 90px;
+    left: 60px;
+    z-index: 1;
+    display: flex;
+    transform: rotate(45deg);
+    width: 340px;
+    height: 530px;
+    overflow: hidden;
+    box-sizing: border-box;
+
+    .square {
+      width: 150px;
+      height: 450px;
+    }
+    .first-square {
+      transition: 0.5s;
+      margin-top: 80px;
+    }
+    .second-square {
+      transition: 0.5s;
+      margin-top: -20px;
+    }
+    .third-square {
+      transition: 0.3s;
+      width: 40px;
+      margin-top: -12px;
+      opacity: 0.2;
+    }
+    .square--lions {
+      background: linear-gradient(#fff 20%, $lions1 75%, rgba(1, 1, 1, 0));
+    }
+    .square--twins {
+      background: linear-gradient(#fff 20%, $twins1 75%, rgba(1, 1, 1, 0));
+    }
+    .square--tigers {
+      background: linear-gradient(#fff 20%, $tigers1 75%, rgba(1, 1, 1, 0));
+    }
+    .square--giants {
+      background: linear-gradient(#fff 20%, $gients3 75%, rgba(1, 1, 1, 0));
+    }
+    .square--eagles {
+      background: linear-gradient(#fff 20%, $eagles1 75%, rgba(1, 1, 1, 0));
+    }
+    .square--heroes {
+      background: linear-gradient(#fff 20%, $heroes1 75%, rgba(1, 1, 1, 0));
+    }
+    .square--landers {
+      background: linear-gradient(#fff 20%, $landers1 75%, rgba(1, 1, 1, 0));
+    }
+    .square--bears {
+      background: linear-gradient(#fff 20%, blue 75%, rgba(1, 1, 1, 0));
+    }
+    .square--dinos {
+      background: linear-gradient(#fff 20%, $dinos2 75%, rgba(1, 1, 1, 0));
+    }
+    .square--wiz {
+      background: linear-gradient(#fff 20%, gray 75%, rgba(1, 1, 1, 0));
+    }
+  }
+
+  &__content {
+    box-sizing: border-box;
+    padding: 40px 0;
+    transition: 0.3s;
+    background-color: $dark-bg;
+    height: 100%;
+    width: 100%;
 
     img {
       position: relative;
       z-index: 9;
-      width: 216px;
-      height: 350px;
       transition: 0.3s;
     }
-  }
-  .teamcard-content--hover {
-    transition: 0.3s;
-    &:hover {
-      transform: scale(1.03);
-      .first-square {
-        margin-top: 30px;
-      }
-      .second-square {
-        margin-top: 60px;
-      }
-      .third-square {
-        margin-top: 42px;
-      }
-      img {
-        transform: scale(1.08);
+
+    &--hover {
+      transition: 0.3s;
+      &:hover {
+        transform: scale(1.03);
+        .first-square {
+          margin-top: 30px;
+        }
+        .second-square {
+          margin-top: 60px;
+        }
+        .third-square {
+          margin-top: 42px;
+        }
+        img {
+          transform: scale(1.08);
+        }
       }
     }
-  }
-  .teamcard-content--clicked {
-    border: 3px solid red;
   }
 }
