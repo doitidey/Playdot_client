@@ -16,6 +16,7 @@ export interface CommentData {
   content: string;
   likeCount?: number;
   createdAt?: string;
+  isLiked?: boolean;
 }
 
 export interface Team {
@@ -26,10 +27,9 @@ export interface Team {
 
 function Comment() {
   const queryClient = useQueryClient();
+
   const [comments, setComments] = useState<CommentData[]>([]);
   const [value, setValue] = useState("");
-
-  // const { value, setValue, comment, setComment } = useCommentStore();
 
   const { data: commentData = comments, refetch } = useQuery({
     queryKey: ["todayComment"],
@@ -41,22 +41,25 @@ function Comment() {
     refetchOnWindowFocus: false,
   });
 
-  const { mutate: postComment } = useMutation(async () => postTodayComment(value), {
-    onMutate: () => {
-      setComments([
-        ...comments,
-        {
-          teamName: localStorage.getItem("teamName") as string,
-          nickname: localStorage.getItem("nickname") as string,
-          content: value,
-        },
-      ]);
-      setValue("");
+  const { mutate: postComment } = useMutation(
+    async () => postTodayComment(value),
+    {
+      onMutate: () => {
+        setComments([
+          ...comments,
+          {
+            teamName: localStorage.getItem("teamName") as string,
+            nickname: localStorage.getItem("nickname") as string,
+            content: value,
+          },
+        ]);
+        setValue("");
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries("todayComment");
+      },
     },
-    onSettled: () => {
-      queryClient.invalidateQueries("todayComment");
-    },
-  });
+  );
 
   const onRefresh = useCallback(() => {
     refetch();
@@ -74,9 +77,14 @@ function Comment() {
   const onSubmit = useCallback(
     async (event: FormEvent) => {
       event.preventDefault();
-      postComment();
+      if (value === "") {
+        // 추후 팝업 창으로 개선 예정
+        window.alert("댓글을 입력하세요!");
+      } else {
+        postComment();
+      }
     },
-    [postComment],
+    [postComment, value],
   );
 
   return (
@@ -93,7 +101,7 @@ function Comment() {
           type="text"
           value={value}
           onChange={onChange}
-          placeholder="댓글을 입력해주세요."
+          placeholder="댓글을 입력하세요."
         />
         <CommentList
           comment={commentData}
