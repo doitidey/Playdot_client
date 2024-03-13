@@ -1,10 +1,11 @@
+import Button from "@/components/common/Button";
 import TokenButton from "./TokenButton";
 import "@/components/chat/modals/PostVoteModal.scss";
 
 function PostVoteModal() {
   return (
     <section className="post-vote">
-      <input className="post-vote__title" placeholder="투표 내용을 입력해봐" />
+      <input className="post-vote__title" placeholder="투표 제목을 입력해줘!" />
       <div className="post-vote__block">
         <div className="post-vote__content">
           <div className="post-vote__content__title">1</div>
@@ -16,6 +17,7 @@ function PostVoteModal() {
         </div>
       </div>
       <TokenButton />
+      <Button label="토큰 5개 사용" size="large" variant="active" />
     </section>
   );
 }

@@ -1,6 +1,9 @@
 @import "@/styles/colors.scss";
 
 .post-shout {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
   &__input {
     text-align: center;
     width: 100%;
@@ -8,7 +11,7 @@
     border: none;
     background-color: transparent;
     color: $dark-text2;
-    margin-bottom: 24px;
+    margin-bottom: 12px;
     &:focus {
       outline: none;
     }

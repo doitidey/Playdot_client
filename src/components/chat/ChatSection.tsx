@@ -7,10 +7,13 @@ import ChatLog from "@/components/chat/chatlog/ChatLog";
 import MenuModal from "@/components/chat/modals/MenuModal";
 import ChatInput from "@/components/chat/ChatInput";
 import useMenuModalState from "@/lib/store/chat/menuModalState";
-import VoteModal from "./modals/VoteModal";
+import VoteModal from "@/components/chat/modals/VoteModal";
+import ShoutBubble from "./chatlog/ShoutBubble";
+import { useState } from "react";
 
 function ChatSection() {
   const { menuModalState } = useMenuModalState();
+  const [showShoutBubble, setShowShoutBubble] = useState(true);
 
   return (
     <div className="chat">
@@ -25,6 +28,9 @@ function ChatSection() {
         </div>
         <ChatLog />
       </div>
+      {showShoutBubble && (
+        <ShoutBubble onEnd={() => setShowShoutBubble(false)} />
+      )}
     </div>
   );
 }
