@@ -145,9 +145,11 @@ function SignupStepTwo() {
             comment: inputValue.comment,
           }),
         );
-        formData.forEach((value, key) => {
-          console.log(key, value);
-        });
+
+        // formData 확인용 console
+        // formData.forEach((value, key) => {
+        //   console.log(key, value);
+        // });
 
         // 프로필 설정 api
         putProfile(formData);
