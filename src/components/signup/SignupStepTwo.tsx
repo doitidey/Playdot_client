@@ -1,48 +1,51 @@
-import React, { useState, useRef, ChangeEvent, useEffect } from "react";
+import React, { useState, useRef, ChangeEvent } from "react";
 import Image from "next/image";
 
 import "@/components/signup/SignupStepTwo.scss";
 import Title from "@/components/common/Title";
 
 import TeamCards from "@/components/common/TeamCards";
-import { nicknameCheck } from "@/lib/api/signupAPI";
-import useSignupStore from "@/lib/store/signup/signupStore";
+import { nicknameCheck, putProfile, putTeam } from "@/lib/api/signupAPI";
 import useclickedCardStore from "@/lib/store/signup/clickedCardStore";
 import useTeamsStore from "@/lib/store/signup/teamsStore";
 import Button from "../common/Button";
 import useStepsStore from "@/lib/store/signup/stepsStore";
+import { rInputRegexs } from "@/lib/util/signupValid";
 
-interface FormData {
-  profileImage?: File;
-  data: {
-    nickname: string;
-    comment: string;
-  };
+interface InputValue {
+  nickname: string;
+  validNickname: string;
+  noneDuplicationNickname: boolean;
+  comment: string;
+  validComment: boolean;
 }
 
 function SignupStepTwo() {
-  const { setFormData } = useSignupStore();
   const { clickedCardStore } = useclickedCardStore();
   const { teamStore } = useTeamsStore();
   const { decreaseStep } = useStepsStore();
 
   const imageInputRef = useRef<HTMLInputElement | null>(null);
-  const [nicknameValid, setNicknameValid] = useState<number>(0);
   const [previewUrl, setPreviewUrl] = useState<string | undefined>();
-  const [formDraftData, setFormDraftData] = useState<FormData>({
-    data: {
-      nickname: "",
-      comment: "",
-    },
+  const [validMessage, setValidMessage] = useState({
+    validNickname: "",
+    validComment: "",
+  });
+  const [inputValue, setInputValue] = useState<InputValue>({
+    nickname: "",
+    validNickname: "",
+    noneDuplicationNickname: false,
+    comment: "",
+    validComment: false,
   });
 
-  const handleClickUpload = () => {
+  const onClickUpload = () => {
     if (imageInputRef.current) {
       imageInputRef.current.click();
     }
   };
 
-  const handleFileChange = () => {
+  const onFileChange = () => {
     const file = imageInputRef.current?.files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -50,90 +53,122 @@ function SignupStepTwo() {
       reader.onload = () => {
         setPreviewUrl(reader.result as string);
       };
-      setFormDraftData((prevData) => ({
-        profileImage: file,
-        ...prevData,
-      }));
     }
   };
 
-  const getNickNameValid = () => {
-    switch (nicknameValid) {
-      default:
-        return;
-      case 0:
-        return;
-      case 1:
-        return "중복된 닉네임이야!";
-      case 2:
-        return "사용 가능한 닉네임이야!";
-    }
-  };
-
-  const getNickNameClass = () => {
-    switch (nicknameValid) {
-      default:
-        return;
-      case 0:
-        return;
-      case 1:
-        return "nickname__validation--duplication";
-      case 2:
-        return "nickname__validation--avaliable";
-    }
-  };
-
-  const handleClickNicknameCheck = async () => {
+  const onClickNicknameCheck = async () => {
     try {
-      if (formDraftData.data.nickname) {
-        const res = await nicknameCheck(formDraftData.data.nickname);
-        res.data.exist ? setNicknameValid(1) : setNicknameValid(2);
+      if (inputValue.nickname) {
+        const res = await nicknameCheck(inputValue.nickname);
+        if (res.data.exist) {
+          setValidMessage((prev) => ({
+            ...prev,
+            validNickname: "중복된 닉네임이야!",
+          }));
+        } else {
+          setInputValue((prev) => ({ ...prev, noneDuplicationNickname: true }));
+          setValidMessage((prev) => ({
+            ...prev,
+            validNickname: "사용 가능한 닉네임이야!",
+          }));
+        }
       }
     } catch {
       console.error("닉네임 체크 APi 오류");
     }
   };
 
-  const handleChangeNickname = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeNickname = (e: ChangeEvent<HTMLInputElement>) => {
     const nickname = e.target.value;
-    setFormDraftData((prevData) => ({
+    setInputValue((prevData) => ({
       ...prevData,
-      data: {
-        ...prevData.data,
-        nickname,
-      },
+      noneDuplicationNickname: false,
+      nickname,
     }));
+    rInputRegexs.nicknameRegex.test(nickname)
+      ? setValidMessage((prevData) => ({
+          ...prevData,
+          validNickname: "",
+        }))
+      : setValidMessage((prevData) => ({
+          ...prevData,
+          validNickname: "닉네임은 문자나 숫자로 2자에서 7자 이내로 설정해줘!",
+        }));
+    console.log(inputValue);
   };
 
-  const handleChangeWords = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const onChangeWords = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const comment = e.target.value;
-    setFormDraftData((prevData) => ({
+    setInputValue((prevData) => ({
       ...prevData,
-      data: {
-        ...prevData.data,
-        comment,
-      },
+      comment,
     }));
+    rInputRegexs.commentRegex.test(comment) ||
+      setValidMessage((prevData) => ({
+        ...prevData,
+        validComment: "한마디는 90자 이내로 작성해줘!",
+      }));
   };
-
-  useEffect(() => {
-    setFormData(formDraftData);
-  }, [formDraftData]);
 
   const onClickPreviousButton = () => {
     decreaseStep();
   };
 
+  const isSubmitRequired =
+    inputValue.nickname &&
+    inputValue.validNickname &&
+    inputValue.noneDuplicationNickname &&
+    inputValue.comment &&
+    inputValue.validComment;
+
+  const onSubmit = () => {
+    if (isSubmitRequired) {
+      try {
+        // 팀 설정 api
+        putTeam(clickedCardStore);
+
+        // 폼 데이터 만들기
+        const formData = new FormData();
+        formData.append(
+          "profileImage",
+          imageInputRef.current?.files?.[0] || "",
+        );
+        formData.append(
+          "data",
+          JSON.stringify({
+            nickname: inputValue.nickname,
+            comment: inputValue.comment,
+          }),
+        );
+        formData.forEach((value, key) => {
+          console.log(key, value);
+        });
+
+        // 프로필 설정 api
+        putProfile(formData);
+      } catch (error) {
+        console.error("프로필 설정 오류", error);
+      }
+    } else {
+      alert("안채웟슴");
+    }
+  };
+
   return (
-    <section className="steptwo">
-      <div>
+    <div className="steptwo">
+      <div className="steptwo__btn">
         <Button
           label="이전"
           variant="primary"
-          size="small"
+          size="x-medium"
           onClick={onClickPreviousButton}
         />
-        <Button label="다음" variant="primary" size="small" />
+        <Button
+          label="다음"
+          variant={`${isSubmitRequired ? "active" : "disactive"}`}
+          size="x-medium"
+          onClick={onSubmit}
+        />
       </div>
       <Title largest className="steptwo__title">
         프로필 설정하기
@@ -143,21 +178,31 @@ function SignupStepTwo() {
       </Title>
       <div className="steptwo__content">
         <div className="steptwo__content__cards">
-          <TeamCards team={teamStore[clickedCardStore]} singleCard={true} />
+          <TeamCards
+            team={
+              teamStore.find((item) => item.teamId === clickedCardStore) ??
+              teamStore[0]
+            }
+            singleCard={true}
+          />
           <div className="cards__upload">
             {previewUrl ? (
               <Image
                 className="uploadedImage"
-                onClick={handleClickUpload}
+                onClick={onClickUpload}
                 src={previewUrl}
                 alt="previewImage"
+                width={0}
+                height={0}
               />
             ) : (
               <Image
                 className="uploadButton"
-                onClick={handleClickUpload}
+                onClick={onClickUpload}
                 src="/images/signupIcon.svg"
                 alt="plusIcon"
+                width={0}
+                height={0}
               />
             )}
             <input
@@ -165,7 +210,7 @@ function SignupStepTwo() {
               accept="image/*"
               className="cards__input"
               ref={imageInputRef}
-              onChange={handleFileChange}
+              onChange={onFileChange}
             />
           </div>
         </div>
@@ -180,21 +225,24 @@ function SignupStepTwo() {
                   type="text"
                   className="nickname__input"
                   placeholder="닉네임을 입력해줘!"
-                  onChange={handleChangeNickname}
+                  onChange={onChangeNickname}
                 />
-                {nicknameValid !== 0 && (
-                  <span
-                    className={`nickname__validation ${getNickNameClass()}`}
-                  >
-                    {getNickNameValid()}
-                  </span>
-                )}
+
+                <span
+                  className={`nickname__validation ${
+                    inputValue.noneDuplicationNickname
+                      ? "nickname__validation--pass"
+                      : "nickname__validation--alert"
+                  }`}
+                >
+                  {validMessage.validNickname}
+                </span>
               </div>
               <Button
                 label="중복확인"
-                size="small"
+                size="x-medium"
                 variant="primary"
-                onClick={handleClickNicknameCheck}
+                onClick={onClickNicknameCheck}
               />
             </div>
           </div>
@@ -205,12 +253,13 @@ function SignupStepTwo() {
             <textarea
               className="words__input"
               placeholder="한마디를 입력해줘!"
-              onChange={handleChangeWords}
+              onChange={onChangeWords}
+              maxLength={90}
             ></textarea>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 
