@@ -14,7 +14,7 @@ import { rInputRegexs } from "@/lib/util/signupValid";
 
 interface InputValue {
   nickname: string;
-  validNickname: string;
+  validNickname: boolean;
   noneDuplicationNickname: boolean;
   comment: string;
   validComment: boolean;
@@ -33,7 +33,7 @@ function SignupStepTwo() {
   });
   const [inputValue, setInputValue] = useState<InputValue>({
     nickname: "",
-    validNickname: "",
+    validNickname: false,
     noneDuplicationNickname: false,
     comment: "",
     validComment: false,
@@ -58,7 +58,7 @@ function SignupStepTwo() {
 
   const onClickNicknameCheck = async () => {
     try {
-      if (inputValue.nickname) {
+      if (inputValue.validNickname) {
         const res = await nicknameCheck(inputValue.nickname);
         if (res.data.exist) {
           setValidMessage((prev) => ({
@@ -83,18 +83,24 @@ function SignupStepTwo() {
     setInputValue((prevData) => ({
       ...prevData,
       noneDuplicationNickname: false,
+      validNickname: false,
       nickname,
     }));
-    rInputRegexs.nicknameRegex.test(nickname)
-      ? setValidMessage((prevData) => ({
-          ...prevData,
-          validNickname: "",
-        }))
-      : setValidMessage((prevData) => ({
-          ...prevData,
-          validNickname: "닉네임은 문자나 숫자로 2자에서 7자 이내로 설정해줘!",
-        }));
-    console.log(inputValue);
+    if (rInputRegexs.nicknameRegex.test(nickname)) {
+      setValidMessage((prevData) => ({
+        ...prevData,
+        validNickname: "",
+      }));
+      setInputValue((prevData) => ({
+        ...prevData,
+        validNickname: true,
+      }));
+    } else {
+      setValidMessage((prevData) => ({
+        ...prevData,
+        validNickname: "닉네임은 문자나 숫자로 2자에서 7자 이내로 설정해줘!",
+      }));
+    }
   };
 
   const onChangeWords = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -118,8 +124,7 @@ function SignupStepTwo() {
     inputValue.nickname &&
     inputValue.validNickname &&
     inputValue.noneDuplicationNickname &&
-    inputValue.comment &&
-    inputValue.validComment;
+    inputValue.comment;
 
   const onSubmit = () => {
     if (isSubmitRequired) {
@@ -147,10 +152,8 @@ function SignupStepTwo() {
         // 프로필 설정 api
         putProfile(formData);
       } catch (error) {
-        console.error("프로필 설정 오류", error);
+        console.error(error);
       }
-    } else {
-      alert("안채웟슴");
     }
   };
 
