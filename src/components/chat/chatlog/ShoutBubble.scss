@@ -1,0 +1,27 @@
+@import "@/styles/colors.scss";
+@import "@/styles/animation.scss";
+
+.shout {
+  width: 100%;
+  height: calc(100% - 260px);
+  position: absolute;
+  right: -100%;
+  animation: pass-away 7s 1s linear forwards;
+  &__block {
+    position: absolute;
+    width: fit-content;
+    color: $dark-text2;
+    font-size: 22px;
+    background: linear-gradient(
+      to right,
+      rgba(255, 0, 0, 0.5) 20%,
+      transparent
+    );
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 20px;
+    padding-right: 94px;
+  }
+}
