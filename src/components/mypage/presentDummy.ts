@@ -1,0 +1,73 @@
+export const presentHeader = ["닉네임", "토큰갯수", "한줄 메세지", "날짜"];
+export const presentData = [
+  {
+    nickname: "닉네임",
+    profileImageUrl: "/profile/asdasd123123.jpg",
+    token: 9,
+    message: "우끼?",
+    takeDate: "2023.12.01",
+  },
+  {
+    nickname: "롯데시식코트",
+    profileImageUrl: "/profile/asdasd123123.jpg",
+    token: 3667,
+    message: "침대콜링",
+    takeDate: "2023.12.01",
+  },
+  {
+    nickname: "저예요",
+    profileImageUrl: "/profile/asdasd123123.jpg",
+    token: 443,
+    message: "먹고떨어져",
+    takeDate: "2023.12.01",
+  },
+  {
+    nickname: "쓱쓲쓱쓱",
+    profileImageUrl: "/profile/asdasd123123.jpg",
+    token: 312,
+    message: "저는야구를몰라요",
+    takeDate: "2023.12.01",
+  },
+  {
+    nickname: "오오",
+    profileImageUrl: "/profile/asdasd123123.jpg",
+    token: 312,
+    message: "ㅇ로ㅓ아ㅓ러",
+    takeDate: "2023.12.01",
+  },
+  {
+    nickname: "김미영",
+    profileImageUrl: "/profile/asdasd123123.jpg",
+    token: 312,
+    message: "스팸메세지",
+    takeDate: "2023.12.01",
+  },
+  {
+    nickname: "임그래",
+    profileImageUrl: "/profile/asdasd123123.jpg",
+    token: 312,
+    message: "고양이",
+    takeDate: "2023.12.01",
+  },
+  {
+    nickname: "이정현",
+    profileImageUrl: "/profile/asdasd123123.jpg",
+    token: 6,
+    message: "소노스터디카페거너스",
+    takeDate: "2023.12.01",
+  },
+  {
+    nickname: "잠만보",
+    profileImageUrl: "/profile/asdasd123123.jpg",
+    token: 3112142,
+    message: "거다이맥스잠만보",
+    takeDate: "2023.12.01",
+  },
+  {
+    nickname: "오은영박사",
+    profileImageUrl: "/profile/asdasd123123.jpg",
+    token: 1,
+    message: "울지말고말해봐",
+    takeDate: "2023.12.01",
+  },
+];
