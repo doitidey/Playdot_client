@@ -151,8 +151,8 @@ function SignupStepTwo() {
 
         // 프로필 설정 api
         putProfile(formData);
-      } catch (error) {
-        console.error(error);
+      } catch {
+        alert("api 오류");
       }
     }
   };
@@ -199,14 +199,7 @@ function SignupStepTwo() {
                 height={0}
               />
             ) : (
-              <Image
-                className="uploadButton"
-                onClick={onClickUpload}
-                src="/images/signupIcon.svg"
-                alt="plusIcon"
-                width={0}
-                height={0}
-              />
+              <div className="uploadButton" onClick={onClickUpload} />
             )}
             <input
               type="file"
