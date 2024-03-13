@@ -7,6 +7,12 @@ const instanceConfig: AxiosRequestConfig = {
   withCredentials: true,
 };
 
+const formConfig: AxiosRequestConfig = {
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  headers: { "Content-Type": "multipart/form-data" },
+  withCredentials: true,
+};
+
 // 로그인 컨피그
 const authConfig: AxiosRequestConfig = {
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
@@ -15,4 +21,5 @@ const authConfig: AxiosRequestConfig = {
 };
 
 export const authInstance = axios.create(authConfig);
+export const formInstance = axios.create(formConfig);
 export const instance = axios.create(instanceConfig);

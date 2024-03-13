@@ -3,6 +3,7 @@
 .post-vote {
   display: flex;
   flex-direction: column;
+  gap: 14px;
   input {
     border: none;
     background-color: transparent;
@@ -14,10 +15,7 @@
   &__title {
     text-align: center;
     font-size: 22px;
-    margin-bottom: 36px;
-  }
-  &__block {
-    margin-bottom: 16px;
+    margin-bottom: 22px;
   }
   &__content {
     display: flex;
