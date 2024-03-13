@@ -9,6 +9,10 @@
   cursor: pointer;
   transition: 0.2s;
 
+  &:hover {
+    opacity: 80%;
+  }
+
   //variant
   &__primary {
     background-color: $signup-back;
@@ -16,6 +20,10 @@
   &__disactive {
     background-color: $button-bg;
     color: $button-disabled;
+    cursor: default;
+    &:hover {
+      opacity: 100%;
+    }
   }
   &__active {
     background: $main;
@@ -41,8 +49,5 @@
   }
   &__large {
     width: 316px;
-  }
-  &:hover {
-    opacity: 80%;
   }
 }

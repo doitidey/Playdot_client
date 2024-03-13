@@ -38,46 +38,56 @@ function TeamCards(props: TeamCardsProps) {
   const getClassTeamName = getTeamColor(props.team.teamName);
 
   return (
-    <div className="teamcard-block">
+    <div className="teamcard">
       {isSelectedInProps && (
         <div
           onClick={props.onClick}
-          className="teamcard-content teamcard-content--active"
+          className="teamcard__block teamcard__block--active"
         >
-          <p className="teamname">선택하기</p>
+          <h3 className="teamcard__title">선택하기</h3>
         </div>
       )}
       <div
-        className={classNames(
-          "teamcard-content",
-          isForSingleCard && "teamcard-content--hover",
-          isSelected && "teamcard-content--clicked",
-        )}
+        className={`teamcard__block ${
+          isSelected && "teamcard__block--clicked"
+        }`}
       >
-        <Image src={getImgSrc} alt={props.team.teamName} width={0} height={0} />
-        <p className="teamname">{props.team.teamName}</p>
-        <div className="teamcard-content__backgrounds">
-          <div
-            className={classNames(
-              "square",
-              "first-square",
-              `square--${getClassTeamName}`,
-            )}
-          ></div>
-          <div
-            className={classNames(
-              "square",
-              "second-square",
-              `square--${getClassTeamName}`,
-            )}
-          ></div>
-          <div
-            className={classNames(
-              "square",
-              "third-square",
-              `square--${getClassTeamName}`,
-            )}
-          ></div>
+        <div
+          className={classNames(
+            "teamcard__content",
+            isForSingleCard && "teamcard__content--hover",
+          )}
+        >
+          <Image
+            src={getImgSrc}
+            alt={props.team.teamName}
+            width={200}
+            height={200}
+          />
+          <h3 className="teamcard__title">{props.team.teamName}</h3>
+          <div className="teamcard__backgrounds">
+            <div
+              className={classNames(
+                "square",
+                "first-square",
+                `square--${getClassTeamName}`,
+              )}
+            ></div>
+            <div
+              className={classNames(
+                "square",
+                "second-square",
+                `square--${getClassTeamName}`,
+              )}
+            ></div>
+            <div
+              className={classNames(
+                "square",
+                "third-square",
+                `square--${getClassTeamName}`,
+              )}
+            ></div>
+          </div>
         </div>
       </div>
     </div>

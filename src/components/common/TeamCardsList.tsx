@@ -24,32 +24,28 @@ function TeamCardsList() {
     getTeamsInfo();
   }, []);
 
-  const [selectedTeam, setSelectedTeam] = useState(
-    teamStore.slice(0).map(() => false),
-  );
+  const [selectedTeam, setSelectedTeam] = useState(teamStore.map(() => false));
 
-  const onCardClick = (index: number) => {
+  const onCardClick = (index: number, teamId: number) => {
     const clearSelectedTeam = selectedTeam.map(() => false);
     const newSelected = [...clearSelectedTeam];
     newSelected[index] = !newSelected[index];
     setSelectedTeam(newSelected);
     //선택된 카드 index store에 저장
-    setClickedCardStore(index);
+    setClickedCardStore(teamId);
   };
 
   return (
     <div className="teamcards">
       {teamStore &&
-        teamStore
-          .slice(0)
-          .map((team: TeamInfo, index: number) => (
-            <TeamCards
-              key={team.teamId}
-              team={{ ...team }}
-              isSelected={selectedTeam[index]}
-              onClick={() => onCardClick(index)}
-            />
-          ))}
+        teamStore.map((team: TeamInfo, index: number) => (
+          <TeamCards
+            key={team.teamId}
+            team={{ ...team }}
+            isSelected={selectedTeam[index]}
+            onClick={() => onCardClick(index, team.teamId)}
+          />
+        ))}
     </div>
   );
 }

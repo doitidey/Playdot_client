@@ -1,4 +1,4 @@
-import { authInstance, instance } from "@/lib/api/instance";
+import { authInstance, formInstance, instance } from "@/lib/api/instance";
 
 type Method = "get" | "post" | "put" | "delete";
 
@@ -29,6 +29,21 @@ export const fetchAuth = async (
     console.error(error);
   }
 };
+
+// 폼데이터 fetch 함수
+export const fetchForm = async (
+  url: string,
+  method: Method,
+  reqData: FormData,
+) => {
+  try {
+    const { data } = await formInstance({ url, method, data: reqData });
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 // 공용 request interceptor
 instance.interceptors.request.use(
   function (config) {
@@ -75,6 +90,21 @@ authInstance.interceptors.response.use(
     localStorage.setItem("profileImageUrl", config.data.data.profileImageUrl);
     localStorage.setItem("nickname", config.data.data.nickname);
     localStorage.setItem("teamName", config.data.data.teamName);
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  },
+);
+
+// 폼데이터 response interceptor
+formInstance.interceptors.request.use(
+  function (config) {
+    const accessToken = localStorage.getItem("authToken") as string;
+    if (!accessToken) {
+      return config;
+    }
+    config.headers.authorization = accessToken;
     return config;
   },
   function (error) {
