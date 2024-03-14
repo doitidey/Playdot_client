@@ -16,6 +16,24 @@
   }
 }
 
+@keyframes drop-down {
+  0% {
+    transform: translateY(-200%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes drop-up {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-200%);
+  }
+}
+
 @keyframes pass-away {
   from {
     transform: translateX(0);
