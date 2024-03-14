@@ -1,69 +1,62 @@
 @import "@/styles/colors.scss";
+@import "@/styles/animation.scss";
 
-.submenu-block {
-  width: 100%;
+.submenu {
   height: 50px;
+  overflow: hidden;
   position: absolute;
-  z-index: 998;
   top: 90px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: $dark-bg;
-
-  a {
-    color: $dark-text1;
+  &__block {
+    left: 0;
+    width: 500px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
   }
 
-  &__content {
+  &__list {
+    width: 100%;
     display: flex;
-    gap: 60px;
-    position: relative;
-    left: -76px;
-    top: 6px;
+    transition: 0.2s;
   }
 
   &__item {
     text-align: center;
     cursor: pointer;
-  }
-}
-
-.scrollDown {
-  transition: opacity 0.2s ease-in-out;
-  animation: scrollDown 0.2s normal;
-  opacity: 0;
-  transform: translateY(-70px);
-  @keyframes scrollDown {
-    0% {
-      transform: translateY(0);
+    flex: 1 1 0;
+    a {
+      color: $dark-text1;
     }
-    100% {
-      transform: translateY(-20px);
+    .active {
+      font-weight: 600;
+      border-bottom: 4px solid #fff;
+      padding-bottom: 6px;
+      color: #fff;
     }
   }
+  &__bg {
+    position: fixed;
+    left: 0;
+    top: 90px;
+    background-color: $dark-bg;
+    width: 100vw;
+    height: 50px;
+    opacity: 0;
+    transition: 0.2s;
+    &--active {
+      opacity: 1;
+    }
+  }
 }
-
-.scrollUp {
-  transition: opacity 0.2s ease-in-out;
-  animation: scrollUp 0.2s normal;
+.scrolldown {
   opacity: 1;
   transform: translateY(0);
-  @keyframes scrollUp {
-    0% {
-      transform: translateY(-20px);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
+  animation: drop-down 0.2s;
 }
-
-.active {
-  font-weight: 600;
-  border-bottom: 4px solid #fff;
-  padding-bottom: 6px;
-  a {
-    color: #fff;
-  }
+.scrollup {
+  transition: 0.2s;
+  opacity: 0;
+  transform: translateY(-50px);
+  animation: drop-up 0.2s;
 }

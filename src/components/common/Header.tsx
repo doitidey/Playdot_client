@@ -33,8 +33,8 @@ function Header() {
 
   return (
     <>
-      <header className="header-block">
-        <div className="header-block__content">
+      <header className="header">
+        <div className="header__block">
           <h1>
             <Link href={PATH.today}>
               <Image
@@ -46,25 +46,30 @@ function Header() {
               />
             </Link>
           </h1>
-          <nav className="header-block__navigation">
-            <div>
-              <Link
-                href={PATH.today}
-                className={`pagelink ${ACTIVE_MATCH_CLASSNAME}`}
-              >
-                승부예측
-                <div className={`underbar ${UNDERBAR_MATCH_CLASSNAME}`} />
-              </Link>
-              <Link
-                href={PATH.community}
-                className={`pagelink ${ACTIVE_COMMUNITY_CLASSNAME}`}
-              >
-                커뮤니티
-                <div
-                  className={`underbar ${UNDERBAR_COMMUNITY_CLASSNAME}`}
-                ></div>
-              </Link>
-            </div>
+          <nav className="navigation">
+            <ol className="navigation__list">
+              <li className="navigation__item">
+                {isSubMenuRequired && <SubMenu />}
+                <Link
+                  href={PATH.today}
+                  className={`pagelink ${ACTIVE_MATCH_CLASSNAME}`}
+                >
+                  승부예측
+                  <div className={`underbar ${UNDERBAR_MATCH_CLASSNAME}`} />
+                </Link>
+              </li>
+              <li className="navigation__item">
+                <Link
+                  href={PATH.community}
+                  className={`pagelink ${ACTIVE_COMMUNITY_CLASSNAME}`}
+                >
+                  커뮤니티
+                  <div
+                    className={`underbar ${UNDERBAR_COMMUNITY_CLASSNAME}`}
+                  ></div>
+                </Link>
+              </li>
+            </ol>
           </nav>
           {localNick ? (
             <Link href={PATH.mypage} className="profile">
@@ -95,7 +100,7 @@ function Header() {
                   className="profile__logo__basictitle"
                   src="/images/logo.svg"
                   alt="프로필이미지 로고"
-                  width={25}
+                  width={20}
                   height={5}
                 />
               </div>
@@ -103,7 +108,6 @@ function Header() {
             </Link>
           )}
         </div>
-        {isSubMenuRequired && <SubMenu />}
       </header>
       <div className="space" />
     </>

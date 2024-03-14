@@ -1,9 +1,7 @@
-"use client";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
 import "./SubMenu.scss";
+import { useCallback, useEffect, useState } from "react";
 
 function SubMenu() {
   const [position, setPosition] = useState(0);
@@ -25,31 +23,37 @@ function SubMenu() {
   }, [onScroll]);
 
   return (
-    <ul className={`submenu-block ${visible ? "scrollUp" : "scrollDown"}`}>
-      <ul className="submenu-block__content">
-        <li
-          className={`submenu-block__item ${
-            pathname === "/match/previous" ? "active" : ""
-          }`}
-        >
-          <Link href="/match/previous">지난예측</Link>
-        </li>
-        <li
-          className={`submenu-block__item ${
-            pathname === "/match/month" ? "active" : ""
-          }`}
-        >
-          <Link href="/match/month">월간 승리요정</Link>
-        </li>
-        <li
-          className={`submenu-block__item ${
-            pathname === "/match/today" ? "active" : ""
-          }`}
-        >
-          <Link href="/match/today">오늘의 승부예측</Link>
-        </li>
-      </ul>
-    </ul>
+    <div className="submenu">
+      <div className={`submenu__bg ${visible && "submenu__bg--active"}`}></div>
+      <div className="submenu__block">
+        <ul className={`submenu__list ${visible ? "scrolldown" : "scrollup"}`}>
+          <li className={"submenu__item"}>
+            <Link
+              href="/match/previous"
+              className={` ${pathname === "/match/previous" && "active"}`}
+            >
+              지난예측
+            </Link>
+          </li>
+          <li className={"submenu__item"}>
+            <Link
+              href="/match/month"
+              className={` ${pathname === "/match/month" && "active"}`}
+            >
+              월간 승리요정
+            </Link>
+          </li>
+          <li className={"submenu__item"}>
+            <Link
+              href="/match/today"
+              className={` ${pathname === "/match/today" && "active"}`}
+            >
+              오늘의 승부예측
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </div>
   );
 }
 
