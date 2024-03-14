@@ -24,20 +24,20 @@ function Winner() {
             <Image src="/images/lions.svg" width={60} height={60} alt="" />
           </div>
         </li>
-        <li className="month-list__item">
+        <li className="month-list__second">
           <Text>이등은 아이디만 보임</Text>
           <Image src="/images/lions.svg" width={60} height={60} alt="" />
         </li>
-        <li className="month-list__item">
-          <Text>이등은 아이디만 보임</Text>
+        <li className="month-list__second">
+          <Text>아이디!!!!</Text>
           <Image src="/images/lions.svg" width={60} height={60} alt="" />
         </li>
-        <li className="month-list__item">
-          <Text>이등은 아이디만 보임</Text>
+        <li className="month-list__second">
+          <Text>아아아아이디!!!</Text>
           <Image src="/images/lions.svg" width={60} height={60} alt="" />
         </li>
-        <li className="month-list__item">
-          <Text>이등은 아이디만 보임</Text>
+        <li className="month-list__second">
+          <Text>으아아아아이디!!</Text>
           <Image src="/images/lions.svg" width={60} height={60} alt="" />
         </li>
       </ul>
