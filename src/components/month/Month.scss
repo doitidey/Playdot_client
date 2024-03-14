@@ -1,0 +1,51 @@
+@import "@/styles/colors.scss";
+
+.month-block {
+  width: 100%;
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.month-container {
+  background: coral;
+  padding: 40px;
+  width: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 60px 0 80px;
+  gap: 20px;
+}
+
+.month-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+  &__item {
+    padding: 30px 30px;
+    background: $surface;
+    border-radius: 10px;
+    color: #fff;
+    .first-floor {
+      display: flex;
+      gap: 60px;
+      span {
+        font-weight: 700;
+        font-size: 48px;
+      }
+    }
+    .last-floor {
+      display: flex;
+    }
+  }
+}
+
+.dummy-image {
+  width: 100px;
+  height: 100px;
+  background: #ccc;
+  border-radius: 50%;
+}
