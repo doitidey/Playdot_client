@@ -17,13 +17,10 @@ export const login = () => {
 };
 
 // 소셜 로그인
-// GET
+// POST
 export const oauthLogin = (registrationId: string, code: string) => {
   try {
-    return fetchAuth(
-      `oauth2/authorization/${registrationId}?code=${code}`,
-      "get",
-    );
+    return fetchData(`login/oauth2/code/${registrationId}${code}`, "post");
   } catch (error) {
     console.error(error);
   }

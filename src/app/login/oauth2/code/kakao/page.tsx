@@ -3,12 +3,12 @@ import { oauthLogin } from "@/lib/api/authAPI";
 import { useEffect } from "react";
 
 function Oauth() {
-  const code = new URL(window.location.href).searchParams.get("code");
+  const code = window.location.search;
   useEffect(() => {
     try {
-      const res = oauthLogin("kakao", String(code));
+      const res = oauthLogin("kakao", code);
       console.log(code);
-      console.log(res.data);
+      console.log(res);
     } catch (error) {
       console.error("로그인 실패:", error);
     }
