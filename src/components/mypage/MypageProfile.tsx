@@ -38,8 +38,13 @@ function MypageProfile() {
         <div className="profile-box__content detail-box">
           <div className="detail-box__block">
             <div className="detail-box__img">
-              {/* <Image src={profileData.profileImageUrl} /> */}
-              이미지 추가예정 수정도 아직 안됩니다,,,
+              {profileData && (
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${profileData.profileImageUrl}`}
+                  alt="프로필사진"
+                  fill={true}
+                />
+              )}
             </div>
             <ol className="detail-box__list">
               <li className="detail-box__item">
