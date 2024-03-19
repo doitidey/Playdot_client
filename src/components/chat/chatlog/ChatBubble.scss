@@ -1,9 +1,14 @@
 @import "@/styles/colors.scss";
 
-.bubble-container {
+.bubble {
   display: flex;
   align-items: center;
   font-family: "pretendard";
+  &__profile {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
   &__img {
     background-color: black;
     width: 36px;
