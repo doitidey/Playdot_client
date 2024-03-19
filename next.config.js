@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
+
+const imageDomains = process.env.NEXT_PUBLIC_IMAGE_URL
+  ? process.env.NEXT_PUBLIC_IMAGE_URL.split("/")[2]
+  : [];
+
 const nextConfig = {
   async rewrites() {
     return [
@@ -16,6 +21,10 @@ const nextConfig = {
         permanent: false,
       },
     ];
+  },
+
+  images: {
+    domains: [imageDomains],
   },
 };
 
