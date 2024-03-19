@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const imageDomains = process.env.NEXT_PUBLIC_IMAGE_URL
-  ? process.env.NEXT_PUBLIC_IMAGE_URL.split("/")[2]
+  ? new URL(process.env.NEXT_PUBLIC_IMAGE_URL).hostname
   : [];
 
 const nextConfig = {
