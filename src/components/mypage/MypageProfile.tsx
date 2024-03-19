@@ -1,10 +1,13 @@
 "use client";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+
 import Text from "../common/Text";
 import Title from "../common/Title";
+import Button from "../common/Button";
+
 import "@/components/mypage/MypageProfile.scss";
 import { getProfileDetails } from "@/lib/api/mypageAPI";
-import { useEffect, useState } from "react";
 
 type ProfileData = {
   comment: string;
@@ -16,21 +19,64 @@ type ProfileData = {
 };
 function MypageProfile() {
   const [profileData, setProfileData] = useState<ProfileData>();
-  const getUserProfile = async () => {
-    try {
-      const res = await getProfileDetails();
-      setProfileData(res.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+
   useEffect(() => {
+    const getUserProfile = async () => {
+      try {
+        const res = await getProfileDetails();
+        setProfileData(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     getUserProfile();
   }, []);
+
+  const onClickEdit = () => {
+    console.log("수정");
+    setIsEditing(true);
+  };
+
+  const onClickCancle = () => {
+    console.log("수정안할게");
+    setIsEditing(false);
+  };
+
+  const onClickSubmit = () => {
+    console.log("등록할께");
+    setIsEditing(false);
+  };
 
   return (
     <section className="profile-box">
       <div className="profile-box__bg"></div>
+      <div className="profile-box__btn">
+        {isEditing ? (
+          <>
+            <Button
+              label="취소"
+              size="x-medium"
+              variant="primary"
+              onClick={onClickCancle}
+            />
+            <Button
+              label="완료"
+              size="x-medium"
+              variant="disactive"
+              onClick={onClickSubmit}
+            />
+          </>
+        ) : (
+          <Button
+            label="수정"
+            size="x-medium"
+            variant="primary"
+            onClick={onClickEdit}
+          />
+        )}
+      </div>
       <div className="profile-box__title">
         <Title large>프로필</Title>
       </div>

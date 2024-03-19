@@ -16,6 +16,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  &__btn {
+    width: 100%;
+    padding-top: 54px;
+    display: flex;
+    justify-content: right;
+    gap: 16px;
+  }
   &__title {
     margin-bottom: 22px;
     width: 100%;
