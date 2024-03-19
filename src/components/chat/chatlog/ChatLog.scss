@@ -1,6 +1,6 @@
 @import "@/styles/colors.scss";
 
-.chatlog__contiainer {
+.chatlog {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -12,6 +12,6 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
-.chatlog__contiainer::-webkit-scrollbar {
+.chatlog::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera*/
 }
