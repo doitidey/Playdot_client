@@ -66,8 +66,14 @@
     }
     &__img {
       @include box-default;
+      position: relative;
+      overflow: hidden;
+      object-fit: cover;
       width: 212px;
       height: 260px;
+      img {
+        object-fit: cover;
+      }
     }
     &__line {
       @include box-default;

@@ -85,9 +85,8 @@ function Header() {
                 ) : (
                   <Image
                     alt="profileimg"
-                    src={`${localURL}`}
-                    width={24}
-                    height={24}
+                    src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${localURL}`}
+                    fill={true}
                   />
                 )}
               </div>
