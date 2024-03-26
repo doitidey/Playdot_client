@@ -1,10 +1,17 @@
 import Image from "next/image";
 import classNames from "classnames";
+import { useState } from "react";
 
 import "@/components/chat/ChatInput.scss";
 import useMenuModalState from "@/lib/store/chat/menuModalState";
 
-function ChatInput() {
+interface ChatInputProps {
+  sendMessage: (msg: string) => void;
+}
+
+function ChatInput({ sendMessage }: ChatInputProps) {
+  const [message, setMessage] = useState("");
+
   const {
     menuModalState,
     setMenuModalClicked,
@@ -30,8 +37,16 @@ function ChatInput() {
     menuModalState.isOpen ? CloseModal() : OpenModal();
   };
 
+  const handleSendMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!message.trim()) return;
+    console.log(message);
+    sendMessage(message);
+    setMessage("");
+  };
+
   return (
-    <div className="input-container">
+    <form className="input-container" onSubmit={handleSendMessage}>
       <div
         className={classNames(
           menuModalState.isClicked && "input-container__button--active",
@@ -50,16 +65,19 @@ function ChatInput() {
       <input
         className="input-container__input"
         type="text"
+        value={message}
         placeholder="대화를 입력해 주세요."
+        onChange={(e) => setMessage(e.target.value)}
       />
-      <Image
-        className="input-container__button"
-        src={"/images/inputbutton.svg"}
-        alt={"inputbutton"}
-        width={56}
-        height={56}
-      />
-    </div>
+      <button className="input-container__button" type="submit">
+        <Image
+          src={"/images/inputbutton.svg"}
+          alt={"inputbutton"}
+          width={56}
+          height={56}
+        />
+      </button>
+    </form>
   );
 }
 
