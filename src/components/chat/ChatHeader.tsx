@@ -21,8 +21,8 @@ function ChatHeader() {
             <Image
               src={getTeamLogo(GAME_DATA.homeTeam.teamName)}
               alt={"hometeam logo"}
-              width={0}
-              height={41}
+              width={50}
+              height={40}
             />
             {GAME_DATA.homeTeam.teamName}
           </div>
@@ -34,8 +34,8 @@ function ChatHeader() {
             <Image
               src={getTeamLogo(GAME_DATA.awayTeam.teamName)}
               alt={"awayTeam logo"}
-              width={0}
-              height={41}
+              width={50}
+              height={40}
             />
             {GAME_DATA.awayTeam.teamName}
           </div>
