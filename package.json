@@ -16,6 +16,7 @@
     "*.{js,ts}": "eslint --fix"
   },
   "dependencies": {
+    "autosize": "^6.0.1",
     "axios": "^1.6.0",
     "classnames": "^2.3.2",
     "immer": "^10.0.3",
@@ -39,6 +40,7 @@
     "@storybook/nextjs": "^7.6.4",
     "@storybook/react": "^7.6.4",
     "@storybook/test": "^7.6.4",
+    "@types/autosize": "^4.0.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

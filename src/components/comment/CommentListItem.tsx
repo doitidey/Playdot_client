@@ -84,7 +84,7 @@ function CommentListItem({
   // 좋아요 기능 작업 중
   const onLike = () => {
     setLike(!like);
-    !like ? setCount(count as number + 1) : setCount(0);
+    !like ? setCount((count as number) + 1) : setCount(0);
   };
 
   const onBalloon = useCallback(() => {
@@ -106,7 +106,11 @@ function CommentListItem({
               <Text medium>{nickname}</Text>
               <TeamTag teamName={teamName} />
             </div>
-            <Text medium>{comment}</Text>
+            {comment.split("\n").map((text, index) => (
+              <Text key={index} medium>
+                {text}
+              </Text>
+            ))}
             <div className="content__reply">
               <span onClick={onVisible}>답글 20</span>
               <span onClick={onVisible}>답글쓰기</span>

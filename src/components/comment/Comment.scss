@@ -10,8 +10,6 @@
   &__content {
     width: 1200px;
     border-radius: 8px;
-    background: $surface;
-    padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -63,15 +61,23 @@
   }
 }
 
+.comment-input-area {
+  display: flex;
+  gap: 16px;
+}
+
 .comment-input {
-  height: 50px;
-  margin-bottom: 24px;
-  background: $gray;
+  height: 36px;
+  background: $like-bg;
   color: #fff;
   border: none;
   font-size: 16px;
-  padding: 8px 16px;
+  padding: 16px;
   border-radius: 8px;
+  word-break: break-all;
+  resize: none;
+  flex: 1;
+  line-height: 1.5;
   &:focus {
     outline: none;
     &::placeholder {
