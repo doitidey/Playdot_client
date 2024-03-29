@@ -1,0 +1,21 @@
+.float-button {
+  width: 80px;
+  height: 80px;
+  border: none;
+  outline: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  cursor: pointer;
+  svg {
+    font-size: 110px;
+    position: absolute;
+    color: #693bff;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
+  }
+  &__content {
+    position: absolute;
+  }
+}

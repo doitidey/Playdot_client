@@ -1,0 +1,12 @@
+.chat-rooms-block {
+  position: fixed;
+  color: #fff;
+  bottom: 110px;
+  right: 14px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(transparent, #2B2E32);
+  border-radius: 50px 50px 0 0;
+  padding: 18px 6px;
+}
