@@ -9,8 +9,17 @@
   align-items: center;
   background: none;
   cursor: pointer;
+  &__chatting {
+    svg {
+      font-size: 100px;
+    }
+  }
+  &__floating {
+    svg {
+      font-size: 110px;
+    }
+  }
   svg {
-    font-size: 110px;
     position: absolute;
     color: #693bff;
     text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);

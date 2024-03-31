@@ -15,8 +15,8 @@ interface ChatRoomItemProps {
 function ChatRoomItem({ visibleFloat, home, away }: ChatRoomItemProps) {
   const [entrance, setEntrance] = useState(false);
   const onEntrance = () => {
+    setEntrance(true);
     // 여기에 로직 작성해주시면 됩니다.
-    setEntrance(!entrance);
   };
 
   const onCancel = () => {
@@ -39,6 +39,7 @@ function ChatRoomItem({ visibleFloat, home, away }: ChatRoomItemProps) {
         away={away}
         visibleFloat={visibleFloat}
         onClick={onEntrance}
+        buttonStyle="chatting"
       />
     </li>
   );
