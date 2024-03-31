@@ -1,3 +1,10 @@
 .today-block {
   margin: 150px 0 80px 0;
 }
+
+.main-float-button {
+  position: fixed;
+  bottom: 60px;
+  right: 20px;
+  z-index: 1000;
+}

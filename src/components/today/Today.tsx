@@ -7,6 +7,11 @@ import "@/components/today/Today.scss";
 import { useState } from "react";
 import { todayGames } from "@/lib/api/todayAPI";
 import { useQuery } from "react-query";
+import FloatButton from "../float/FloatButton";
+import Float from "../float/Float";
+import Image from "next/image";
+import Text from "../common/Text";
+import ChatRooms from "../float/ChatRooms";
 
 export interface TodayMatchData {
   gameId?: number;
@@ -29,6 +34,7 @@ export interface TodayMatchData {
 }
 
 function Today() {
+  const [visibleFloat, setVisibleFloat] = useState(false);
   const [game, setGame] = useState<TodayMatchData[]>([]);
   const { data: todayData = game } = useQuery({
     queryKey: ["today"],
@@ -41,12 +47,32 @@ function Today() {
 
   console.warn(todayData);
 
+  const onVisibleFloat = () => {
+    setVisibleFloat(!visibleFloat);
+  };
+
   return (
-    <div className="today-block">
-      <DateSection />
-      <ScoreList game={todayData} />
-      <Comment />
-    </div>
+    <>
+      <div className="today-block">
+        <DateSection />
+        <ScoreList game={todayData} />
+        <Comment />
+      </div>
+      {visibleFloat && (
+        <>
+          <Float />
+          <ChatRooms game={todayData} visibleFloat={visibleFloat} />
+        </>
+      )}
+      <div className="main-float-button">
+        <FloatButton
+          onClick={onVisibleFloat}
+          chat={<Image src="/images/chat.svg" alt="" width={40} height={40} />}
+          chatButtonTitle={<Text small>채팅방</Text>}
+          buttonStyle="floating"
+        />
+      </div>
+    </>
   );
 }
 
