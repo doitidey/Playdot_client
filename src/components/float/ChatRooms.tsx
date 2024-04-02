@@ -19,6 +19,7 @@ function ChatRooms({ game, visibleFloat }: ChatRoomsProps) {
           home={item.homeTeam.teamName}
           away={item.awayTeam.teamName}
           gameId={item.gameId as number}
+          status={item.status as string}
         />
       ))}
     </ul>

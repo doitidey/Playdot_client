@@ -10,6 +10,15 @@
   background: none;
   cursor: pointer;
   &__chatting {
+    &:disabled {
+      svg {
+        color: #222426;
+      }
+      span {
+        color: #414141;
+      }
+      cursor: default;
+    }
     svg {
       font-size: 100px;
     }

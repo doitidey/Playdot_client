@@ -10,9 +10,10 @@ interface ChatRoomItemProps {
   away: string;
   visibleFloat: boolean;
   gameId: number;
+  status?: string;
 }
 
-function ChatRoomItem({ visibleFloat, home, away }: ChatRoomItemProps) {
+function ChatRoomItem({ visibleFloat, home, away, status }: ChatRoomItemProps) {
   const [entrance, setEntrance] = useState(false);
   const onEntrance = () => {
     setEntrance(true);
@@ -40,6 +41,7 @@ function ChatRoomItem({ visibleFloat, home, away }: ChatRoomItemProps) {
         visibleFloat={visibleFloat}
         onClick={onEntrance}
         buttonStyle="chatting"
+        disabled={status === "PROGRESS" || status === "END"}
       />
     </li>
   );
