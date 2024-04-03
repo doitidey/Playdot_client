@@ -41,7 +41,7 @@ function ChatRoomItem({ visibleFloat, home, away, status }: ChatRoomItemProps) {
         visibleFloat={visibleFloat}
         onClick={onEntrance}
         buttonStyle="chatting"
-        disabled={status === "PROGRESS" || status === "END"}
+        disabled={status === "END" || status === "CANCEL"}
       />
     </li>
   );
