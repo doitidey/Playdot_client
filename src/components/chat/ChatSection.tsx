@@ -28,7 +28,7 @@ function ChatSection() {
       console.log("connected", frame);
       setStompClient(socket);
       socket.subscribe(
-        `/sub/chat/room/${ROOMNUM}`,
+        `/sub/chat/${ROOMNUM}`,
         (frame) => {
           try {
             console.log("구독요청");
