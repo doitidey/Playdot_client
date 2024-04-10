@@ -1,16 +1,27 @@
 import ChatBubble from "@/components/chat/chatlog/ChatBubble";
 import "@/components/chat/chatlog/ChatLog.scss";
-import { useEffect, useRef } from "react";
 
-function ChatLog() {
-  const messageEndRef = useRef<HTMLDivElement | null>(null);
-  useEffect(() => {
-    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, []);
+type MessageType = {
+  gameId: number;
+  message: string;
+  profile: {
+    nickname: string;
+    profileImageUrl: string;
+    teamName: string;
+  };
+  type: string;
+};
+
+type ChatLogProps = {
+  chatList: MessageType[] | [];
+};
+
+function ChatLog({ chatList }: ChatLogProps) {
   return (
     <div className="chatlog">
-      <ChatBubble />
-      <div id="chatlog__end" ref={messageEndRef} />
+      {chatList.map((messageData) => (
+        <ChatBubble key={messageData.gameId} data={messageData} />
+      ))}
     </div>
   );
 }

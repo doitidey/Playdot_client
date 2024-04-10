@@ -14,12 +14,24 @@ import VoteModal from "@/components/chat/modals/VoteModal";
 import ShoutBubble from "@/components/chat/chatlog/ShoutBubble";
 import { configureStompClient } from "@/lib/api/chatAPI";
 
+type MessageType = {
+  gameId: number;
+  message: string;
+  profile: {
+    nickname: string;
+    profileImageUrl: string;
+    teamName: string;
+  };
+  type: string;
+};
+
 function ChatSection() {
   const ROOMNUM = 1; //TODO: NextJS url praram
 
   const { menuModalState } = useMenuModalState();
   const [showShoutBubble, setShowShoutBubble] = useState(true);
   const [stompClient, setStompClient] = useState<Client>();
+  const [chatList, setChatList] = useState<MessageType[]>([]);
 
   useEffect(() => {
     const socket = configureStompClient(ROOMNUM);
@@ -32,6 +44,7 @@ function ChatSection() {
           try {
             const receivedMessage = JSON.parse(frame.body);
             console.log(receivedMessage);
+            setChatList((prev) => [receivedMessage, ...prev]);
           } catch (error) {
             console.error("stomp 구독에 오류가 발생했습니다:", error);
           }
@@ -57,7 +70,7 @@ function ChatSection() {
           </div>
           <ChatInput stompClient={stompClient} />
         </div>
-        <ChatLog />
+        <ChatLog chatList={chatList} />
       </div>
       {showShoutBubble && (
         <ShoutBubble onEnd={() => setShowShoutBubble(false)} />
