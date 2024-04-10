@@ -5,6 +5,7 @@ import "@/components/float/ChatRooms.scss";
 import FloatButton from "@/components/float/FloatButton";
 import FloatEntrancePopup from "@/components/float/FloatEntrancePopup";
 import { TodayMatchData } from "@/components/today/Today";
+import usePopupStore from "@/lib/store/today/popupStore";
 
 interface ChatRoomsProps {
   game: TodayMatchData[];
@@ -12,15 +13,19 @@ interface ChatRoomsProps {
 }
 
 function ChatRooms({ game, visiblefloat }: ChatRoomsProps) {
+  const { isOpen, setOpenPopup } = usePopupStore();
   const [clickedId, setClickedId] = useState(0);
+
   const onClickRooms = (gameId: number) => {
     setClickedId(gameId);
+    setOpenPopup();
   };
+
   return (
     <ul className="chatrooms">
       {game.map((item) => (
         <li className="chatrooms__item" key={item.gameId}>
-          {clickedId === item.gameId && (
+          {isOpen && clickedId === item.gameId && (
             <FloatEntrancePopup gameId={item.gameId} />
           )}
           <FloatButton

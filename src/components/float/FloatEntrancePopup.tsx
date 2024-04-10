@@ -2,15 +2,18 @@ import { useRouter } from "next/navigation";
 
 import "@/components/float/FloatEntrancePopup.scss";
 import Text from "@/components/common/Text";
+import usePopupStore from "@/lib/store/today/popupStore";
 
 function FloatEntrancePopup({ gameId }: { gameId: number }) {
   const router = useRouter();
+  const { setClosePopup } = usePopupStore();
+
   const onEntrance = () => {
     router.push("/match/chat");
   };
 
   const onCancel = () => {
-    //TODO: 취소 클릭시 팝업 제거
+    setClosePopup();
   };
 
   return (
