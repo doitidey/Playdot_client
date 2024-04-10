@@ -20,7 +20,7 @@ export const login = () => {
 // GET
 export const oauthLogin = (registrationId: string, code: string) => {
   try {
-    return fetchData(`login/oauth2/code/${registrationId}${code}`, "get");
+    return fetchAuth(`login/oauth2/code/${registrationId}${code}`, "get");
   } catch (error) {
     console.error(error);
   }
