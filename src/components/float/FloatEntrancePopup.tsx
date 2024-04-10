@@ -9,7 +9,9 @@ function FloatEntrancePopup({ gameId }: { gameId: number }) {
     router.push("/match/chat");
   };
 
-  const onCancel = () => {};
+  const onCancel = () => {
+    //TODO: 취소 클릭시 팝업 제거
+  };
 
   return (
     <div className="entrancepopup">

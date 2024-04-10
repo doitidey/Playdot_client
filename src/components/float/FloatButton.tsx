@@ -14,7 +14,7 @@ interface FloatButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   chat?: ReactNode;
   home?: string;
   away?: string;
-  visiblefloat?: boolean;
+  visiblefloat: boolean;
   chatbuttontitle?: ReactNode;
   buttonstyle?: buttonstyle;
 }
@@ -33,6 +33,7 @@ function FloatButton({ ...props }: FloatButtonProps) {
       {props.buttonstyle === "floating" ? (
         <div className="float-button__content">
           {props.visiblefloat ? (
+            //TODO: X버튼으로 변경
             <Image src="/images/chat.svg" alt="" width={38} height={38} />
           ) : (
             <Image src="/images/chat.svg" alt="" width={38} height={38} />
