@@ -1,27 +1,16 @@
 import ChatBubble from "@/components/chat/chatlog/ChatBubble";
 import "@/components/chat/chatlog/ChatLog.scss";
+import { useStompMessageData } from "@/lib/store/chat/stompclientStore";
 
-type MessageType = {
-  gameId: number;
-  message: string;
-  profile: {
-    nickname: string;
-    profileImageUrl: string;
-    teamName: string;
-  };
-  type: string;
-};
+function ChatLog() {
+  const { messageData } = useStompMessageData();
 
-type ChatLogProps = {
-  chatList: MessageType[] | [];
-};
-
-function ChatLog({ chatList }: ChatLogProps) {
   return (
     <div className="chatlog">
-      {chatList.map((messageData) => (
-        <ChatBubble key={messageData.gameId} data={messageData} />
-      ))}
+      {messageData.length > 0 &&
+        messageData.map((data, index) => (
+          <ChatBubble key={index} data={data} />
+        ))}
     </div>
   );
 }
