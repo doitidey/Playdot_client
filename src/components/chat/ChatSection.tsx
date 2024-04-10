@@ -3,7 +3,6 @@
 import "@/components/chat/ChatSection.scss";
 
 import { useEffect, useState } from "react";
-import { Client } from "@stomp/stompjs";
 
 import ChatHeader from "@/components/chat/ChatHeader";
 import ChatLog from "@/components/chat/chatlog/ChatLog";
@@ -12,51 +11,17 @@ import ChatInput from "@/components/chat/ChatInput";
 import useMenuModalState from "@/lib/store/chat/menuModalState";
 import VoteModal from "@/components/chat/modals/VoteModal";
 import ShoutBubble from "@/components/chat/chatlog/ShoutBubble";
-import { configureStompClient } from "@/lib/api/chatAPI";
-
-type MessageType = {
-  gameId: number;
-  message: string;
-  profile: {
-    nickname: string;
-    profileImageUrl: string;
-    teamName: string;
-  };
-  type: string;
-};
+import { useSocket } from "@/lib/hooks/useSocket";
 
 function ChatSection() {
   const ROOMNUM = 1; //TODO: NextJS url praram
 
+  const { connectSocket } = useSocket();
   const { menuModalState } = useMenuModalState();
   const [showShoutBubble, setShowShoutBubble] = useState(true);
-  const [stompClient, setStompClient] = useState<Client>();
-  const [chatList, setChatList] = useState<MessageType[]>([]);
 
   useEffect(() => {
-    const socket = configureStompClient(ROOMNUM);
-
-    socket.onConnect = () => {
-      setStompClient(socket);
-      socket.subscribe(
-        `/sub/chat/${ROOMNUM}`,
-        (frame) => {
-          try {
-            const receivedMessage = JSON.parse(frame.body);
-            console.log(receivedMessage);
-            setChatList((prev) => [receivedMessage, ...prev]);
-          } catch (error) {
-            console.error("stomp 구독에 오류가 발생했습니다:", error);
-          }
-        },
-        {
-          gameId: `${ROOMNUM}`,
-          Authorization: `${localStorage.getItem("authToken")}`,
-        },
-      );
-    };
-
-    socket.activate();
+    connectSocket(ROOMNUM);
   }, []);
 
   return (
@@ -68,9 +33,9 @@ function ChatSection() {
             {menuModalState.isOpen && <MenuModal />}
             <VoteModal />
           </div>
-          <ChatInput stompClient={stompClient} />
+          <ChatInput />
         </div>
-        <ChatLog chatList={chatList} />
+        <ChatLog />
       </div>
       {showShoutBubble && (
         <ShoutBubble onEnd={() => setShowShoutBubble(false)} />

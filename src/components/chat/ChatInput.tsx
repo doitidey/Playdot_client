@@ -1,17 +1,14 @@
 import Image from "next/image";
 import classNames from "classnames";
 import { useState } from "react";
-import { Client } from "@stomp/stompjs";
 
 import "@/components/chat/ChatInput.scss";
 import useMenuModalState from "@/lib/store/chat/menuModalState";
+import { useSocket } from "@/lib/hooks/useSocket";
 
-interface ChatInputProps {
-  stompClient: Client | undefined;
-}
-
-function ChatInput({ stompClient }: ChatInputProps) {
+function ChatInput() {
   const [message, setMessage] = useState("");
+  const { sendMessage } = useSocket();
 
   const {
     menuModalState,
@@ -36,26 +33,6 @@ function ChatInput({ stompClient }: ChatInputProps) {
   const onClickMenu = () => {
     setMenuModalClicked();
     menuModalState.isOpen ? CloseModal() : OpenModal();
-  };
-
-  const sendMessage = (msg: string) => {
-    const ROOMNUM = 1;
-    if (stompClient && stompClient.connected) {
-      const messageDetails = JSON.stringify({
-        gameId: `${ROOMNUM}`,
-        type: "NORMAL",
-        message: `${msg}`,
-      });
-
-      stompClient.publish({
-        destination: "/pub/chat/message",
-        body: messageDetails,
-        headers: {
-          gameId: `${ROOMNUM}`,
-          Authorization: `${localStorage.getItem("authToken")}`,
-        },
-      });
-    }
   };
 
   const handleSendMessage = (e: React.FormEvent) => {
