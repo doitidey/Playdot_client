@@ -1,26 +1,37 @@
 "use client";
+import { useState } from "react";
 
 import "@/components/float/ChatRooms.scss";
-import { TodayMatchData } from "../today/Today";
-import ChatRoomItem from "./ChatRoomItem";
+import FloatButton from "@/components/float/FloatButton";
+import FloatEntrancePopup from "@/components/float/FloatEntrancePopup";
+import { TodayMatchData } from "@/components/today/Today";
 
 interface ChatRoomsProps {
   game: TodayMatchData[];
-  visibleFloat: boolean;
+  visiblefloat: boolean;
 }
 
-function ChatRooms({ game, visibleFloat }: ChatRoomsProps) {
+function ChatRooms({ game, visiblefloat }: ChatRoomsProps) {
+  const [clickedId, setClickedId] = useState(0);
+  const onClickRooms = (gameId: number) => {
+    setClickedId(gameId);
+  };
   return (
-    <ul className="chat-rooms-block">
+    <ul className="chatrooms">
       {game.map((item) => (
-        <ChatRoomItem
-          key={item.gameId}
-          visibleFloat={visibleFloat}
-          home={item.homeTeam.teamName}
-          away={item.awayTeam.teamName}
-          gameId={item.gameId as number}
-          status={item.status as string}
-        />
+        <li className="chatrooms__item" key={item.gameId}>
+          {clickedId === item.gameId && (
+            <FloatEntrancePopup gameId={item.gameId} />
+          )}
+          <FloatButton
+            home={item.homeTeam.teamName}
+            away={item.awayTeam.teamName}
+            visiblefloat={visiblefloat}
+            buttonstyle="chatting"
+            disabled={item.status === "END" || item.status === "CANCEL"}
+            onClick={() => onClickRooms(item.gameId)}
+          />
+        </li>
       ))}
     </ul>
   );
