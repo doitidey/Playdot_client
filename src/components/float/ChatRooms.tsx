@@ -26,7 +26,7 @@ function ChatRooms({ game, visiblefloat }: ChatRoomsProps) {
           <FloatButton
             home={item.homeTeam.teamName}
             away={item.awayTeam.teamName}
-            visiblefloat={visiblefloat}
+            visiblefloat={visiblefloat.toString()}
             buttonstyle="chatting"
             disabled={item.status === "END" || item.status === "CANCEL"}
             onClick={() => onClickRooms(item.gameId)}

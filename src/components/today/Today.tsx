@@ -11,7 +11,7 @@ import ChatFloatSection from "@/components/float/ChatFloatSection";
 import { todayGames } from "@/lib/api/todayAPI";
 
 export interface TodayMatchData {
-  gameId?: number;
+  gameId: number;
   gameTime: string;
   homeTeam: {
     id: number;

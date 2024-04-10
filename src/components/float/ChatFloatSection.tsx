@@ -7,7 +7,7 @@ import FloatButton from "@/components/float/FloatButton";
 import { TodayMatchData } from "@/components/today/Today";
 
 function ChatFloatSection({ game }: { game: TodayMatchData[] }) {
-  const [visibleFloat, setVisibleFloat] = useState(false);
+  const [visibleFloat, setVisibleFloat] = useState<boolean>(false);
 
   const onClickChatFloatButton = () => {
     setVisibleFloat(!visibleFloat);
@@ -23,7 +23,7 @@ function ChatFloatSection({ game }: { game: TodayMatchData[] }) {
       )}
       <FloatButton
         onClick={onClickChatFloatButton}
-        visiblefloat={visibleFloat}
+        visiblefloat={visibleFloat.toString()}
         buttonstyle="floating"
       />
     </div>
