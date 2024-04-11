@@ -4,9 +4,11 @@ import Button from "@/components/common/Button";
 import TokenButton from "@/components/chat/modals/TokenButton";
 import "@/components/chat/modals/PostVoteModal.scss";
 import { useSocket } from "@/lib/hooks/useSocket";
+import { useModal } from "@/lib/hooks/useModal";
 
 function PostVoteModal() {
   const { createVote } = useSocket();
+  const { closeModal } = useModal();
   const [voteDetail, setVoteDetail] = useState({
     question: "",
     option1: "",
@@ -38,11 +40,7 @@ function PostVoteModal() {
   const onSubmitCreateVote = (e: React.FormEvent) => {
     e.preventDefault();
     createVote(voteDetail);
-    setVoteDetail({
-      question: "",
-      option1: "",
-      option2: "",
-    });
+    closeModal();
   };
 
   return (

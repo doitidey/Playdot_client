@@ -1,12 +1,14 @@
 import { useState } from "react";
 
+import "@/components/chat/modals/PostShoutModal.scss";
 import Button from "@/components/common/Button";
 import TokenButton from "@/components/chat/modals/TokenButton";
-import "@/components/chat/modals/PostShoutModal.scss";
 import { useSocket } from "@/lib/hooks/useSocket";
+import { useModal } from "@/lib/hooks/useModal";
 
 function PostShoutModal() {
   const { sendMessage } = useSocket();
+  const { closeModal } = useModal();
   const [message, setMessage] = useState("");
 
   const onClickShout = () => {
@@ -15,6 +17,7 @@ function PostShoutModal() {
       type: "BAWWLING",
     };
     sendMessage(messageDetail);
+    closeModal();
   };
 
   return (
