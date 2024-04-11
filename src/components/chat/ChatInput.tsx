@@ -38,7 +38,11 @@ function ChatInput() {
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     if (!message.trim()) return;
-    sendMessage(message);
+    const messageDetail = {
+      message: message,
+      type: "NORMAL",
+    };
+    sendMessage(messageDetail);
     setMessage("");
   };
 
