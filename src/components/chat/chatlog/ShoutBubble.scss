@@ -2,12 +2,13 @@
 @import "@/styles/animation.scss";
 
 .shout {
-  width: 100%;
-  height: calc(100% - 260px);
   position: absolute;
   left: 100%;
-  animation: pass-away 7s 1s linear forwards;
-  &__block {
+  width: 100%;
+  height: calc(100% - 260px);
+  animation: pass-away 5s 1s linear forwards;
+  pointer-events: none;
+  &__content {
     position: absolute;
     width: fit-content;
     color: $dark-text2;
