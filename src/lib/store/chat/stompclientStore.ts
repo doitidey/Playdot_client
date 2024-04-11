@@ -1,28 +1,9 @@
+import {
+  ClientStore,
+  MessageDataStore,
+  ShoutMessageDataStore,
+} from "@/lib/types/store/stompclientTypes";
 import { create } from "zustand";
-import { Client } from "@stomp/stompjs";
-
-interface ClientStore {
-  stompClient: Client | null;
-  roomId: number;
-  setStompClient: (client: Client) => void;
-  setRoomId: (roomNumber: number) => void;
-}
-
-type MessageType = {
-  gameId: number;
-  message: string;
-  profile: {
-    nickname: string;
-    profileImageUrl: string;
-    teamName: string;
-  };
-  type: string;
-};
-
-interface MessageDataStore {
-  messageData: MessageType[] | [];
-  setMessageData: (receivedMessage: MessageType) => void;
-}
 
 export const useStompClient = create<ClientStore>((set) => ({
   stompClient: null,
@@ -42,4 +23,26 @@ export const useStompMessageData = create<MessageDataStore>((set) => ({
       messageData: [receivedMessage, ...prev.messageData],
     }));
   },
+}));
+
+export const useStompShoutData = create<ShoutMessageDataStore>((set) => ({
+  shoutData: [],
+  // shout가 노출 되어야하는지 마는지 판단해야할때
+  // isShoutMessageShow: false,
+  setShoutData: (receivedMessage) => {
+    set((prev) => ({
+      shoutData: [...prev.shoutData, receivedMessage],
+    }));
+  },
+  // shoutData를 날려줘야할때
+  // setEmptyShoutData: () => {
+  //   set(() => ({
+  //     shoutData: [],
+  //   }));
+  // },
+  // setIsShoutMessageShow: () => {
+  //   set((prev) => ({
+  //     isShoutMessageShow: !prev.isShoutMessageShow,
+  //   }));
+  // },
 }));

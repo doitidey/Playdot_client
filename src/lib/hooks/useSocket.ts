@@ -4,16 +4,14 @@ import { configureStompClient } from "@/lib/api/chatAPI";
 import {
   useStompClient,
   useStompMessageData,
-} from "../store/chat/stompclientStore";
-
-type MessageDetailProps = {
-  message: string;
-  type: string;
-};
+  useStompShoutData,
+} from "@/lib/store/chat/stompclientStore";
+import { MessageDetailProps } from "@/lib/types/hooks/useSocketTypes";
 
 export const useSocket = () => {
   const { stompClient, roomId, setStompClient, setRoomId } = useStompClient();
   const { setMessageData } = useStompMessageData();
+  const { setShoutData } = useStompShoutData();
 
   //소켓 연결하기
   const connectSocket = (roomNumber: number) => {
@@ -28,7 +26,12 @@ export const useSocket = () => {
         (frame) => {
           try {
             const receivedMessage = JSON.parse(frame.body);
-            setMessageData(receivedMessage);
+            if (receivedMessage.type === "BAWWLING") {
+              setShoutData(receivedMessage);
+              // isShoutMessageShow || setIsShoutMessageShow();
+            } else {
+              setMessageData(receivedMessage);
+            }
           } catch (error) {
             console.error("stomp 구독에 오류가 발생했습니다:", error);
           }
@@ -52,8 +55,6 @@ export const useSocket = () => {
           type: `${props.type}`,
           message: `${props.message}`,
         });
-        console.log(messageDetails);
-
         stompClient.publish({
           destination: "/pub/chat/message",
           body: messageDetails,
