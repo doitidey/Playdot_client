@@ -8,9 +8,10 @@ function ChatLog() {
   return (
     <div className="chatlog">
       {messageData.length > 0 &&
-        messageData.map((data, index) => (
-          <ChatBubble key={index} data={data} />
-        ))}
+        messageData.map(
+          (data, index) =>
+            data.type === "NORMAL" && <ChatBubble key={index} data={data} />,
+        )}
     </div>
   );
 }
