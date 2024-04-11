@@ -1,17 +1,10 @@
+import Image from "next/image";
+
 import "@/components/chat/chatlog/ChatBubble.scss";
 import { useModal } from "@/lib/hooks/useModal";
-import ProfileModal from "../modals/ProfileModal";
-import Image from "next/image";
-type MessageType = {
-  gameId: number;
-  message: string;
-  profile: {
-    nickname: string;
-    profileImageUrl: string;
-    teamName: string;
-  };
-  type: string;
-};
+import ProfileModal from "@/components/chat/modals/ProfileModal";
+import { MessageType } from "@/lib/types/chat/chatTypes";
+
 function ChatBubble({ data }: { data: MessageType }) {
   const { openModal } = useModal();
 

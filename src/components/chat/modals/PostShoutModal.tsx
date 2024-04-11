@@ -1,8 +1,9 @@
+import { useState } from "react";
+
 import Button from "@/components/common/Button";
-import TokenButton from "./TokenButton";
+import TokenButton from "@/components/chat/modals/TokenButton";
 import "@/components/chat/modals/PostShoutModal.scss";
 import { useSocket } from "@/lib/hooks/useSocket";
-import { useState } from "react";
 
 function PostShoutModal() {
   const { sendMessage } = useSocket();
