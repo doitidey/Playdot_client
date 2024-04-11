@@ -1,5 +1,5 @@
 import { Client } from "@stomp/stompjs";
-import { MessageType } from "@/lib/types/chat/chatTypes";
+import { MessageType, VoteType } from "@/lib/types/chat/chatTypes";
 
 export interface ClientStore {
   stompClient: Client | null;
@@ -19,4 +19,9 @@ export interface ShoutMessageDataStore {
   setShoutData: (receivedMessage: MessageType) => void;
   //   setEmptyShoutData: () => void;
   //   setIsShoutMessageShow: () => void;
+}
+
+export interface VoteDataStore {
+  voteData: VoteType | {};
+  setVoteData: (receivedMessage: VoteType) => void;
 }

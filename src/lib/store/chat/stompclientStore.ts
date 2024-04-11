@@ -2,6 +2,7 @@ import {
   ClientStore,
   MessageDataStore,
   ShoutMessageDataStore,
+  VoteDataStore,
 } from "@/lib/types/store/stompclientTypes";
 import { create } from "zustand";
 
@@ -45,4 +46,13 @@ export const useStompShoutData = create<ShoutMessageDataStore>((set) => ({
   //     isShoutMessageShow: !prev.isShoutMessageShow,
   //   }));
   // },
+}));
+
+export const useStompVoteData = create<VoteDataStore>((set) => ({
+  voteData: {},
+  setVoteData: (receivedMessage) => {
+    set(() => ({
+      voteData: receivedMessage,
+    }));
+  },
 }));

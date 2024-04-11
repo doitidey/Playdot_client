@@ -5,13 +5,24 @@ import {
   useStompClient,
   useStompMessageData,
   useStompShoutData,
+  useStompVoteData,
 } from "@/lib/store/chat/stompclientStore";
-import { MessageDetailProps } from "@/lib/types/hooks/useSocketTypes";
+import {
+  CreateVoteDetailProps,
+  MessageDetailProps,
+} from "@/lib/types/hooks/useSocketTypes";
 
 export const useSocket = () => {
   const { stompClient, roomId, setStompClient, setRoomId } = useStompClient();
   const { setMessageData } = useStompMessageData();
   const { setShoutData } = useStompShoutData();
+  const { setVoteData } = useStompVoteData();
+
+  useStompVoteData;
+  const headers = {
+    gameId: `${roomId}`,
+    Authorization: `${localStorage.getItem("authToken")}`,
+  };
 
   //소켓 연결하기
   const connectSocket = (roomNumber: number) => {
@@ -23,14 +34,17 @@ export const useSocket = () => {
       setStompClient(socket);
       socket.subscribe(
         `/sub/chat/${roomId}`,
-        (frame) => {
+        (frame: { body: string }) => {
           try {
             const receivedMessage = JSON.parse(frame.body);
+            console.log(receivedMessage);
             if (receivedMessage.type === "BAWWLING") {
               setShoutData(receivedMessage);
               // isShoutMessageShow || setIsShoutMessageShow();
-            } else {
+            } else if (receivedMessage.type === "NORMAL") {
               setMessageData(receivedMessage);
+            } else {
+              setVoteData(receivedMessage);
             }
           } catch (error) {
             console.error("stomp 구독에 오류가 발생했습니다:", error);
@@ -58,15 +72,32 @@ export const useSocket = () => {
         stompClient.publish({
           destination: "/pub/chat/message",
           body: messageDetails,
-          headers: {
-            gameId: `${roomId}`,
-            Authorization: `${localStorage.getItem("authToken")}`,
-          },
+          headers: headers,
         });
       }
     },
     [roomId, stompClient],
   );
 
-  return { connectSocket, sendMessage };
+  //미니투표 만들기
+  const createVote = useCallback(
+    (props: CreateVoteDetailProps) => {
+      if (stompClient && stompClient.connected) {
+        const voteDetails = JSON.stringify({
+          gameId: `${roomId}`,
+          question: `${props.question}`,
+          option1: `${props.option1}`,
+          option2: `${props.option2}`,
+        });
+        stompClient.publish({
+          destination: "/pub/chat/createVote",
+          body: voteDetails,
+          headers: headers,
+        });
+      }
+    },
+    [roomId, stompClient],
+  );
+
+  return { connectSocket, sendMessage, createVote };
 };
