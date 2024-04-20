@@ -11,7 +11,7 @@ export const BUTTON_INFO: ButtonInfo = [
 
 type LoginLinks = { [naver: string]: string; kakao: string; google: string };
 export const LOGIN_LINKS: LoginLinks = {
-  naver: ``,
+  naver: `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_NAVER_REST_API_KEY}&state=playdot&redirect_uri=${process.env.NEXT_PUBLIC_NAVER_REDIRECT_URI}`,
   kakao: `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code`,
   google: `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=email profile`,
 };
