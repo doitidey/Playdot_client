@@ -6,17 +6,12 @@ import SubMenu from "./SubMenu";
 import "./Header.scss";
 import usePath from "@/lib/hooks/usePath";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useUserDataStore } from "@/lib/store/userDataStore";
 
 function Header() {
   const pathname = usePathname();
-  const [localNick, setLocalNick] = useState<String | null>("");
-  const [localURL, setLocalURL] = useState<String | null>("");
 
-  useEffect(() => {
-    setLocalNick(localStorage.getItem("nickname"));
-    setLocalURL(localStorage.getItem("profileImageUrl"));
-  }, []);
+  const { userData } = useUserDataStore();
 
   const {
     ACTIVE_MATCH_CLASSNAME,
@@ -71,10 +66,16 @@ function Header() {
               </li>
             </ol>
           </nav>
-          {localNick ? (
+          {userData.nickname ? (
             <Link href={PATH.mypage} className="profile">
               <div className="profile__logo">
-                {localURL === "null" ? (
+                {userData.profileImageUrl ? (
+                  <Image
+                    alt="profileimg"
+                    src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${userData.profileImageUrl}`}
+                    fill={true}
+                  />
+                ) : (
                   <Image
                     className="profile__logo__basictitle"
                     src="/images/logo.svg"
@@ -82,15 +83,9 @@ function Header() {
                     width={24}
                     height={24}
                   />
-                ) : (
-                  <Image
-                    alt="profileimg"
-                    src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${localURL}`}
-                    fill={true}
-                  />
                 )}
               </div>
-              <span className="profile__myname">{localNick}</span>
+              <span className="profile__myname">{userData.nickname}</span>
             </Link>
           ) : (
             <Link href={PATH.login} className="profile">
@@ -99,8 +94,8 @@ function Header() {
                   className="profile__logo__basictitle"
                   src="/images/logo.svg"
                   alt="프로필이미지 로고"
-                  width={20}
-                  height={5}
+                  width={24}
+                  height={24}
                 />
               </div>
               <span className="profile__login">로그인</span>
