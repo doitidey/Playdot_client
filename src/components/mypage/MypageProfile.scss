@@ -48,6 +48,7 @@
       gap: 14px;
     }
     &__list {
+      position: relative;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -68,8 +69,21 @@
       justify-content: center;
     }
     &__desc {
+      background-color: transparent;
+      border: none;
       text-align: center;
+      font-size: inherit;
+      color: inherit;
       flex: 1;
+      &--active {
+        color: #fff;
+        &::placeholder {
+          color: #fff;
+        }
+      }
+      &:focus {
+        outline: none;
+      }
     }
     &__img {
       @include box-default;
@@ -82,13 +96,49 @@
         object-fit: cover;
       }
     }
-    &__line {
+    &__comment {
       @include box-default;
       width: 612px;
       height: 146px;
       margin-top: 16px;
       padding: 22px 32px;
       text-align: left;
+      resize: none;
+      color: #fff;
+      &:focus {
+        outline: none;
+      }
+    }
+    &__valid {
+      color: red;
+      position: absolute;
+      top: -15px;
+      right: 0;
+      margin-right: 14px;
+      font-size: 14px;
+    }
+  }
+  .img {
+    &__upload {
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      z-index: 99;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 42px;
+      &::before {
+        content: "";
+        width: 68px;
+        height: 68px;
+        border-radius: 50%;
+        background-color: $dark-bg;
+        position: absolute;
+        z-index: -1;
+      }
     }
   }
   .level-box {

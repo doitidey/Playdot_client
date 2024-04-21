@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 import Text from "../common/Text";
 import Title from "../common/Title";
@@ -8,6 +9,7 @@ import Button from "../common/Button";
 
 import "@/components/mypage/MypageProfile.scss";
 import { getProfileDetails } from "@/lib/api/mypageAPI";
+import { useProfile } from "@/lib/hooks/useProfile";
 
 type ProfileData = {
   comment: string;
@@ -18,8 +20,24 @@ type ProfileData = {
   token: number;
 };
 function MypageProfile() {
+  const imageInputRef = useRef<HTMLInputElement | null>(null);
+  const {
+    previewUrl,
+    validStore,
+    onSubmit,
+    onClickUpload,
+    onFileChange,
+    resetProfile,
+    onChangeNickname,
+    isSubmitRequired,
+    onChangeComment,
+    inputStore,
+  } = useProfile();
+
   const [profileData, setProfileData] = useState<ProfileData>();
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const router = useRouter();
+  console.log(inputStore);
 
   useEffect(() => {
     const getUserProfile = async () => {
@@ -35,18 +53,22 @@ function MypageProfile() {
   }, []);
 
   const onClickEdit = () => {
-    console.log("수정");
     setIsEditing(true);
   };
 
+  const onClickChangeTeam = () => {
+    if (!isEditing) return;
+    router.push("/mypage/teams");
+  };
+
   const onClickCancle = () => {
-    console.log("수정안할게");
     setIsEditing(false);
+    resetProfile();
   };
 
   const onClickSubmit = () => {
-    console.log("등록할께");
-    setIsEditing(false);
+    console.log("Submit");
+    onSubmit(imageInputRef);
   };
 
   return (
@@ -64,7 +86,7 @@ function MypageProfile() {
             <Button
               label="완료"
               size="x-medium"
-              variant="disactive"
+              variant={isSubmitRequired() ? "active" : "disactive"}
               onClick={onClickSubmit}
             />
           </>
@@ -81,25 +103,67 @@ function MypageProfile() {
         <Title large>프로필</Title>
       </div>
       <div className="profile-box__block">
-        <div className="profile-box__content detail-box">
+        <form className="profile-box__content detail-box">
           <div className="detail-box__block">
             <div className="detail-box__img">
+              {isEditing && (
+                <div
+                  className="img__upload"
+                  onClick={() => onClickUpload(imageInputRef)}
+                >
+                  +
+                </div>
+              )}
               {profileData && (
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${profileData.profileImageUrl}`}
+                  src={
+                    previewUrl
+                      ? `${previewUrl}`
+                      : `${process.env.NEXT_PUBLIC_IMAGE_URL}${profileData.profileImageUrl}`
+                  }
                   alt="프로필사진"
                   fill={true}
                 />
               )}
+              <input
+                type="file"
+                accept="image/*"
+                className="img__input"
+                ref={imageInputRef}
+                onChange={() => onFileChange(imageInputRef)}
+              />
             </div>
             <ol className="detail-box__list">
+              {validStore.validNickname && (
+                <span className="detail-box__valid">
+                  {validStore.validNickname}
+                </span>
+              )}
               <li className="detail-box__item">
                 <div className="detail-box__title">닉네임</div>
-                <div className="detail-box__desc">{profileData?.nickname}</div>
+                <input
+                  className={
+                    isEditing
+                      ? `detail-box__desc detail-box__desc--active`
+                      : `detail-box__desc`
+                  }
+                  placeholder={`${profileData?.nickname}`}
+                  readOnly={!isEditing && true}
+                  onChange={(e) => onChangeNickname(e)}
+                />
               </li>
               <li className="detail-box__item">
                 <div className="detail-box__title">구단</div>
-                <div className="detail-box__desc"> {profileData?.teamName}</div>
+                <div
+                  className={
+                    isEditing
+                      ? `detail-box__desc detail-box__desc--active`
+                      : `detail-box__desc`
+                  }
+                  onClick={onClickChangeTeam}
+                >
+                  {profileData?.teamName}
+                </div>
               </li>
               <li className="detail-box__item">
                 <div className="detail-box__title">보유토큰</div>
@@ -107,8 +171,17 @@ function MypageProfile() {
               </li>
             </ol>
           </div>
-          <div className=" detail-box__line">{profileData?.comment}</div>
-        </div>
+          <textarea
+            className={
+              isEditing
+                ? `detail-box__item detail-box__comment detail-box__desc--active`
+                : `detail-box__item detail-box__comment`
+            }
+            placeholder={`${profileData?.comment}`}
+            readOnly={!isEditing && true}
+            onChange={(e) => onChangeComment(e)}
+          />
+        </form>
         <div className="profile-box__content level-box">
           <Title large className="level-box__title">
             야구고수
