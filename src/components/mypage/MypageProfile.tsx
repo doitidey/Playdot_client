@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 import Text from "../common/Text";
 import Title from "../common/Title";
@@ -9,7 +9,8 @@ import Button from "../common/Button";
 
 import "@/components/mypage/MypageProfile.scss";
 import { getProfileDetails } from "@/lib/api/mypageAPI";
-import { useProfile } from "@/lib/hooks/useProfile";
+import { nicknameCheck, putProfile } from "@/lib/api/signupAPI";
+import { rInputRegexs } from "@/lib/util/signupValid";
 
 type ProfileData = {
   comment: string;
@@ -19,31 +20,43 @@ type ProfileData = {
   teamName: string;
   token: number;
 };
+interface InputValue {
+  nickname: string;
+  validNickname: boolean;
+  comment: string;
+  validComment: boolean;
+}
 function MypageProfile() {
   const imageInputRef = useRef<HTMLInputElement | null>(null);
-  const {
-    previewUrl,
-    validStore,
-    onSubmit,
-    onClickUpload,
-    onFileChange,
-    resetProfile,
-    onChangeNickname,
-    isSubmitRequired,
-    onChangeComment,
-    inputStore,
-  } = useProfile();
-
+  const [previewUrl, setPreviewUrl] = useState<string | undefined>();
   const [profileData, setProfileData] = useState<ProfileData>();
   const [isEditing, setIsEditing] = useState<boolean>(false);
+
+  const [inputValue, setInputValue] = useState<InputValue>({
+    nickname: "",
+    validNickname: false,
+    comment: "",
+    validComment: false,
+  });
+
+  const [validMessage, setValidMessage] = useState({
+    validNickname: "",
+    validComment: "",
+  });
+
   const router = useRouter();
-  console.log(inputStore);
 
   useEffect(() => {
     const getUserProfile = async () => {
       try {
         const res = await getProfileDetails();
         setProfileData(res.data);
+        setInputValue({
+          nickname: res.data.nickname,
+          validNickname: true,
+          comment: res.data.comment,
+          validComment: true,
+        });
       } catch (error) {
         console.error(error);
       }
@@ -56,6 +69,61 @@ function MypageProfile() {
     setIsEditing(true);
   };
 
+  const onChangeNicknameInput = (e: ChangeEvent<HTMLInputElement>) => {
+    const nickname = e.target.value;
+    setInputValue((prevData) => ({
+      ...prevData,
+      noneDuplicationNickname: false,
+      validNickname: false,
+      nickname,
+    }));
+    if (rInputRegexs.nicknameRegex.test(nickname)) {
+      setValidMessage((prevData) => ({
+        ...prevData,
+        validNickname: "",
+      }));
+      setInputValue((prevData) => ({
+        ...prevData,
+        validNickname: true,
+      }));
+    } else {
+      setValidMessage((prevData) => ({
+        ...prevData,
+        validNickname: "닉네임은 문자나 숫자로 2자에서 7자 이내로 설정해줘!",
+      }));
+    }
+  };
+
+  const onClickUpload = () => {
+    if (imageInputRef) {
+      imageInputRef.current?.click();
+    }
+  };
+
+  const onFileChange = () => {
+    const file = imageInputRef.current?.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        setPreviewUrl(reader.result as string);
+      };
+    }
+  };
+
+  const onChangeCommentInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const comment = e.target.value;
+    setInputValue((prevData) => ({
+      ...prevData,
+      comment,
+    }));
+    rInputRegexs.commentRegex.test(comment) ||
+      setValidMessage((prevData) => ({
+        ...prevData,
+        validComment: "한마디는 90자 이내로 작성해줘!",
+      }));
+  };
+
   const onClickChangeTeam = () => {
     if (!isEditing) return;
     router.push("/mypage/teams");
@@ -63,13 +131,74 @@ function MypageProfile() {
 
   const onClickCancle = () => {
     setIsEditing(false);
-    resetProfile();
   };
 
-  const onClickSubmit = () => {
-    console.log("Submit");
-    onSubmit(imageInputRef);
+  const putSubmit = async () => {
+    try {
+      // 폼 데이터 만들기
+      const formData = new FormData();
+      formData.append("profileImage", imageInputRef.current?.files?.[0] || "");
+      const blob = new Blob(
+        [
+          JSON.stringify({
+            nickname: inputValue.nickname,
+            comment: inputValue.comment,
+          }),
+        ],
+        {
+          type: "application/json",
+        },
+      );
+      formData.append("data", blob);
+
+      // formData 확인용 console
+      // formData.forEach((value, key) => {
+      //   console.log(key, value);
+      // });
+
+      // 프로필 설정 api
+      putProfile(formData);
+    } catch {
+      alert("api 오류");
+    }
   };
+
+  const onClickSubmit = async () => {
+    if (inputValue.nickname) {
+      try {
+        if (inputValue.validNickname) {
+          const res = await nicknameCheck(inputValue.nickname);
+          if (res.data.exist) {
+            setValidMessage((prev) => ({
+              ...prev,
+              validNickname: "중복된 닉네임이야!",
+            }));
+          } else {
+            setInputValue((prev) => ({
+              ...prev,
+              noneDuplicationNickname: true,
+            }));
+            setValidMessage((prev) => ({
+              ...prev,
+              validNickname: "사용 가능한 닉네임이야!",
+            }));
+            putSubmit();
+            location.reload();
+          }
+        }
+      } catch {
+        console.error("닉네임 체크 APi 오류");
+      }
+      return;
+    }
+    putSubmit();
+    location.reload();
+  };
+
+  const isCanSubmit =
+    inputValue.nickname !== profileData?.nickname ||
+    inputValue.comment !== profileData?.comment ||
+    previewUrl;
 
   return (
     <section className="profile-box">
@@ -86,7 +215,7 @@ function MypageProfile() {
             <Button
               label="완료"
               size="x-medium"
-              variant={isSubmitRequired() ? "active" : "disactive"}
+              variant={isCanSubmit ? "active" : "disactive"}
               onClick={onClickSubmit}
             />
           </>
@@ -107,10 +236,7 @@ function MypageProfile() {
           <div className="detail-box__block">
             <div className="detail-box__img">
               {isEditing && (
-                <div
-                  className="img__upload"
-                  onClick={() => onClickUpload(imageInputRef)}
-                >
+                <div className="img__upload" onClick={onClickUpload}>
                   +
                 </div>
               )}
@@ -130,13 +256,13 @@ function MypageProfile() {
                 accept="image/*"
                 className="img__input"
                 ref={imageInputRef}
-                onChange={() => onFileChange(imageInputRef)}
+                onChange={onFileChange}
               />
             </div>
             <ol className="detail-box__list">
-              {validStore.validNickname && (
+              {validMessage.validNickname && (
                 <span className="detail-box__valid">
-                  {validStore.validNickname}
+                  {validMessage.validNickname}
                 </span>
               )}
               <li className="detail-box__item">
@@ -149,7 +275,7 @@ function MypageProfile() {
                   }
                   placeholder={`${profileData?.nickname}`}
                   readOnly={!isEditing && true}
-                  onChange={(e) => onChangeNickname(e)}
+                  onChange={onChangeNicknameInput}
                 />
               </li>
               <li className="detail-box__item">
@@ -179,7 +305,7 @@ function MypageProfile() {
             }
             placeholder={`${profileData?.comment}`}
             readOnly={!isEditing && true}
-            onChange={(e) => onChangeComment(e)}
+            onChange={onChangeCommentInput}
           />
         </form>
         <div className="profile-box__content level-box">

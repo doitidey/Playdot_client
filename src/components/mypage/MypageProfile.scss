@@ -140,6 +140,9 @@
         z-index: -1;
       }
     }
+    &__input {
+      display: none;
+    }
   }
   .level-box {
     text-align: center;
