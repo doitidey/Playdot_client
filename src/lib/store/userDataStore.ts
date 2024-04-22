@@ -12,6 +12,7 @@ interface UserDataStore {
   userData: UserProfile;
   setUserData: (data: UserProfile) => void;
 }
+
 //TODO: 마이페이지에서 정보 변경시 api 요청 후 데이터 다시 세팅
 export const useUserDataStore = create<UserDataStore>()(
   persist(
@@ -28,6 +29,6 @@ export const useUserDataStore = create<UserDataStore>()(
           userData: { ...prev.userData, ...data },
         })),
     }),
-    { name: "userData" },
+    { name: "userData", skipHydration: true },
   ),
 );

@@ -7,9 +7,14 @@ import "./Header.scss";
 import usePath from "@/lib/hooks/usePath";
 import Image from "next/image";
 import { useUserDataStore } from "@/lib/store/userDataStore";
+import { useEffect } from "react";
 
 function Header() {
   const pathname = usePathname();
+
+  useEffect(() => {
+    useUserDataStore.persist.rehydrate();
+  }, []);
 
   const { userData } = useUserDataStore();
 
