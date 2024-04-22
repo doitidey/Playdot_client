@@ -1,18 +1,18 @@
 "use client";
 import { oauthLogin } from "@/lib/api/authAPI";
 import { useUserDataStore } from "@/lib/store/userDataStore";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 
 function Oauth() {
-  const code = window.location.search;
   const router = useRouter();
-
+  const searchParams = useSearchParams();
+  const code = searchParams.get("code");
   const { userData, setUserData } = useUserDataStore();
   useEffect(() => {
     const getOathLogin = async () => {
       try {
-        const res = await oauthLogin("kakao", code);
+        const res = code && (await oauthLogin("kakao", code));
         const userProfile = {
           profileImageUrl: res.data.profileImageUrl,
           nickname: res.data.nickname,
