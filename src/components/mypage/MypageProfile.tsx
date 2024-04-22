@@ -316,7 +316,8 @@ function MypageProfile() {
             당신은 진정한 야구러버!
           </Text>
           <Image
-            src={`images/levelicon_${profileData?.level}.svg`}
+            // TODO: 레벨값 연동 src={`images/levelicon_${profileData?.level}.svg`}
+            src={`images/levelicon_1.svg`}
             alt="레벨 아이콘"
             width={220}
             height={227}
