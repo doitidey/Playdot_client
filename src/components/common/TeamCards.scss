@@ -52,8 +52,6 @@
     transform: rotate(45deg);
     width: 340px;
     height: 530px;
-    overflow: hidden;
-    box-sizing: border-box;
 
     .square {
       width: 150px;
@@ -112,6 +110,9 @@
     background-color: $dark-bg;
     height: 100%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     img {
       position: relative;
@@ -124,13 +125,13 @@
       &:hover {
         transform: scale(1.03);
         .first-square {
-          margin-top: 30px;
+          transform: translateY(30px);
         }
         .second-square {
-          margin-top: 60px;
+          transform: translateY(60px);
         }
         .third-square {
-          margin-top: 42px;
+          transform: translateY(42px);
         }
         img {
           transform: scale(1.08);
