@@ -49,18 +49,24 @@
   }
 }
 .pagination {
+  display: flex;
   margin-top: 84px;
-  &__content {
+  font-size: 24px;
+  li {
     cursor: pointer;
-    background: none;
-    color: $dark-text1;
-    border: none;
-    font-size: 24px;
     width: 44px;
     height: 44px;
-    border-radius: 8px;
-    &--active {
-      color: $dark-text2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    a {
+      color: $dark-text1;
+    }
+    &.active {
+      a {
+        color: $dark-text2;
+      }
       background: #4a2fa5;
     }
   }
