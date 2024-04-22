@@ -66,30 +66,19 @@ function Header() {
               </li>
             </ol>
           </nav>
-          {userData.nickname ? (
-            <Link href={PATH.mypage} className="profile">
-              <div className="profile__logo">
-                {userData.profileImageUrl ? (
-                  <Image
-                    alt="profileimg"
-                    src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${userData.profileImageUrl}`}
-                    fill={true}
-                  />
-                ) : (
-                  <Image
-                    className="profile__logo__basictitle"
-                    src="/images/logo.svg"
-                    alt="프로필이미지 로고"
-                    width={24}
-                    height={24}
-                  />
-                )}
-              </div>
-              <span className="profile__myname">{userData.nickname}</span>
-            </Link>
-          ) : (
-            <Link href={PATH.login} className="profile">
-              <div className="profile__logo">
+
+          <Link
+            href={userData.nickname ? PATH.mypage : PATH.login}
+            className="profile"
+          >
+            <div className="profile__logo">
+              {userData.profileImageUrl ? (
+                <Image
+                  alt="profileimg"
+                  src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${userData.profileImageUrl}`}
+                  fill={true}
+                />
+              ) : (
                 <Image
                   className="profile__logo__basictitle"
                   src="/images/logo.svg"
@@ -97,10 +86,16 @@ function Header() {
                   width={24}
                   height={24}
                 />
-              </div>
-              <span className="profile__login">로그인</span>
-            </Link>
-          )}
+              )}
+            </div>
+            <span
+              className={
+                userData.nickname ? "profile__myname" : "profile__login"
+              }
+            >
+              {userData.nickname ? userData.nickname : "로그인"}
+            </span>
+          </Link>
         </div>
       </header>
       <div className="space" />
