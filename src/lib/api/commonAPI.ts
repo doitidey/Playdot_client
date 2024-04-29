@@ -59,21 +59,6 @@ instance.interceptors.request.use(
   },
 );
 
-// 로그인 request interceptor
-authInstance.interceptors.request.use(
-  function (config) {
-    const accessToken = localStorage.getItem("authToken");
-    if (!accessToken) {
-      return config;
-    }
-    config.headers.authorization = accessToken;
-    return config;
-  },
-  function (error) {
-    return Promise.reject(error);
-  },
-);
-
 // 로그인 response interceptor
 authInstance.interceptors.response.use(
   function (config) {
@@ -87,9 +72,6 @@ authInstance.interceptors.response.use(
       console.error("500 Internal Error");
     }
     localStorage.setItem("authToken", config.headers.authorization);
-    localStorage.setItem("profileImageUrl", config.data.data.profileImageUrl);
-    localStorage.setItem("nickname", config.data.data.nickname);
-    localStorage.setItem("teamName", config.data.data.teamName);
     return config;
   },
   function (error) {
