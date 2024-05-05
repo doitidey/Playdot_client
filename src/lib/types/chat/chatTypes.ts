@@ -7,6 +7,7 @@ export type MessageType = {
     profileImageUrl: string;
     teamName: string;
   };
+  teamType: string;
   type: string;
 };
 

@@ -13,7 +13,6 @@ function ChatBubble({ data }: { data: MessageType }) {
       content: <ProfileModal />,
     });
   };
-
   return (
     <div className="bubble">
       <div className="bubble__profile" onClick={onClickNickname}>
@@ -24,7 +23,15 @@ function ChatBubble({ data }: { data: MessageType }) {
           alt="profileImage"
           src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${data.profile.profileImageUrl}`}
         />
-        <div className="bubble__name">{data.profile.nickname}</div>
+        <div
+          className={
+            data.teamType === "home"
+              ? "bubble__name bubble__name--home"
+              : "bubble__name bubble__name--away"
+          }
+        >
+          {data.profile.nickname}
+        </div>
       </div>
       <div className="bubble__text">{data.message}</div>
     </div>

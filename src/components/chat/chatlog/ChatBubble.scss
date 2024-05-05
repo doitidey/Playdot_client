@@ -15,7 +15,12 @@
   &__name {
     font-size: 18px;
     margin: 0 27px 0 20px;
-    color: $tag-blue;
+    &--home {
+      color: $tag-blue;
+    }
+    &--away {
+      color: $tag-red;
+    }
   }
   &__text {
     font-size: 18px;
