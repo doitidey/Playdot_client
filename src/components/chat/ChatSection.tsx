@@ -19,8 +19,8 @@ function ChatSection() {
 
   const { connectSocket } = useSocket();
   const { menuModalState } = useMenuModalState();
-
   const { shoutData } = useStompShoutData();
+  const today = new Date();
 
   useEffect(() => {
     connectSocket(ROOMNUM);
@@ -39,8 +39,11 @@ function ChatSection() {
         </div>
         <ChatLog />
       </div>
-      {shoutData.map((data, index) => (
-        <ShoutBubble key={index} data={data} />
+      {shoutData.map((data) => (
+        <ShoutBubble
+          key={data.profile.nickname + today.getHours + today.getMinutes}
+          data={data}
+        />
       ))}
     </div>
   );
