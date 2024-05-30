@@ -25,3 +25,17 @@ export const configureStompClient = (gameId: number) => {
 
   return stompClient;
 };
+
+type TokenBody = {
+  recipientNickName: string;
+  token: number;
+  comment: string;
+};
+export const putToken = (body: TokenBody) => {
+  try {
+    const res = fetchData("gift/token", "put", body);
+    return res;
+  } catch (error) {
+    console.error(error);
+  }
+};
