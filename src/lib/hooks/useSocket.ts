@@ -37,7 +37,7 @@ export const useSocket = () => {
         (frame: { body: string }) => {
           try {
             const receivedMessage = JSON.parse(frame.body);
-            console.log(receivedMessage);
+            // console.log(receivedMessage);
             if (receivedMessage.type === "BAWWLING") {
               setShoutData(receivedMessage);
               // isShoutMessageShow || setIsShoutMessageShow();

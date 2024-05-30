@@ -1,5 +1,6 @@
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
+import { fetchData } from "@/lib/api/commonAPI";
 
 export const configureStompClient = (gameId: number) => {
   const serverUrl = `${process.env.NEXT_PUBLIC_BASE_URL}chat`;
@@ -15,7 +16,7 @@ export const configureStompClient = (gameId: number) => {
     //   console.log("ㄷㄱ객", frame);
     // },
     debug: (str) => {
-      console.log(str);
+      // console.log(str);
     },
     reconnectDelay: 5000,
     heartbeatIncoming: 4000,
