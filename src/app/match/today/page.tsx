@@ -6,7 +6,11 @@ export const metadata: Metadata = {
 };
 
 function TodayPage() {
-  return <Today />;
+  return (
+    <>
+      <Today />
+    </>
+  );
 }
 
 export default TodayPage;

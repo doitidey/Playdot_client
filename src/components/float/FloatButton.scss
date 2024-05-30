@@ -1,0 +1,39 @@
+.float-button {
+  z-index: 1000;
+  width: 130px;
+  height: auto;
+  border: none;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  cursor: pointer;
+  &__chatting {
+    &:disabled {
+      svg {
+        color: #222426;
+      }
+      span {
+        color: #414141;
+      }
+      cursor: default;
+    }
+    svg {
+      font-size: 110px;
+    }
+  }
+  &__floating {
+    svg {
+      font-size: 130px;
+    }
+  }
+  svg {
+    position: absolute;
+    color: #693bff;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
+  }
+  &__content {
+    position: relative;
+  }
+}
