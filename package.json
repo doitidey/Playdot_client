@@ -16,6 +16,7 @@
     "*.{js,ts}": "eslint --fix"
   },
   "dependencies": {
+    "autosize": "^6.0.1",
     "@stomp/stompjs": "^7.0.0",
     "@types/sockjs-client": "^1.5.4",
     "axios": "^1.6.0",
@@ -25,6 +26,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^4.12.0",
+    "react-js-pagination": "^3.0.3",
     "react-query": "^3.39.3",
     "sass": "^1.69.5",
     "sockjs-client": "^1.6.1",
@@ -42,9 +44,11 @@
     "@storybook/nextjs": "^7.6.4",
     "@storybook/react": "^7.6.4",
     "@storybook/test": "^7.6.4",
+    "@types/autosize": "^4.0.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-js-pagination": "^3.0.7",
     "@typescript-eslint/eslint-plugin": "^6.17.0",
     "@typescript-eslint/parser": "^6.17.0",
     "eslint": "^8",

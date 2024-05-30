@@ -1,0 +1,15 @@
+.changeteam {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 54px 70px 144px 70px;
+  &__button {
+    width: 100%;
+    text-align: right;
+  }
+  &__title {
+    padding-bottom: 62px;
+  }
+}

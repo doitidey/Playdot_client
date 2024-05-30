@@ -1,60 +1,109 @@
 import "@/components/mypage/MypagePresentRecord.scss";
-import { presentData, presentHeader } from "./presentDummy";
-import { GoArrowUp } from "react-icons/go";
+// import { GoArrowUp } from "react-icons/go";
+import { useEffect, useState } from "react";
+import { getGiftHistory } from "@/lib/api/mypageAPI";
+import Text from "../common/Text";
+import Pagination from "react-js-pagination";
+interface ContentData {
+  nickname: string;
+  teamName: string;
+  token: number;
+  comment: string;
+  takeDate: string;
+}
+
+interface GetPresentData {
+  content: ContentData[];
+  empty: boolean;
+  first: boolean;
+  last: boolean;
+  number: number;
+  numberOfElements: number;
+  pageable: {
+    offset: number;
+    pageNumber: number;
+    pageSize: number;
+    paged: boolean;
+  };
+  size: number;
+  sort: { sorted: boolean; empty: boolean; unsorted: boolean };
+  totalElements: number;
+  totalPages: number;
+}
 
 function MypagePresentRecord() {
+  const [pageData, setPageData] = useState<GetPresentData>();
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    const getHistory = async () => {
+      const res = await getGiftHistory(page);
+      setPageData(res.data);
+    };
+    getHistory();
+  }, [page]);
+
+  const handlePageChange = (page: number) => {
+    setPage(page);
+  };
+
+  const presentHeader = ["닉네임", "토큰갯수", "한줄 메세지", "날짜"];
+
   return (
     <div className="present">
-      <div className="present-filter">
-        보낸 선물내역
-        <div className="present-filter__icon">
-          <GoArrowUp />
-        </div>
-      </div>
-      <table className="present-record">
-        <thead>
-          <tr className="present-record__title">
-            {presentHeader.map((i) => (
-              <th key={i} className="contentbox">
-                {i}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {presentData.map((data, i) => {
-            return (
-              <tr
-                key={i}
-                className={`present-record__content ${
-                  i % 2 === 0 && "present-record__content--deco"
-                }`}
-              >
-                <td className="contentbox">{data.nickname}</td>
-                <td className="contentbox">{data.token}</td>
-                <td className="contentbox">{data.message}</td>
-                <td className="contentbox">{data.takeDate}</td>
+      {pageData && pageData.content.length > 0 ? (
+        <>
+          {/* //TODO: 아이템 필터링
+          <div className="present-filter">
+            보낸 선물내역
+            <div className="present-filter__icon">
+              <GoArrowUp />
+            </div>
+          </div> */}
+          <table className="present-record">
+            <thead>
+              <tr className="present-record__title">
+                {presentHeader.map((i) => (
+                  <th key={i} className="contentbox">
+                    {i}
+                  </th>
+                ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <div className="pagination">
-        <button className="pagination__content">&lt;</button>
-        <button className="pagination__content pagination__content--active">
-          1
-        </button>
-        <button className="pagination__content">2</button>
-        <button className="pagination__content">3</button>
-        <button className="pagination__content">4</button>
-        <button className="pagination__content">5</button>
-        <button className="pagination__content">6</button>
-        <button className="pagination__content">7</button>
-        <button className="pagination__content">8</button>
-        <button className="pagination__content">9</button>
-        <button className="pagination__content">10</button>
-        <button className="pagination__content">&gt;</button>
-      </div>
+            </thead>
+            <tbody>
+              {pageData &&
+                pageData.content.map((data, i) => {
+                  return (
+                    <tr
+                      key={data.takeDate + data.comment}
+                      className={`present-record__content ${
+                        i % 2 === 0 && "present-record__content--deco"
+                      }`}
+                    >
+                      <td className="contentbox">{data.nickname}</td>
+                      <td className="contentbox">{data.token}</td>
+                      <td className="contentbox">{data.comment}</td>
+                      <td className="contentbox">{data.takeDate}</td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+          <Pagination
+            activePage={pageData.totalPages}
+            itemsCountPerPage={10}
+            totalItemsCount={10}
+            pageRangeDisplayed={
+              pageData.totalPages < 5 ? pageData.totalPages : 5
+            }
+            onChange={handlePageChange}
+          />
+        </>
+      ) : (
+        <>
+          <Text large>내역이 존재하지 않아!ㅠㅠ</Text>
+        </>
+      )}
     </div>
   );
 }

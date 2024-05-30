@@ -1,12 +1,22 @@
 "use client";
 
 import "@/components/comment/Comment.scss";
-import { ChangeEvent, FormEvent, useCallback, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { MdRefresh } from "react-icons/md";
 import Title from "@/components/common/Title";
 import CommentList from "@/components/comment/CommentList";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { postTodayComment, todayGamesComment } from "@/lib/api/todayAPI";
+import autosize from "autosize";
+import Button from "@/components/common/Button";
+import Text from "@/components/common/Text";
 
 export interface CommentData {
   profileImageUrl?: null;
@@ -30,7 +40,9 @@ function Comment() {
 
   const [comments, setComments] = useState<CommentData[]>([]);
   const [value, setValue] = useState("");
+  const commentRef = useRef<HTMLTextAreaElement>(null);
 
+  // TODO: 리액트 쿼리 관련 hook으로 리팩토링
   const { data: commentData = comments, refetch } = useQuery({
     queryKey: ["todayComment"],
     queryFn: () =>
@@ -87,6 +99,12 @@ function Comment() {
     [postComment, value],
   );
 
+  useEffect(() => {
+    if (commentRef) {
+      autosize(commentRef.current as HTMLTextAreaElement);
+    }
+  }, []);
+
   return (
     <section className="comment-block">
       <form className="comment-block__content" onSubmit={onSubmit}>
@@ -96,13 +114,20 @@ function Comment() {
             <MdRefresh />
           </div>
         </div>
-        <input
-          className="comment-input"
-          type="text"
-          value={value}
-          onChange={onChange}
-          placeholder="댓글을 입력하세요."
-        />
+        <div className="comment-input-area">
+          <textarea
+            className="comment-input"
+            value={value}
+            onChange={onChange}
+            placeholder="댓글을 입력하세요."
+            rows={1}
+            maxLength={300}
+            spellCheck={false}
+            ref={commentRef}
+          />
+          <Button size="submit" variant="active" type="submit" label="등록" />
+        </div>
+        <Text medium>{value.length} / 300</Text>
         <CommentList
           comment={commentData}
           setComments={setComments}

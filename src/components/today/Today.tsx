@@ -1,15 +1,17 @@
 "use client";
+import { useState } from "react";
+import { useQuery } from "react-query";
 
+import "@/components/today/Today.scss";
 import DateSection from "@/components/today/DateSection";
 import ScoreList from "@/components/today/ScoreList";
 import Comment from "@/components/comment/Comment";
-import "@/components/today/Today.scss";
-import { useState } from "react";
+import ChatFloatSection from "@/components/float/ChatFloatSection";
+
 import { todayGames } from "@/lib/api/todayAPI";
-import { useQuery } from "react-query";
 
 export interface TodayMatchData {
-  gameId?: number;
+  gameId: number;
   gameTime: string;
   homeTeam: {
     id: number;
@@ -42,11 +44,14 @@ function Today() {
   console.warn(todayData);
 
   return (
-    <div className="today-block">
-      <DateSection />
-      <ScoreList game={todayData} />
-      <Comment />
-    </div>
+    <>
+      <div className="today-block">
+        <DateSection />
+        <ScoreList game={todayData} />
+        <Comment />
+        <ChatFloatSection game={todayData} />
+      </div>
+    </>
   );
 }
 

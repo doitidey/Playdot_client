@@ -16,6 +16,16 @@ export const login = () => {
   }
 };
 
+// 소셜 로그인
+// GET
+export const oauthLogin = (registrationId: string, code: string) => {
+  try {
+    return fetchAuth(`login/oauth2/code/${registrationId}${code}`, "get");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 // 구단 조회
 // GET
 export const teams = () => {
