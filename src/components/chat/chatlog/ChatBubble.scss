@@ -1,19 +1,26 @@
 @import "@/styles/colors.scss";
 
-.bubble-container {
+.bubble {
   display: flex;
   align-items: center;
   font-family: "pretendard";
+  &__profile {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
   &__img {
-    background-color: black;
-    width: 36px;
-    height: 36px;
     border-radius: 50%;
   }
   &__name {
     font-size: 18px;
     margin: 0 27px 0 20px;
-    color: $tag-blue;
+    &--home {
+      color: $tag-blue;
+    }
+    &--away {
+      color: $tag-red;
+    }
   }
   &__text {
     font-size: 18px;
