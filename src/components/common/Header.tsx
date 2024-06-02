@@ -60,10 +60,10 @@ function Header() {
               </li>
               <li className="navigation__item">
                 <Link
-                  href={PATH.community}
+                  href={userData.nickname ? PATH.mypage : PATH.login}
                   className={`pagelink ${ACTIVE_COMMUNITY_CLASSNAME}`}
                 >
-                  커뮤니티
+                  마이페이지
                   <div
                     className={`underbar ${UNDERBAR_COMMUNITY_CLASSNAME}`}
                   ></div>
