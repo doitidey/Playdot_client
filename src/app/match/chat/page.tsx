@@ -1,11 +1,18 @@
-import { Metadata } from "next";
-import ChatSection from "@/components/chat/ChatSection";
+"use client";
 
-export const metadata: Metadata = {
-  title: "플레이닷 | 채팅",
-};
+import ChatSection from "@/components/chat/ChatSection";
+import { useEffect, useState } from "react";
 
 function ChatPage() {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null;
+  }
   return (
     <div className="chat">
       <ChatSection />

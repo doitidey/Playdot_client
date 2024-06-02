@@ -1,17 +1,17 @@
 @import "@/styles/colors.scss";
 
-.chatlog__contiainer {
+.chatlog {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   gap: 20px;
   padding: 130px 20px 162px 20px;
   height: calc(100vh - 100px);
   width: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   background-color: $surface;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
-.chatlog__contiainer::-webkit-scrollbar {
+.chatlog::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera*/
 }

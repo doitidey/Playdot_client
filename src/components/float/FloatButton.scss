@@ -1,9 +1,9 @@
 .float-button {
-  width: 80px;
-  height: 80px;
+  z-index: 1000;
+  width: 130px;
+  height: auto;
   border: none;
   outline: none;
-  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,12 +20,12 @@
       cursor: default;
     }
     svg {
-      font-size: 100px;
+      font-size: 110px;
     }
   }
   &__floating {
     svg {
-      font-size: 110px;
+      font-size: 130px;
     }
   }
   svg {
@@ -34,6 +34,6 @@
     text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
   }
   &__content {
-    position: absolute;
+    position: relative;
   }
 }
