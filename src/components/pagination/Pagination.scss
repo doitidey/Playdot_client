@@ -1,0 +1,62 @@
+@import "@/styles/colors.scss";
+
+.pagination-block {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  svg {
+    cursor: pointer;
+    color: $dark-text1;
+  }
+}
+
+.pagination-list {
+  display: flex;
+  justify-content: center;
+  &__item {
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    color: $dark-text2;
+    padding: 8px 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    outline: none;
+    border: none;
+  }
+  &__prev-next {
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    color: $dark-text2;
+    padding: 8px 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    outline: none;
+    border: none;
+    &:active {
+      svg {
+        color: $dark-text2;
+      }
+    }
+    &:disabled {
+      cursor: not-allowed;
+      svg {
+        cursor: not-allowed;
+        color: $dark-text1;
+      }
+    }
+  }
+}
+
+.page-active {
+  background: #693bff;
+  color: $dark-text2;
+  border-radius: 8px;
+}
