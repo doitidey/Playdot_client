@@ -138,13 +138,18 @@ function SignupStepTwo() {
           "profileImage",
           imageInputRef.current?.files?.[0] || "",
         );
-        formData.append(
-          "data",
-          JSON.stringify({
-            nickname: inputValue.nickname,
-            comment: inputValue.comment,
-          }),
+        const blob = new Blob(
+          [
+            JSON.stringify({
+              nickname: inputValue.nickname,
+              comment: inputValue.comment,
+            }),
+          ],
+          {
+            type: "application/json",
+          },
         );
+        formData.append("data", blob);
 
         // formData 확인용 console
         // formData.forEach((value, key) => {
