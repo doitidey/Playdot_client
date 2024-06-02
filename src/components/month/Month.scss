@@ -2,73 +2,15 @@
 
 .month-block {
   width: 100%;
-  padding: 0 20px;
+  padding: 40px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.month-container {
-  // background: coral;
-  width: 1200px;
+.month-content {
+  width: 100%;
+  max-width: 1200px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 60px 0 80px;
-  gap: 20px;
-}
-
-.month-list {
-  width: inherit;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 20px;
-  &__item {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0 160px;
-    background: $surface;
-    border-radius: 10px;
-    color: #fff;
-    .first-floor {
-      display: flex;
-      gap: 80px;
-      margin: 20px 0;
-      span {
-        font-weight: 700;
-        font-size: 48px;
-        color: #646464;
-      }
-    }
-    .last-floor {
-      display: flex;
-      gap: 60px;
-      margin: 20px 0;
-      &__content {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 10px;
-      }
-    }
-  }
-  &__second {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 50px;
-    gap: 30px;
-    background: $surface;
-    border-radius: 10px;
-    color: #fff;
-  }
-}
-
-.dummy-image {
-  width: 100px;
-  height: 100px;
-  background: #ccc;
-  border-radius: 50%;
+  gap: 22px;
 }
