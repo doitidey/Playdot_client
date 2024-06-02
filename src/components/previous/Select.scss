@@ -1,0 +1,22 @@
+@import "@/styles/colors.scss";
+
+.select-block {
+  display: flex;
+  gap: 20px;
+  &__item {
+    width: 140px;
+    height: 90px;
+    background: linear-gradient(130deg, #313437, #505457);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+}
+
+.active-select {
+  background: $main;
+}
