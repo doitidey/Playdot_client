@@ -2,16 +2,16 @@
 
 import "@/components/month/Month.scss";
 import Comment from "@/components/comment/Comment";
-import Winner from "@/components/month/Winner";
-import Loser from "@/components/month/Loser";
+import WinnerMonthItem from "./WinnerMonthItem";
+import LoserMonthItem from "./LoserMonthItem";
 
 function Month() {
   return (
     <>
       <section className="month-block">
-        <div className="month-container">
-          <Winner />
-          <Loser />
+        <div className="month-content">
+          <WinnerMonthItem />
+          <LoserMonthItem />
         </div>
       </section>
       <Comment />
