@@ -2,8 +2,8 @@ import "@/components/chat/modals/PresentModal.scss";
 import TokenButton from "./TokenButton";
 
 type PropType = {
-  onChangeMessage: (e) => void;
-  onChangeTokenNumber: (e) => void;
+  onChangeMessage: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeTokenNumber: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 function PresentModal({ onChangeMessage, onChangeTokenNumber }: PropType) {

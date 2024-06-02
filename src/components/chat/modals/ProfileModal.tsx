@@ -42,7 +42,7 @@ function ProfileModal({ nickname }: { nickname: string }) {
     return;
   };
 
-  const onChangeMessage = (e) => {
+  const onChangeMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const comment = e.target.value;
     setTokenBody((prev) => ({
       ...prev,
@@ -50,7 +50,7 @@ function ProfileModal({ nickname }: { nickname: string }) {
     }));
   };
 
-  const onChangeTokenNumber = (e) => {
+  const onChangeTokenNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
     const tokenNumber = Number(e.target.value);
     setTokenBody((prev) => ({
       ...prev,
