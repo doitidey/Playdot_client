@@ -5,7 +5,7 @@ export const metadata: Metadata = {
 };
 
 function PreviousPage() {
-  return <div>지난예측</div>;
+  return <div>지난 예측</div>;
 }
 
 export default PreviousPage;
