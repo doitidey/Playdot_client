@@ -4,20 +4,9 @@ import Image from "next/image";
 
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-
 import "@/components/login/LoginButton.scss";
-import { login } from "@/lib/api/authAPI";
 
-type ButtonInfo = Array<{
-  name: string;
-  text: string;
-  img: string;
-}>;
-const BUTTON_INFO: ButtonInfo = [
-  { name: "naver", text: "네이버 로그인", img: "/images/naver.svg" },
-  { name: "kakao", text: "카카오톡 로그인", img: "/images/kakao.svg" },
-  { name: "google", text: "구글 로그인", img: "/images/google.svg" },
-];
+import { BUTTON_INFO, LOGIN_LINKS } from "@/lib/util/login/loginButton";
 
 function LoginButton() {
   const router = useRouter();
@@ -29,11 +18,14 @@ function LoginButton() {
     }
   }, [router]);
 
-  const onClickButton = async () => {
+  const onClickButton = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const name = event.currentTarget.getAttribute("data-name");
+    if (!name || !LOGIN_LINKS[name]) {
+      console.error("로그인 링크를 찾을 수 없음");
+      return;
+    }
     try {
-      await login();
-      localStorage.getItem("authToken");
-      router.push("/match/today");
+      window.location.href = LOGIN_LINKS[name];
     } catch (error) {
       console.error("로그인 실패:", error);
     }
@@ -45,6 +37,7 @@ function LoginButton() {
         <button
           onClick={onClickButton}
           key={name}
+          data-name={name}
           className={classNames(
             "buttons-block__button",
             `buttons-block__button--${name}`,
