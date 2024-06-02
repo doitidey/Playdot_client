@@ -1,3 +1,4 @@
+import Previous from "@/components/previous/Previous";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -5,7 +6,7 @@ export const metadata: Metadata = {
 };
 
 function PreviousPage() {
-  return <div>지난 예측</div>;
+  return <Previous />;
 }
 
 export default PreviousPage;
