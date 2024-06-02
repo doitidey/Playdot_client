@@ -28,6 +28,7 @@
     color: white;
     background-color: transparent;
     border: none;
+    width: 100%;
     &:focus {
       outline: none;
     }
@@ -35,5 +36,6 @@
   &__desc {
     font-size: 14px;
     color: #818a99;
+    margin-left: 10px;
   }
 }

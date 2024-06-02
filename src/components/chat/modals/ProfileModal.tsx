@@ -1,11 +1,11 @@
 import "@/components/chat/modals/ProfileModal.scss";
 import Button from "@/components/common/Button";
-import { useModal } from "@/lib/hooks/useModal";
 import PresentModal from "./PresentModal";
-import { getProfile } from "@/lib/api/chatAPI";
+import { getProfile, putToken } from "@/lib/api/chatAPI";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Title from "@/components/common/Title";
+import useTokenNumberStore from "@/lib/store/chat/tokenStore";
 
 type ProfileModal = {
   nickname: string;
@@ -15,8 +15,14 @@ type ProfileModal = {
 };
 
 function ProfileModal({ nickname }: { nickname: string }) {
-  const { openModal } = useModal();
   const [profileData, setProfileData] = useState<ProfileModal>();
+  const [isClickPresent, setIsClickPresent] = useState<boolean>(false);
+  const [tokenBody, setTokenBody] = useState({
+    recipientNickName: nickname,
+    token: 0,
+    comment: "",
+  });
+  const { totalStore } = useTokenNumberStore();
 
   useEffect(() => {
     const getProfileData = async () => {
@@ -27,10 +33,50 @@ function ProfileModal({ nickname }: { nickname: string }) {
   }, []);
 
   const onClickPresent = () => {
-    openModal({
-      content: <PresentModal />,
-    });
+    setIsClickPresent(true);
   };
+  const onClickTokenPresent = () => {
+    if (isButtonActive()) {
+      putToken(tokenBody);
+    }
+    return;
+  };
+
+  const onChangeMessage = (e) => {
+    const comment = e.target.value;
+    setTokenBody((prev) => ({
+      ...prev,
+      comment: comment,
+    }));
+  };
+
+  const onChangeTokenNumber = (e) => {
+    const tokenNumber = Number(e.target.value);
+    setTokenBody((prev) => ({
+      ...prev,
+      token: tokenNumber,
+    }));
+  };
+
+  const isTokenEnough = () => {
+    if (totalStore >= tokenBody.token && totalStore > 0) {
+      return true;
+    }
+    return false;
+  };
+
+  const isButtonActive = () => {
+    if (!isClickPresent) {
+      return true;
+    } else if (isClickPresent && isTokenEnough() && isTokenBodyReady()) {
+      return true;
+    } else return false;
+  };
+
+  const isTokenBodyReady = () => {
+    if (tokenBody.token && tokenBody.token > 0) return true;
+  };
+
   return (
     <section className="profilemodal">
       <div className="profilemodal__contents">
@@ -49,11 +95,17 @@ function ProfileModal({ nickname }: { nickname: string }) {
           {profileData && profileData.nickname}
         </Title>
       </div>
+      {isClickPresent && (
+        <PresentModal
+          onChangeMessage={onChangeMessage}
+          onChangeTokenNumber={onChangeTokenNumber}
+        />
+      )}
       <Button
-        size={"medium"}
-        variant="active"
+        size={isClickPresent ? "large" : "medium"}
+        variant={isButtonActive() ? "active" : "disactive"}
         label="선물하기"
-        onClick={onClickPresent}
+        onClick={isClickPresent ? onClickTokenPresent : onClickPresent}
       />
     </section>
   );
