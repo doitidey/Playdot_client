@@ -10,7 +10,7 @@ function ChatBubble({ data }: { data: MessageType }) {
 
   const onClickNickname = () => {
     openModal({
-      content: <ProfileModal />,
+      content: <ProfileModal nickname={data.profile.nickname} />,
     });
   };
   return (

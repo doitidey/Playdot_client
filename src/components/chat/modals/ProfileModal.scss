@@ -1,0 +1,9 @@
+.profilemodal {
+  &__contents {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 26px;
+  }
+}

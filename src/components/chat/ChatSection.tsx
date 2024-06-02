@@ -11,12 +11,16 @@ import ChatInput from "@/components/chat/ChatInput";
 import useMenuModalState from "@/lib/store/chat/menuModalState";
 import VoteModal from "@/components/chat/modals/VoteModal";
 import { useSocket } from "@/lib/hooks/useSocket";
-import { useStompShoutData } from "@/lib/store/chat/stompclientStore";
+import {
+  useStompClient,
+  useStompShoutData,
+} from "@/lib/store/chat/stompclientStore";
 import ShoutBubble from "@/components/chat/chatlog/ShoutBubble";
 
 function ChatSection() {
   const ROOMNUM = 1; //TODO: NextJS url praram
 
+  const { stompClient } = useStompClient();
   const { connectSocket } = useSocket();
   const { menuModalState } = useMenuModalState();
   const { shoutData } = useStompShoutData();
@@ -24,6 +28,12 @@ function ChatSection() {
 
   useEffect(() => {
     connectSocket(ROOMNUM);
+
+    return () => {
+      if (stompClient) {
+        stompClient.deactivate();
+      }
+    };
   }, []);
 
   return (

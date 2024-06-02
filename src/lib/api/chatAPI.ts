@@ -39,3 +39,12 @@ export const putToken = (body: TokenBody) => {
     console.error(error);
   }
 };
+
+export const getProfile = (nickname: string) => {
+  try {
+    const res = fetchData(`/profiles?nickname=${nickname}`, "get");
+    return res;
+  } catch (error) {
+    console.error(error);
+  }
+};
