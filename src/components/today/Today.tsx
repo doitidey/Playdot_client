@@ -43,6 +43,8 @@ function Today() {
         setGame(res.data);
       }),
     refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    // refetchInterval: 60000,
   });
 
   console.warn(todayData);
@@ -50,6 +52,14 @@ function Today() {
   const onVisibleFloat = () => {
     setVisibleFloat(!visibleFloat);
   };
+
+  // const onRefresh = useCallback(() => {
+  //   refetch();
+  // }, [refetch]);
+
+  // useEffect(() => {
+  //   refetch();
+  // }, [refetch]);
 
   return (
     <>
