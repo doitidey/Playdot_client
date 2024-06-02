@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 
-const imageDomains = process.env.NEXT_PUBLIC_IMAGE_URL
-  ? new URL(process.env.NEXT_PUBLIC_IMAGE_URL).hostname
-  : [];
+const imageDomains =
+  process.env.NEXT_PUBLIC_IMAGE_URL &&
+  new URL(process.env.NEXT_PUBLIC_IMAGE_URL).hostname;
 
 const nextConfig = {
   async rewrites() {
