@@ -18,6 +18,12 @@ import autosize from "autosize";
 import Button from "@/components/common/Button";
 import Text from "@/components/common/Text";
 
+interface Sort {
+  sorted: boolean;
+  empty: boolean;
+  unsorted: boolean;
+}
+
 export interface CommentData {
   profileImageUrl?: null;
   nickname: string;
@@ -29,6 +35,29 @@ export interface CommentData {
   isLiked?: boolean;
 }
 
+interface Pageable {
+  pageNumber: number;
+  pageSize: number;
+  sort: Sort;
+  offset: number;
+  paged: boolean;
+  unpaged: boolean;
+}
+
+export interface Comment {
+  content: CommentData[];
+  pageable: Pageable;
+  totalElements: number;
+  totalPages: number;
+  last: boolean;
+  size: number;
+  number: number;
+  sort: Sort;
+  numberOfElements: number;
+  first: boolean;
+  empty: boolean;
+}
+
 export interface Team {
   img: string;
   name: string;
@@ -38,12 +67,17 @@ export interface Team {
 function Comment() {
   const queryClient = useQueryClient();
 
-  const [comments, setComments] = useState<CommentData[]>([]);
+  const [comments, setComments] = useState<Comment>();
+  const [comment, setComment] = useState<CommentData[]>(
+    comments?.content as [],
+  );
   const [value, setValue] = useState("");
   const commentRef = useRef<HTMLTextAreaElement>(null);
 
+  console.warn(comment);
+
   // TODO: 리액트 쿼리 관련 hook으로 리팩토링
-  const { data: commentData = comments, refetch } = useQuery({
+  const { data: commentData = comment, refetch } = useQuery({
     queryKey: ["todayComment"],
     queryFn: () =>
       todayGamesComment()?.then((res) => {
@@ -57,8 +91,8 @@ function Comment() {
     async () => postTodayComment(value),
     {
       onMutate: () => {
-        setComments([
-          ...comments,
+        setComment([
+          ...comment,
           {
             teamName: localStorage.getItem("teamName") as string,
             nickname: localStorage.getItem("nickname") as string,
@@ -109,7 +143,7 @@ function Comment() {
     <section className="comment-block">
       <form className="comment-block__content" onSubmit={onSubmit}>
         <div className="comment-header">
-          <Title medium>댓글 {commentData.length}개</Title>
+          <Title medium>댓글 {comments?.totalElements}개</Title>
           <div onClick={onRefresh}>
             <MdRefresh />
           </div>
@@ -127,12 +161,14 @@ function Comment() {
           />
           <Button size="submit" variant="active" type="submit" label="등록" />
         </div>
-        <Text medium>{value.length} / 300</Text>
-        <CommentList
+        <Text medium className="value-length">
+          {value.length} / 300
+        </Text>
+        {/* <CommentList
           comment={commentData}
-          setComments={setComments}
+          setComment={setComment}
           queryClient={queryClient}
-        />
+        /> */}
       </form>
     </section>
   );
