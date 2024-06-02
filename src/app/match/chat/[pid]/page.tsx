@@ -3,7 +3,7 @@
 import ChatSection from "@/components/chat/ChatSection";
 import { useEffect, useState } from "react";
 
-function ChatPage() {
+function ChatPage({ params }: { params: { pid: string } }) {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ function ChatPage() {
   }
   return (
     <div className="chat">
-      <ChatSection />
+      <ChatSection pid={params.pid} />
     </div>
   );
 }

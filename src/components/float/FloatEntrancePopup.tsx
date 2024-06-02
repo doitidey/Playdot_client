@@ -9,7 +9,7 @@ function FloatEntrancePopup({ gameId }: { gameId: number }) {
   const { setClosePopup } = usePopupStore();
 
   const onEntrance = () => {
-    router.push("/match/chat");
+    router.push(`/match/chat/${gameId}`);
   };
 
   const onCancel = () => {
