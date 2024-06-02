@@ -1,0 +1,39 @@
+@import "@/styles/colors.scss";
+
+.presentmodal {
+  &__block {
+  }
+  &__content {
+    &:first-child {
+      margin-bottom: 18px;
+    }
+  }
+  &__title {
+    font-size: 14px;
+    color: #969696;
+  }
+  &__inputbox {
+    margin-top: 10px;
+    width: 316px;
+    height: 54px;
+    background-color: $surface;
+    border-radius: 10px;
+    padding: 0 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__input {
+    font-size: 14px;
+    color: white;
+    background-color: transparent;
+    border: none;
+    &:focus {
+      outline: none;
+    }
+  }
+  &__desc {
+    font-size: 14px;
+    color: #818a99;
+  }
+}

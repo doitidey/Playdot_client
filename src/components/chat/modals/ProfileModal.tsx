@@ -50,7 +50,7 @@ function ProfileModal({ nickname }: { nickname: string }) {
         </Title>
       </div>
       <Button
-        size="medium"
+        size={"medium"}
         variant="active"
         label="선물하기"
         onClick={onClickPresent}
