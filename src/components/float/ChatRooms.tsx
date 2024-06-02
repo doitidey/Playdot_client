@@ -26,7 +26,7 @@ function ChatRooms({ game, visiblefloat }: ChatRoomsProps) {
       {game.map((item) => (
         <li className="chatrooms__item" key={item.gameId}>
           {isOpen && clickedId === item.gameId && (
-            <FloatEntrancePopup gameId={item.gameId} />
+            <FloatEntrancePopup item={item} />
           )}
           <FloatButton
             home={item.homeTeam.teamName}

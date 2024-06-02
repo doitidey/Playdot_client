@@ -17,18 +17,17 @@ import {
 } from "@/lib/store/chat/stompclientStore";
 import ShoutBubble from "@/components/chat/chatlog/ShoutBubble";
 
-function ChatSection() {
-  const ROOMNUM = 1; //TODO: NextJS url praram
-
+function ChatSection({ pid }: { pid: string }) {
   const { stompClient } = useStompClient();
   const { connectSocket } = useSocket();
   const { menuModalState } = useMenuModalState();
   const { shoutData } = useStompShoutData();
+
   const today = new Date();
+  const ROOMNUM = Number(pid);
 
   useEffect(() => {
     connectSocket(ROOMNUM);
-
     return () => {
       if (stompClient) {
         stompClient.deactivate();

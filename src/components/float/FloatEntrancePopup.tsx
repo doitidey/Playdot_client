@@ -3,13 +3,16 @@ import { useRouter } from "next/navigation";
 import "@/components/float/FloatEntrancePopup.scss";
 import Text from "@/components/common/Text";
 import usePopupStore from "@/lib/store/today/popupStore";
+import useSelectedGameDataStore from "@/lib/store/today/selectedGameStore";
 
-function FloatEntrancePopup({ gameId }: { gameId: number }) {
+function FloatEntrancePopup({ item }: { item: any }) {
   const router = useRouter();
   const { setClosePopup } = usePopupStore();
+  const { setGameData } = useSelectedGameDataStore();
 
   const onEntrance = () => {
-    router.push("/match/chat");
+    setGameData(item);
+    router.push(`/match/chat/${item.gameId}`);
   };
 
   const onCancel = () => {
