@@ -16,7 +16,7 @@ export const configureStompClient = (gameId: number) => {
     //   console.log("ㄷㄱ객", frame);
     // },
     debug: (str) => {
-      // console.log(str);
+      console.log(str);
     },
     reconnectDelay: 5000,
     heartbeatIncoming: 4000,

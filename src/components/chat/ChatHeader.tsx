@@ -1,9 +1,12 @@
 import "@/components/chat/ChatHeader.scss";
 import Image from "next/image";
-import { GAME_DATA } from "./dummy";
 import { getTeamLogo } from "@/lib/util/TeamTagLogo";
+import useSelectedGameDataStore from "@/lib/store/today/selectedGameStore";
 
 function ChatHeader() {
+  const { gameData } = useSelectedGameDataStore();
+  const GAME_DATA = gameData;
+
   return (
     <div className="chat-header">
       <div className="chat-header__button">
