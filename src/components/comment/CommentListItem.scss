@@ -131,7 +131,7 @@
   align-items: center;
   gap: 16px;
   position: absolute;
-  background: $dark-bg;
+  background: $surface;
   color: white;
   border-radius: 5px;
   padding: 12px 16px;
@@ -139,7 +139,7 @@
   right: -10px;
   width: 200px;
   &::after {
-    border-top: 10px solid $dark-bg;
+    border-top: 10px solid $surface;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-bottom: 0px solid transparent;

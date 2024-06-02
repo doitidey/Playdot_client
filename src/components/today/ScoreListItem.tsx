@@ -11,9 +11,12 @@ import { getAwayLogo, getHomeLogo } from "@/lib/util/getLogo";
 import { gameDate } from "@/lib/util/getGameTime";
 import { deleteTodayGameVote, todayGameVote } from "@/lib/api/todayAPI";
 import { useMutation } from "react-query";
+import GameStatus from "./GameStatus";
 
 // Interface
-interface ScoreListItemProps extends TodayMatchData {}
+interface ScoreListItemProps extends TodayMatchData {
+  status: string;
+}
 
 // Component
 function ScoreListItem({
@@ -21,6 +24,7 @@ function ScoreListItem({
   awayTeam,
   gameTime,
   gameId,
+  status,
 }: ScoreListItemProps) {
   const [selectHome, setSelectHome] = useState(false);
   const [selectAway, setSelectAway] = useState(false);
@@ -85,16 +89,16 @@ function ScoreListItem({
         <Title className="match-day" small>
           {gameDate(gameTime)}
         </Title>
-        <div className="match-date-block__left-time">
-          <Title className="time" small>
-            20:17
-          </Title>
-          <Text className="left" medium>
-            분 남았습니다.
-          </Text>
-        </div>
+        <GameStatus status={status} gameTime={gameTime} />
       </div>
       <li className="score-item-block">
+        {status === "READY" || (
+          <div className="vote-end">
+            {status === "PROGRESS" && <Title small>예측 마감</Title>}
+            {status === "CANCEL" && <Title small>경기 취소</Title>}
+            {status === "END" && <Title small>경기 종료</Title>}
+          </div>
+        )}
         <div
           className={classNames(
             `score-item-block__left ${selectHome ? "active-left" : ""}`,

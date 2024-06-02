@@ -11,6 +11,15 @@ export const todayGames = () => {
   }
 };
 
+export const todayGamesLogin = (nickname: string) => {
+  try {
+    const res = fetchData(`games/${nickname}`, "get");
+    return res;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 // 투표
 export const todayGameVote = (gameId: number, teamId: number) => {
   try {
@@ -50,7 +59,7 @@ export const deleteTodayGameVote = (gameId: number) => {
 // 댓글 조회
 export const todayGamesComment = () => {
   try {
-    const res = fetchData("games/daily-replies", "get");
+    const res = fetchData(`games/daily-replies`, "get");
     return res;
   } catch (e) {
     console.error(e);

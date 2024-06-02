@@ -39,6 +39,8 @@ function Today() {
         setGame(res.data);
       }),
     refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    // refetchInterval: 60000,
   });
 
   console.warn(todayData);

@@ -6,11 +6,11 @@ import { QueryClient } from "react-query";
 
 interface CommentListProps {
   comment: CommentData[];
-  setComments: Dispatch<SetStateAction<CommentData[]>>;
+  setComment: Dispatch<SetStateAction<CommentData[]>>;
   queryClient: QueryClient;
 }
 
-function CommentList({ comment, setComments, queryClient }: CommentListProps) {
+function CommentList({ comment, setComment, queryClient }: CommentListProps) {
   return (
     <ul className="comment-list-block">
       {comment.map((item, index) => (
@@ -22,7 +22,7 @@ function CommentList({ comment, setComments, queryClient }: CommentListProps) {
           createdAt={item.createdAt}
           likeCount={item.likeCount}
           replyId={item.replyId}
-          setComments={setComments}
+          setComments={setComment}
           queryClient={queryClient}
           isLiked={item.isLiked}
         />

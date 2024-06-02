@@ -10,6 +10,15 @@ export const gameDate = (data: string) => {
   return `${year}년 ${month}월 ${day}일 ${time}`;
 };
 
+export const getGameTime = (data: string) => {
+  const rDataFormat = /[12][0-9]{3}-[0-9]{2}-[0-9]{2}/;
+  if (data.search(rDataFormat) === -1) {
+    return data;
+  }
+  const time = data.substring(11, 16);
+  return `${time}`;
+};
+
 export const commentDate = (createdAt: string | undefined) => {
   const postDate = createdAt;
   const year = postDate?.substring(0, 4);

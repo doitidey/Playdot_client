@@ -8,6 +8,8 @@ interface ScoreListProps {
   game: TodayMatchData[];
 }
 
+type Status = "READY" | "PROGRASS" | "END";
+
 function ScoreList({ game }: ScoreListProps) {
   return (
     <section className="score-block">
@@ -19,6 +21,7 @@ function ScoreList({ game }: ScoreListProps) {
             awayTeam={item.awayTeam}
             gameTime={item.gameTime}
             gameId={item.gameId}
+            status={item.status as Status}
           />
         ))}
       </ul>

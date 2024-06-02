@@ -21,6 +21,18 @@
   }
 }
 
+.vote-end {
+  width: 100%;
+  height: inherit;
+  position: absolute;
+  background: rgba($color: #000000, $alpha: 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 998;
+  border-radius: 8px;
+}
+
 .score-item-block {
   height: 80px;
   background: $surface;
@@ -76,12 +88,14 @@
 }
 
 .team-info-left {
+  flex: 2;
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
 .team-info-right {
+  flex: 2;
   display: flex;
   flex-direction: column;
   gap: 4px;
