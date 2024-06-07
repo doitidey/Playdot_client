@@ -10,7 +10,7 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 function Layout({ children }: LayoutProps) {
   return (
