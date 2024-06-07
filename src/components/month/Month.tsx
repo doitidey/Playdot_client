@@ -1,7 +1,7 @@
 "use client";
 
 import "@/components/month/Month.scss";
-import Comment from "@/components/comment/Comment";
+// import Comment from "@/components/comment/Comment";
 import WinnerMonthItem from "./WinnerMonthItem";
 import LoserMonthItem from "./LoserMonthItem";
 
@@ -14,7 +14,7 @@ function Month() {
           <LoserMonthItem />
         </div>
       </section>
-      <Comment />
+      {/* <Comment /> */}
     </>
   );
 }
