@@ -1,14 +1,13 @@
 "use client";
-import { useState } from "react";
-import { useQuery } from "react-query";
 
 import "@/components/today/Today.scss";
+import { useQuery } from "react-query";
 import DateSection from "@/components/today/DateSection";
 import ScoreList from "@/components/today/ScoreList";
 import Comment from "@/components/comment/Comment";
 import ChatFloatSection from "@/components/float/ChatFloatSection";
 
-import { todayGames } from "@/lib/api/todayAPI";
+import { getTodayGames } from "@/lib/api/todayAPI";
 
 export interface TodayMatchData {
   gameId: number;
@@ -19,6 +18,7 @@ export interface TodayMatchData {
     teamName: string;
     teamShortName: string;
     voteRatio: number;
+    hasVote: boolean;
   };
   awayTeam: {
     id: number;
@@ -26,22 +26,20 @@ export interface TodayMatchData {
     teamName: string;
     teamShortName: string;
     voteRatio: number;
+    hasVote: boolean;
   };
   status?: string;
 }
 
 function Today() {
-  const [game, setGame] = useState<TodayMatchData[]>([]);
-  const { data: todayData = game } = useQuery({
-    queryKey: ["today"],
-    queryFn: () =>
-      todayGames()?.then((res) => {
-        setGame(res.data);
-      }),
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    // refetchInterval: 60000,
-  });
+  const { data: todayData } = useQuery<TodayMatchData[]>(
+    "today",
+    () => getTodayGames(),
+    {
+      staleTime: 1000 * 60,
+      cacheTime: 1000 * 60 * 5,
+    },
+  );
 
   console.warn(todayData);
 
@@ -49,9 +47,9 @@ function Today() {
     <>
       <div className="today-block">
         <DateSection />
-        <ScoreList game={todayData} />
+        <ScoreList todayData={todayData as []} />
         <Comment />
-        <ChatFloatSection game={todayData} />
+        <ChatFloatSection game={todayData as []} />
       </div>
     </>
   );
