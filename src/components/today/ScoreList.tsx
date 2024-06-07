@@ -5,16 +5,16 @@ import ScoreListItem from "./ScoreListItem";
 import { TodayMatchData } from "./Today";
 
 interface ScoreListProps {
-  game: TodayMatchData[];
+  todayData: TodayMatchData[];
 }
 
 type Status = "READY" | "PROGRASS" | "END";
 
-function ScoreList({ game }: ScoreListProps) {
+function ScoreList({ todayData }: ScoreListProps) {
   return (
     <section className="score-block">
       <ul className="score-block__content">
-        {game.map((item) => (
+        {todayData?.map((item) => (
           <ScoreListItem
             key={item.gameId}
             homeTeam={item.homeTeam}

@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback } from "react";
 import Text from "../common/Text";
 import "./ScoreListItem.scss";
 import classNames from "classnames";
@@ -9,9 +9,9 @@ import Title from "../common/Title";
 import { TodayMatchData } from "./Today";
 import { getAwayLogo, getHomeLogo } from "@/lib/util/getLogo";
 import { gameDate } from "@/lib/util/getGameTime";
-import { deleteTodayGameVote, todayGameVote } from "@/lib/api/todayAPI";
 import { useMutation } from "react-query";
-import GameStatus from "./GameStatus";
+import { deleteTodayGames, voteTodayGames } from "@/lib/api/todayAPI";
+import { queryClient } from "../common/Layout";
 
 // Interface
 interface ScoreListItemProps extends TodayMatchData {
@@ -26,62 +26,62 @@ function ScoreListItem({
   gameId,
   status,
 }: ScoreListItemProps) {
-  const [selectHome, setSelectHome] = useState(false);
-  const [selectAway, setSelectAway] = useState(false);
-  const [voteHome, setVoteHome] = useState(homeTeam.voteRatio);
-  const [voteAway, setVoteAway] = useState(awayTeam.voteRatio);
 
-  const { mutate: home } = useMutation(
-    async () => todayGameVote(gameId as number, homeTeam.id),
+  const { mutate: awayVote } = useMutation(
+    () => voteTodayGames(gameId, awayTeam.id),
     {
-      onMutate: () => {
-        console.warn("홈 팀 선택 완료!");
+      onSuccess: () => {
+        console.warn("원정 팀 선택 완료");
+        queryClient.invalidateQueries({ queryKey: ["today"] });
       },
     },
   );
 
-  const { mutate: homeDelete } = useMutation(
-    async () => deleteTodayGameVote(gameId as number),
+  const { mutate: deleteAwayVote } = useMutation(
+    () => deleteTodayGames(gameId),
     {
-      onMutate: () => {
-        console.warn("홈 팀 삭제 완료");
+      onSuccess: () => {
+        console.warn("원정 팀 투표 취소 완료");
+        queryClient.invalidateQueries({ queryKey: ["today"] });
       },
     },
   );
 
-  const { mutate: away } = useMutation(
-    async () => todayGameVote(gameId as number, awayTeam.id),
+  const { mutate: homeVote } = useMutation(
+    () => voteTodayGames(gameId, homeTeam.id),
     {
-      onMutate: () => {
-        console.warn("원정 팀 선택 완료!");
+      onSuccess: () => {
+        console.warn("홈 팀 선택 완료");
+        queryClient.invalidateQueries({ queryKey: ["today"] });
       },
     },
   );
 
-  const { mutate: awayDelete } = useMutation(
-    async () => deleteTodayGameVote(gameId as number),
+  const { mutate: deleteHomeVote } = useMutation(
+    () => deleteTodayGames(gameId),
     {
-      onMutate: () => {
-        console.warn("원정 팀 삭제 완료");
+      onSuccess: () => {
+        console.warn("원정 팀 투표 취소 완료");
+        queryClient.invalidateQueries({ queryKey: ["today"] });
       },
     },
   );
-
-  const onClickHome = useCallback(() => {
-    // Toggle select home
-    setSelectHome(!selectHome);
-    setSelectAway(false);
-    !selectHome ? home() : homeDelete();
-    setVoteHome(homeTeam.voteRatio);
-  }, [home, homeDelete, selectHome, homeTeam.voteRatio]);
 
   const onClickAway = useCallback(() => {
-    // Toggle select away
-    setSelectAway(!selectAway);
-    setSelectHome(false);
-    !selectAway ? away() : awayDelete();
-    setVoteAway(awayTeam.voteRatio);
-  }, [away, awayDelete, selectAway, awayTeam.voteRatio]);
+    awayVote();
+  }, [awayVote]);
+
+  const onDeleteAwayVote = useCallback(() => {
+    deleteAwayVote();
+  }, [deleteAwayVote]);
+
+  const onClickHome = useCallback(() => {
+    homeVote();
+  }, [homeVote]);
+
+  const onDeleteHomeVote = useCallback(() => {
+    deleteHomeVote();
+  }, [deleteHomeVote]);
 
   return (
     <>
@@ -89,7 +89,7 @@ function ScoreListItem({
         <Title className="match-day" small>
           {gameDate(gameTime)}
         </Title>
-        <GameStatus status={status} gameTime={gameTime} />
+        {/* <GameStatus status={status} gameTime={gameTime} /> */}
       </div>
       <li className="score-item-block">
         {status === "READY" || (
@@ -101,31 +101,7 @@ function ScoreListItem({
         )}
         <div
           className={classNames(
-            `score-item-block__left ${selectHome ? "active-left" : ""}`,
-          )}
-          onClick={onClickHome}
-        >
-          <div className="team-img">
-            <Image
-              src={getHomeLogo(homeTeam.teamName)}
-              alt={homeTeam.teamName}
-              width={0}
-              height={0}
-              draggable={false}
-            />
-          </div>
-          <div className="team-info-left">
-            {selectHome ? (
-              <Text large>{homeTeam.teamName}</Text>
-            ) : (
-              <Text large>{homeTeam.teamName}</Text>
-            )}
-            <Title medium>{voteHome}%</Title>
-          </div>
-        </div>
-        <div
-          className={classNames(
-            `score-item-block__right ${selectAway ? "active-right" : ""}`,
+            `score-item-block__left ${awayTeam.hasVote ? "active-left" : ""}`,
           )}
           onClick={onClickAway}
         >
@@ -138,13 +114,39 @@ function ScoreListItem({
               draggable={false}
             />
           </div>
-          <div className="team-info-right">
-            {selectAway ? (
+          <div className="team-info-left">
+            {awayTeam.hasVote ? (
               <Text large>{awayTeam.teamName}</Text>
             ) : (
               <Text large>{awayTeam.teamName}</Text>
             )}
-            <Title medium>{voteAway}%</Title>
+            <Title medium>{awayTeam.voteRatio}%</Title>
+            <button onClick={onDeleteAwayVote}>투표취소(임시)</button>
+          </div>
+        </div>
+        <div
+          className={classNames(
+            `score-item-block__right ${homeTeam.hasVote ? "active-right" : ""}`,
+          )}
+          onClick={onClickHome}
+        >
+          <div className="team-img">
+            <Image
+              src={getHomeLogo(homeTeam.teamName)}
+              alt={homeTeam.teamName}
+              width={0}
+              height={0}
+              draggable={false}
+            />
+          </div>
+          <div className="team-info-right">
+            {homeTeam.hasVote ? (
+              <Text large>{homeTeam.teamName}</Text>
+            ) : (
+              <Text large>{homeTeam.teamName}</Text>
+            )}
+            <Title medium>{homeTeam.voteRatio}%</Title>
+            <button onClick={onDeleteHomeVote}>투표취소(임시)</button>
           </div>
         </div>
       </li>
