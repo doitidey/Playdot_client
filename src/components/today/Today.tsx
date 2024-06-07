@@ -4,7 +4,7 @@ import "@/components/today/Today.scss";
 import { useQuery } from "react-query";
 import DateSection from "@/components/today/DateSection";
 import ScoreList from "@/components/today/ScoreList";
-import Comment from "@/components/comment/Comment";
+// import Comment from "@/components/comment/Comment";
 import ChatFloatSection from "@/components/float/ChatFloatSection";
 
 import { getTodayGames } from "@/lib/api/todayAPI";
@@ -48,7 +48,7 @@ function Today() {
       <div className="today-block">
         <DateSection />
         <ScoreList todayData={todayData as []} />
-        <Comment />
+        {/* <Comment /> */}
         <ChatFloatSection game={todayData as []} />
       </div>
     </>
