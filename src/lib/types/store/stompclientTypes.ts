@@ -22,6 +22,6 @@ export interface ShoutMessageDataStore {
 }
 
 export interface VoteDataStore {
-  voteData: VoteType | {};
+  voteData: VoteType[] | [];
   setVoteData: (receivedMessage: VoteType) => void;
 }

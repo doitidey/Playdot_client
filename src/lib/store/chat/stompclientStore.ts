@@ -49,10 +49,10 @@ export const useStompShoutData = create<ShoutMessageDataStore>((set) => ({
 }));
 
 export const useStompVoteData = create<VoteDataStore>((set) => ({
-  voteData: {},
+  voteData: [],
   setVoteData: (receivedMessage) => {
     set(() => ({
-      voteData: receivedMessage,
+      voteData: [receivedMessage],
     }));
   },
 }));

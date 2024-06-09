@@ -8,3 +8,8 @@ export type CreateVoteDetailProps = {
   option1: string;
   option2: string;
 };
+
+export type SendVoteDetailProps = {
+  miniGameId: number;
+  option: number;
+};

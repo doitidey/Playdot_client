@@ -10,6 +10,7 @@ import {
 import {
   CreateVoteDetailProps,
   MessageDetailProps,
+  SendVoteDetailProps,
 } from "@/lib/types/hooks/useSocketTypes";
 
 export const useSocket = () => {
@@ -99,5 +100,22 @@ export const useSocket = () => {
     [roomId, stompClient],
   );
 
-  return { connectSocket, sendMessage, createVote };
+  const sendVote = useCallback(
+    (props: SendVoteDetailProps) => {
+      if (stompClient && stompClient.connected) {
+        const voteDetails = JSON.stringify({
+          miniGameId: `${props.miniGameId}`,
+          option: `${props.option}`,
+        });
+        stompClient.publish({
+          destination: "/pub/chat/vote",
+          body: voteDetails,
+          headers: headers,
+        });
+      }
+    },
+    [roomId, stompClient],
+  );
+
+  return { connectSocket, sendMessage, createVote, sendVote };
 };

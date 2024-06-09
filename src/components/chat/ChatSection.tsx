@@ -14,6 +14,7 @@ import { useSocket } from "@/lib/hooks/useSocket";
 import {
   useStompClient,
   useStompShoutData,
+  useStompVoteData,
 } from "@/lib/store/chat/stompclientStore";
 import ShoutBubble from "@/components/chat/chatlog/ShoutBubble";
 
@@ -22,6 +23,7 @@ function ChatSection({ pid }: { pid: string }) {
   const { connectSocket } = useSocket();
   const { menuModalState } = useMenuModalState();
   const { shoutData } = useStompShoutData();
+  const { voteData } = useStompVoteData();
 
   const today = new Date();
   const ROOMNUM = Number(pid);
@@ -42,7 +44,8 @@ function ChatSection({ pid }: { pid: string }) {
         <div className="float">
           <div className="float__contents">
             {menuModalState.isOpen && <MenuModal />}
-            <VoteModal />
+            {voteData[0] && <VoteModal />}
+            {/* <VoteModal /> */}
           </div>
           <ChatInput />
         </div>
