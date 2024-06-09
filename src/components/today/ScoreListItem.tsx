@@ -26,7 +26,6 @@ function ScoreListItem({
   gameId,
   status,
 }: ScoreListItemProps) {
-
   const { mutate: awayVote } = useMutation(
     () => voteTodayGames(gameId, awayTeam.id),
     {
@@ -68,6 +67,7 @@ function ScoreListItem({
   );
 
   const onClickAway = useCallback(() => {
+    // switch case 문으로 조건 정의
     awayVote();
   }, [awayVote]);
 

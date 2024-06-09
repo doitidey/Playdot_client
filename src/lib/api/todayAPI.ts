@@ -35,3 +35,17 @@ export const updateTodayGames = async (gameId: number, teamId: number) => {
     .then((res) => res.data);
   return response.data;
 };
+
+instance.interceptors.request.use(
+  function (config) {
+    const accessToken = localStorage.getItem("authToken") as string;
+    if (!accessToken) {
+      return config;
+    }
+    config.headers.authorization = accessToken;
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  },
+);
