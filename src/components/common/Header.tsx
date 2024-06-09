@@ -20,8 +20,8 @@ function Header() {
 
   const {
     ACTIVE_MATCH_CLASSNAME,
-    ACTIVE_COMMUNITY_CLASSNAME,
-    UNDERBAR_COMMUNITY_CLASSNAME,
+    ACTIVE_MYPAGE_CLASSNAME,
+    UNDERBAR_MYPAGE_CLASSNAME,
     UNDERBAR_MATCH_CLASSNAME,
     PATH,
   } = usePath();
@@ -61,11 +61,11 @@ function Header() {
               <li className="navigation__item">
                 <Link
                   href={userData.nickname ? PATH.mypage : PATH.login}
-                  className={`pagelink ${ACTIVE_COMMUNITY_CLASSNAME}`}
+                  className={`pagelink ${ACTIVE_MYPAGE_CLASSNAME}`}
                 >
                   마이페이지
                   <div
-                    className={`underbar ${UNDERBAR_COMMUNITY_CLASSNAME}`}
+                    className={`underbar ${UNDERBAR_MYPAGE_CLASSNAME}`}
                   ></div>
                 </Link>
               </li>
