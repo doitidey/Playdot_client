@@ -6,6 +6,7 @@ import classNames from "classnames";
 import { useStompVoteData } from "@/lib/store/chat/stompclientStore";
 import { VOTE_DATA } from "../dummy";
 import { useSocket } from "@/lib/hooks/useSocket";
+import VoteTimer from "./VoteTimer";
 
 function VoteModal() {
   // const { voteData } = useStompVoteData();
@@ -30,7 +31,9 @@ function VoteModal() {
 
   return (
     <div className="vote__block">
-      <div className="vote__title">🔔 20분 00초 뒤 종료</div>
+      <div className="vote__title">
+        <VoteTimer targetTime={voteDescData.startedAt} />
+      </div>
       <div className="vote__content-detail">
         <div className="vote__content-detail__nickname">
           [ {profileData.nickname} ]님의 미니투표
