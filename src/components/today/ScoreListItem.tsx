@@ -10,7 +10,11 @@ import { TodayMatchData } from "./Today";
 import { getAwayLogo, getHomeLogo } from "@/lib/util/getLogo";
 import { gameDate } from "@/lib/util/getGameTime";
 import { useMutation } from "react-query";
-import { deleteTodayGames, voteTodayGames } from "@/lib/api/todayAPI";
+import {
+  deleteTodayGames,
+  updateTodayGames,
+  voteTodayGames,
+} from "@/lib/api/todayAPI";
 import { queryClient } from "../common/Layout";
 
 // Interface
@@ -33,6 +37,9 @@ function ScoreListItem({
         console.warn("원정 팀 선택 완료");
         queryClient.invalidateQueries({ queryKey: ["today"] });
       },
+      onError: () => {
+        console.error("선택 오류");
+      },
     },
   );
 
@@ -42,6 +49,9 @@ function ScoreListItem({
       onSuccess: () => {
         console.warn("원정 팀 투표 취소 완료");
         queryClient.invalidateQueries({ queryKey: ["today"] });
+      },
+      onError: () => {
+        console.error("선택 오류");
       },
     },
   );
@@ -53,6 +63,9 @@ function ScoreListItem({
         console.warn("홈 팀 선택 완료");
         queryClient.invalidateQueries({ queryKey: ["today"] });
       },
+      onError: () => {
+        console.error("선택 오류");
+      },
     },
   );
 
@@ -63,24 +76,49 @@ function ScoreListItem({
         console.warn("원정 팀 투표 취소 완료");
         queryClient.invalidateQueries({ queryKey: ["today"] });
       },
+      onError: () => {
+        console.error("선택 오류");
+      },
+    },
+  );
+
+  const { mutate: updateAway } = useMutation(
+    () => updateTodayGames(gameId, awayTeam.id),
+    {
+      onSuccess: () => {
+        console.warn("팀 변경 완료");
+        queryClient.invalidateQueries({ queryKey: ["today"] });
+      },
+    },
+  );
+
+  const { mutate: updateHome } = useMutation(
+    () => updateTodayGames(gameId, homeTeam.id),
+    {
+      onSuccess: () => {
+        console.warn("팀 변경 완료");
+        queryClient.invalidateQueries({ queryKey: ["today"] });
+      },
     },
   );
 
   const onClickAway = useCallback(() => {
     if (awayTeam.hasVote === false) {
       awayVote();
-    } else {
+      updateAway();
+    } else if (awayTeam.hasVote === true) {
       deleteAwayVote();
     }
-  }, [awayVote, awayTeam.hasVote, deleteAwayVote]);
+  }, [awayVote, awayTeam.hasVote, deleteAwayVote, updateAway]);
 
   const onClickHome = useCallback(() => {
     if (homeTeam.hasVote === false) {
       homeVote();
-    } else {
+      updateHome();
+    } else if (homeTeam.hasVote === true) {
       deleteHomeVote();
     }
-  }, [homeVote, homeTeam.hasVote, deleteHomeVote]);
+  }, [homeVote, homeTeam.hasVote, deleteHomeVote, updateHome]);
 
   return (
     <>
