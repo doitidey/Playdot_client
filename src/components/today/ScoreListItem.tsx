@@ -67,21 +67,20 @@ function ScoreListItem({
   );
 
   const onClickAway = useCallback(() => {
-    // switch case 문으로 조건 정의
-    awayVote();
-  }, [awayVote]);
-
-  const onDeleteAwayVote = useCallback(() => {
-    deleteAwayVote();
-  }, [deleteAwayVote]);
+    if (awayTeam.hasVote === false) {
+      awayVote();
+    } else {
+      deleteAwayVote();
+    }
+  }, [awayVote, awayTeam.hasVote, deleteAwayVote]);
 
   const onClickHome = useCallback(() => {
-    homeVote();
-  }, [homeVote]);
-
-  const onDeleteHomeVote = useCallback(() => {
-    deleteHomeVote();
-  }, [deleteHomeVote]);
+    if (homeTeam.hasVote === false) {
+      homeVote();
+    } else {
+      deleteHomeVote();
+    }
+  }, [homeVote, homeTeam.hasVote, deleteHomeVote]);
 
   return (
     <>
@@ -121,7 +120,6 @@ function ScoreListItem({
               <Text large>{awayTeam.teamName}</Text>
             )}
             <Title medium>{awayTeam.voteRatio}%</Title>
-            <button onClick={onDeleteAwayVote}>투표취소(임시)</button>
           </div>
         </div>
         <div
@@ -146,7 +144,6 @@ function ScoreListItem({
               <Text large>{homeTeam.teamName}</Text>
             )}
             <Title medium>{homeTeam.voteRatio}%</Title>
-            <button onClick={onDeleteHomeVote}>투표취소(임시)</button>
           </div>
         </div>
       </li>
