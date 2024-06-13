@@ -9,9 +9,12 @@ interface WinnerMonthItemProps {
 }
 
 function WinnerMonthItem({ monthData }: WinnerMonthItemProps) {
+  // 글자 수 제한 함수
   const truncateNickname = (str: string, n: number) => {
     return str && str.length > n ? str.substring(0, n - 1) + "..." : str;
   };
+
+  // 등수 별 아이콘 경로 함수
   const renderRankImg = (rank: number) => {
     switch (rank) {
       case (rank = 2):
@@ -24,60 +27,60 @@ function WinnerMonthItem({ monthData }: WinnerMonthItemProps) {
         return "/images/fourth.svg";
     }
   };
+
+  // Render
   return (
-    <>
-      <div className="block">
-        <Title medium>승리요정</Title>
-        <div className="primary">
+    <div className="block">
+      <Title medium>승리요정</Title>
+      <div className="primary">
+        <div className="icon-container">
+          <Image
+            className="first-icon"
+            src="/images/first.svg"
+            alt=""
+            width={100}
+            height={100}
+          />
+          <Text large>1st</Text>
+        </div>
+        {/* 추후 Image 컴포넌트로 변경 */}
+        <div className="image-percentage">
+          <div className="user-image" />
+          <Title largest>{monthData?.winMembers[0].voteRatio}%</Title>
+        </div>
+        <div className="text-logo">
+          <div className="text">
+            <Title large>
+              {truncateNickname(monthData?.winMembers[0].nickname, 6)}
+            </Title>
+            <Text large>
+              승리요정 {monthData?.winMembers[0].winFairyCount}회 / 패배요정{" "}
+              {monthData?.winMembers[0].loseFairyCount}회
+            </Text>
+            <Title medium>{monthData?.winMembers[0].title}</Title>
+          </div>
+          <Image src="/images/lions.svg" alt="" width={60} height={60} />
+        </div>
+      </div>
+      {monthData?.winMembers.slice(1, 5).map((item) => (
+        <div key={item.memberId} className="secondary">
           <div className="icon-container">
             <Image
               className="first-icon"
-              src="/images/first.svg"
+              src={renderRankImg(item.rank) as string}
               alt=""
               width={100}
               height={100}
             />
-            <Text large>1st</Text>
+            <Text large>{item.rank}nd</Text>
           </div>
-          {/* 추후 Image 컴포넌트로 변경 */}
-          <div className="image-percentage">
-            <div className="user-image" />
-            <Title largest>{monthData?.winMembers[0].voteRatio}%</Title>
-          </div>
-          <div className="text-logo">
-            <div className="text">
-              <Title large>
-                {truncateNickname(monthData?.winMembers[0].nickname, 6)}
-              </Title>
-              <Text large>
-                승리요정 {monthData?.winMembers[0].winFairyCount}회 / 패배요정{" "}
-                {monthData?.winMembers[0].loseFairyCount}회
-              </Text>
-              <Title medium>{monthData?.winMembers[0].title}</Title>
-            </div>
+          <div className="user-icon">
+            <Title small>{truncateNickname(item.nickname, 6)}</Title>
             <Image src="/images/lions.svg" alt="" width={60} height={60} />
           </div>
         </div>
-        {monthData?.winMembers.slice(1, 5).map((item) => (
-          <div key={item.memberId} className="secondary">
-            <div className="icon-container">
-              <Image
-                className="first-icon"
-                src={renderRankImg(item.rank) as string}
-                alt=""
-                width={100}
-                height={100}
-              />
-              <Text large>{item.rank}nd</Text>
-            </div>
-            <div className="user-icon">
-              <Title small>{truncateNickname(item.nickname, 6)}</Title>
-              <Image src="/images/lions.svg" alt="" width={60} height={60} />
-            </div>
-          </div>
-        ))}
-      </div>
-    </>
+      ))}
+    </div>
   );
 }
 
