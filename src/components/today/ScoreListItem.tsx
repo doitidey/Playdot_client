@@ -30,6 +30,7 @@ function ScoreListItem({
   gameId,
   status,
 }: ScoreListItemProps) {
+  // 원정 팀 선택
   const { mutate: awayVote } = useMutation(
     () => voteTodayGames(gameId, awayTeam.id),
     {
@@ -43,6 +44,7 @@ function ScoreListItem({
     },
   );
 
+  // 원정 팀 취소
   const { mutate: deleteAwayVote } = useMutation(
     () => deleteTodayGames(gameId),
     {
@@ -56,6 +58,18 @@ function ScoreListItem({
     },
   );
 
+  // 원정 팀 변경
+  const { mutate: updateAway } = useMutation(
+    () => updateTodayGames(gameId, awayTeam.id),
+    {
+      onSuccess: () => {
+        console.warn("팀 변경 완료");
+        queryClient.invalidateQueries({ queryKey: ["today"] });
+      },
+    },
+  );
+
+  // 홈 팀 선택
   const { mutate: homeVote } = useMutation(
     () => voteTodayGames(gameId, homeTeam.id),
     {
@@ -69,6 +83,7 @@ function ScoreListItem({
     },
   );
 
+  // 홈 팀 취소
   const { mutate: deleteHomeVote } = useMutation(
     () => deleteTodayGames(gameId),
     {
@@ -82,16 +97,7 @@ function ScoreListItem({
     },
   );
 
-  const { mutate: updateAway } = useMutation(
-    () => updateTodayGames(gameId, awayTeam.id),
-    {
-      onSuccess: () => {
-        console.warn("팀 변경 완료");
-        queryClient.invalidateQueries({ queryKey: ["today"] });
-      },
-    },
-  );
-
+  // 홈 팀 변경
   const { mutate: updateHome } = useMutation(
     () => updateTodayGames(gameId, homeTeam.id),
     {
@@ -102,6 +108,7 @@ function ScoreListItem({
     },
   );
 
+  // 원정 팀 선택 이벤트 함수
   const onClickAway = useCallback(() => {
     if (awayTeam.hasVote === false) {
       awayVote();
@@ -111,6 +118,7 @@ function ScoreListItem({
     }
   }, [awayVote, awayTeam.hasVote, deleteAwayVote, updateAway]);
 
+  // 홈 팀 선택 이벤트 함수
   const onClickHome = useCallback(() => {
     if (homeTeam.hasVote === false) {
       homeVote();
