@@ -1,19 +1,15 @@
 // import "@/components/comment/CommentList.scss";
 // import CommentListItem from "@/components/comment/CommentListItem";
-// import { CommentData } from "@/components/comment/Comment";
-// import { Dispatch, SetStateAction } from "react";
-// import { QueryClient } from "react-query";
+// import { Comment, CommentData } from "@/components/comment/Comment";
 
 // interface CommentListProps {
-//   comment: CommentData[];
-//   setComment: Dispatch<SetStateAction<CommentData[]>>;
-//   queryClient: QueryClient;
+//   content: CommentData[];
 // }
 
-// function CommentList({ comment, setComment, queryClient }: CommentListProps) {
+// function CommentList({ content }: CommentListProps) {
 //   return (
 //     <ul className="comment-list-block">
-//       {comment.map((item, index) => (
+//       {content.map((item, index) => (
 //         <CommentListItem
 //           key={index}
 //           nickname={item.nickname}
@@ -22,8 +18,6 @@
 //           createdAt={item.createdAt}
 //           likeCount={item.likeCount}
 //           replyId={item.replyId}
-//           setComments={setComment}
-//           queryClient={queryClient}
 //           isLiked={item.isLiked}
 //         />
 //       ))}

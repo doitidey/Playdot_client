@@ -9,11 +9,7 @@
 // import classNames from "classnames";
 // import { commentDate } from "@/lib/util/getGameTime";
 // import { QueryClient, useMutation } from "react-query";
-// import {
-//   // cancelLikeTodayComment,
-//   // likeTodayComment,
-//   removeTodayComment,
-// } from "@/lib/api/todayAPI";
+// import { deleteTodayComment } from "@/lib/api/todayAPI";
 // import { CommentData } from "./Comment";
 
 // interface CommentListItemProps {
@@ -35,7 +31,6 @@
 //   createdAt,
 //   likeCount,
 //   replyId,
-//   setComments,
 //   isLiked,
 // }: CommentListItemProps) {
 //   const [visibleReply, setVisibleReply] = useState(false);
@@ -43,38 +38,6 @@
 //   const [like, setLike] = useState(isLiked);
 //   const [count, setCount] = useState(likeCount);
 //   const [visibleBalloon, setVisibleBalloon] = useState(false);
-
-//   const { mutate: removeComment } = useMutation(
-//     async () => removeTodayComment(replyId as number),
-//     {
-//       onMutate: (commentId: number) => {
-//         console.warn(`댓글 ${replyId}: 댓글 삭제 완료`);
-//         setComments((prevComments) =>
-//           prevComments.filter((comment) => comment.replyId !== commentId),
-//         );
-//       },
-//     },
-//   );
-
-//   // 좋아요 기능 작업 중
-//   // const { mutate: likeComment } = useMutation(
-//   //   async () => likeTodayComment(replyId as number),
-//   //   {
-//   //     onMutate: () => {
-//   //       console.warn(replyId);
-//   //       isLiked && setCount((count as number) + 1);
-//   //     },
-//   //   },
-//   // );
-
-//   // const { mutate: cancelLike } = useMutation(
-//   //   async () => cancelLikeTodayComment(replyId as number),
-//   //   {
-//   //     onMutate: () => {
-//   //       console.warn(replyId);
-//   //     },
-//   //   },
-//   // );
 
 //   const onVisible = () => {
 //     setVisibleReply(!visibleReply);
@@ -91,10 +54,6 @@
 //     setVisibleBalloon(!visibleBalloon);
 //   }, [visibleBalloon]);
 
-//   const onRemove = useCallback(() => {
-//     removeComment(replyId as number);
-//     setVisibleBalloon(false);
-//   }, [removeComment, replyId]);
 
 //   return (
 //     <>
@@ -123,7 +82,7 @@
 //               <div className="balloon">
 //                 <Text small>삭제 하시겠습니까?</Text>
 //                 <div className="balloon__button">
-//                   <span onClick={onRemove}>삭제</span>
+//                   <span>삭제</span>
 //                   <span onClick={onBalloon}>취소</span>
 //                 </div>
 //               </div>

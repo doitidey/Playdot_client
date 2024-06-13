@@ -11,12 +11,13 @@
 // } from "react";
 // import { MdRefresh } from "react-icons/md";
 // import Title from "@/components/common/Title";
-// // import CommentList from "@/components/comment/CommentList";
-// import { useMutation, useQuery, useQueryClient } from "react-query";
-// // import { postTodayComment, todayGamesComment } from "@/lib/api/todayAPI";
+// import CommentList from "@/components/comment/CommentList";
+// import { useMutation, useQuery } from "react-query";
 // import autosize from "autosize";
 // import Button from "@/components/common/Button";
 // import Text from "@/components/common/Text";
+// import { getTodayComment, postTodayComment } from "@/lib/api/todayAPI";
+// import { queryClient } from "../common/Layout";
 
 // interface Sort {
 //   sorted: boolean;
@@ -46,16 +47,16 @@
 
 // export interface Comment {
 //   content: CommentData[];
-//   pageable: Pageable;
-//   totalElements: number;
-//   totalPages: number;
-//   last: boolean;
-//   size: number;
-//   number: number;
-//   sort: Sort;
-//   numberOfElements: number;
-//   first: boolean;
-//   empty: boolean;
+//   pageable?: Pageable;
+//   totalElements?: number;
+//   totalPages?: number;
+//   last?: boolean;
+//   size?: number;
+//   number?: number;
+//   sort?: Sort;
+//   numberOfElements?: number;
+//   first?: boolean;
+//   empty?: boolean;
 // }
 
 // export interface Team {
@@ -65,47 +66,19 @@
 // }
 
 // function Comment() {
-//   const queryClient = useQueryClient();
-
-//   const [comments, setComments] = useState<Comment>();
-//   const [comment, setComment] = useState<CommentData[]>(
-//     comments?.content as [],
-//   );
 //   const [value, setValue] = useState("");
 //   const commentRef = useRef<HTMLTextAreaElement>(null);
 
-//   console.warn(comment);
+//   const { data: comment, refetch } = useQuery<CommentData[]>("comment", () =>
+//     getTodayComment(),
+//   );
 
-//   // TODO: 리액트 쿼리 관련 hook으로 리팩토링
-//   // const { data: commentData = comment, refetch } = useQuery({
-//   //   queryKey: ["todayComment"],
-//   //   queryFn: () =>
-//   //     todayGamesComment()?.then((res) => {
-//   //       setComments(res.data.content);
-//   //       console.warn(res.data.content);
-//   //     }),
-//   //   refetchOnWindowFocus: false,
-//   // });
-
-//   // const { mutate: postComment } = useMutation(
-//   //   async () => postTodayComment(value),
-//   //   {
-//   //     onMutate: () => {
-//   //       setComment([
-//   //         ...comment,
-//   //         {
-//   //           teamName: localStorage.getItem("teamName") as string,
-//   //           nickname: localStorage.getItem("nickname") as string,
-//   //           content: value,
-//   //         },
-//   //       ]);
-//   //       setValue("");
-//   //     },
-//   //     onSettled: () => {
-//   //       queryClient.invalidateQueries("todayComment");
-//   //     },
-//   //   },
-//   // );
+//   const { mutate: postComment } = useMutation(() => postTodayComment(value), {
+//     onSuccess: () => {
+//       console.warn(`댓글 작성 완료: ${value}`);
+//       queryClient.invalidateQueries({ queryKey: ["comment"] });
+//     },
+//   });
 
 //   const onRefresh = useCallback(() => {
 //     refetch();
@@ -143,7 +116,7 @@
 //     <section className="comment-block">
 //       <form className="comment-block__content" onSubmit={onSubmit}>
 //         <div className="comment-header">
-//           <Title medium>댓글 {comments?.totalElements}개</Title>
+//           <Title medium>댓글 0개</Title>
 //           <div onClick={onRefresh}>
 //             <MdRefresh />
 //           </div>
@@ -164,11 +137,7 @@
 //         <Text medium className="value-length">
 //           {value.length} / 300
 //         </Text>
-//         {/* <CommentList
-//           comment={commentData}
-//           setComment={setComment}
-//           queryClient={queryClient}
-//         /> */}
+//         {/* <CommentList content={comment?.content} /> */}
 //       </form>
 //     </section>
 //   );
