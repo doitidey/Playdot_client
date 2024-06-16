@@ -14,11 +14,11 @@ function SignupSection() {
   const { userData } = useUserDataStore();
   const router = useRouter();
 
-  useEffect(() => {
-    if (!userData.newMember) {
-      router.push("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!userData.newMember) {
+  //     router.push("/");
+  //   }
+  // }, []);
 
   return (
     <section className="signup">
