@@ -42,9 +42,11 @@ function TeamCards(props: TeamCardsProps) {
       {isSelectedInProps && (
         <div
           onClick={props.onClick}
-          className="teamcard__block teamcard__block--active"
+          className={`teamcard__block teamcard__block--active ${
+            isSelected && "teamcard__block--active--clicked"
+          }`}
         >
-          <h3 className="teamcard__title">선택하기</h3>
+          {!isSelected && <h3 className="teamcard__title">선택하기</h3>}
         </div>
       )}
       <div
