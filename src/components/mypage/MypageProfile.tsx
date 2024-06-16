@@ -28,14 +28,16 @@ interface InputValue {
 }
 function MypageProfile() {
   const imageInputRef = useRef<HTMLInputElement | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | undefined>();
   const [profileData, setProfileData] = useState<ProfileData>();
+  const [previewUrl, setPreviewUrl] = useState<string | undefined>(
+    profileData?.profileImageUrl,
+  );
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const [inputValue, setInputValue] = useState<InputValue>({
-    nickname: "",
+    nickname: profileData ? profileData.nickname : "",
     validNickname: false,
-    comment: "",
+    comment: profileData ? profileData.comment : "",
     validComment: false,
   });
 
@@ -196,9 +198,11 @@ function MypageProfile() {
   };
 
   const isCanSubmit =
-    inputValue.nickname !== profileData?.nickname ||
-    inputValue.comment !== profileData?.comment ||
-    previewUrl;
+    (inputValue.nickname !== profileData?.nickname ||
+      inputValue.comment !== profileData?.comment ||
+      previewUrl) &&
+    inputValue.validComment &&
+    inputValue.validNickname;
 
   return (
     <section className="profile-box">
