@@ -29,7 +29,7 @@ interface InputValue {
 }
 function MypageProfile() {
   const imageInputRef = useRef<HTMLInputElement | null>(null);
-  const { setUserData } = useUserDataStore();
+  const { userData, setUserData } = useUserDataStore();
   const [profileData, setProfileData] = useState<ProfileData>();
   const [previewUrl, setPreviewUrl] = useState<string | undefined>();
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -61,6 +61,7 @@ function MypageProfile() {
           profileImageUrl: res.data.profileImageUrl,
           nickname: res.data.nickname,
           teamName: res.data.teamname,
+          newMember: userData.newMember,
         });
       } catch (error) {
         console.error(error);
