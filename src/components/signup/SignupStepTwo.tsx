@@ -11,6 +11,7 @@ import useTeamsStore from "@/lib/store/signup/teamsStore";
 import Button from "../common/Button";
 import useStepsStore from "@/lib/store/signup/stepsStore";
 import { rInputRegexs } from "@/lib/util/signupValid";
+import { useRouter } from "next/navigation";
 
 interface InputValue {
   nickname: string;
@@ -24,6 +25,7 @@ function SignupStepTwo() {
   const { clickedCardStore } = useclickedCardStore();
   const { teamStore } = useTeamsStore();
   const { decreaseStep } = useStepsStore();
+  const router = useRouter();
 
   const imageInputRef = useRef<HTMLInputElement | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | undefined>();
@@ -160,6 +162,8 @@ function SignupStepTwo() {
         putProfile(formData);
       } catch {
         alert("api 오류");
+      } finally {
+        router.push("/");
       }
     }
   };
