@@ -4,7 +4,7 @@ import { MessageType, VoteType } from "@/lib/types/chat/chatTypes";
 export interface ClientStore {
   stompClient: Client | null;
   roomId: number;
-  setStompClient: (client: Client) => void;
+  setStompClient: (client: Client | null) => void;
   setRoomId: (roomNumber: number) => void;
 }
 

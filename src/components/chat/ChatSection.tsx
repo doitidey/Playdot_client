@@ -19,7 +19,7 @@ import {
 import ShoutBubble from "@/components/chat/chatlog/ShoutBubble";
 
 function ChatSection({ pid }: { pid: string }) {
-  const { stompClient } = useStompClient();
+  const { stompClient, setStompClient } = useStompClient();
   const { connectSocket } = useSocket();
   const { menuModalState } = useMenuModalState();
   const { shoutData } = useStompShoutData();
@@ -31,9 +31,8 @@ function ChatSection({ pid }: { pid: string }) {
   useEffect(() => {
     connectSocket(ROOMNUM);
     return () => {
-      if (stompClient) {
-        stompClient.deactivate();
-      }
+      stompClient?.deactivate();
+      setStompClient(null);
     };
   }, []);
 
@@ -51,9 +50,14 @@ function ChatSection({ pid }: { pid: string }) {
         </div>
         <ChatLog />
       </div>
-      {shoutData.map((data) => (
+      {shoutData.map((data, index) => (
         <ShoutBubble
-          key={data.profile.nickname + today.getHours + today.getMinutes}
+          key={
+            index +
+            data.profile.nickname +
+            today.getMinutes() +
+            today.getMilliseconds()
+          }
           data={data}
         />
       ))}

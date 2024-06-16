@@ -34,7 +34,7 @@ export const useSocket = () => {
     socket.onConnect = () => {
       setStompClient(socket);
       socket.subscribe(
-        `/sub/chat/${roomId}`,
+        `/sub/chat/${roomNumber}`,
         (frame: { body: string }) => {
           try {
             const receivedMessage = JSON.parse(frame.body);
@@ -52,7 +52,7 @@ export const useSocket = () => {
           }
         },
         {
-          gameId: `${roomId}`,
+          gameId: `${roomNumber}`,
           Authorization: `${localStorage.getItem("authToken")}`,
         },
       );
