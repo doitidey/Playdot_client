@@ -11,6 +11,7 @@ import "@/components/mypage/MypageProfile.scss";
 import { getProfileDetails } from "@/lib/api/mypageAPI";
 import { nicknameCheck, putProfile } from "@/lib/api/signupAPI";
 import { rInputRegexs } from "@/lib/util/signupValid";
+import { useUserDataStore } from "@/lib/store/userDataStore";
 
 type ProfileData = {
   comment: string;
@@ -28,17 +29,16 @@ interface InputValue {
 }
 function MypageProfile() {
   const imageInputRef = useRef<HTMLInputElement | null>(null);
+  const { setUserData } = useUserDataStore();
   const [profileData, setProfileData] = useState<ProfileData>();
   const [previewUrl, setPreviewUrl] = useState<string | undefined>();
   const [isEditing, setIsEditing] = useState<boolean>(false);
-
   const [inputValue, setInputValue] = useState<InputValue>({
     nickname: profileData ? profileData.nickname : "",
     validNickname: false,
     comment: profileData ? profileData.comment : "",
     validComment: false,
   });
-
   const [validMessage, setValidMessage] = useState({
     validNickname: "",
     validComment: "",
@@ -56,6 +56,11 @@ function MypageProfile() {
           validNickname: true,
           comment: res.data.comment,
           validComment: true,
+        });
+        setUserData({
+          profileImageUrl: res.data.profileImageUrl,
+          nickname: res.data.nickname,
+          teamName: res.data.teamname,
         });
       } catch (error) {
         console.error(error);
@@ -183,16 +188,15 @@ function MypageProfile() {
               validNickname: "사용 가능한 닉네임이야!",
             }));
             putSubmit();
-            location.reload();
           }
         }
       } catch {
         console.error("닉네임 체크 APi 오류");
+      } finally {
+        location.reload();
       }
-      return;
     }
     putSubmit();
-    location.reload();
   };
 
   const isCanSubmit =

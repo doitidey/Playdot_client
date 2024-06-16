@@ -5,7 +5,6 @@ interface UserProfile {
   profileImageUrl: null | string;
   nickname: string;
   teamName: null | string;
-  newMember: boolean;
 }
 
 interface UserDataStore {
@@ -21,7 +20,6 @@ export const useUserDataStore = create<UserDataStore>()(
         profileImageUrl: "",
         nickname: "",
         teamName: null,
-        newMember: false,
       },
 
       setUserData: (data) =>
