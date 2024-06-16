@@ -29,9 +29,7 @@ interface InputValue {
 function MypageProfile() {
   const imageInputRef = useRef<HTMLInputElement | null>(null);
   const [profileData, setProfileData] = useState<ProfileData>();
-  const [previewUrl, setPreviewUrl] = useState<string | undefined>(
-    profileData?.profileImageUrl,
-  );
+  const [previewUrl, setPreviewUrl] = useState<string | undefined>();
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const [inputValue, setInputValue] = useState<InputValue>({
@@ -244,17 +242,26 @@ function MypageProfile() {
                   +
                 </div>
               )}
-              {profileData && (
+
+              {previewUrl || profileData?.profileImageUrl ? (
                 <Image
                   src={
                     previewUrl
                       ? `${previewUrl}`
-                      : `${process.env.NEXT_PUBLIC_IMAGE_URL}${profileData.profileImageUrl}`
+                      : `${process.env.NEXT_PUBLIC_IMAGE_URL}${profileData?.profileImageUrl}`
                   }
                   alt="프로필사진"
                   fill={true}
                 />
+              ) : (
+                <Image
+                  src="/images/emptyProfile.svg"
+                  alt="프로필사진"
+                  width={136}
+                  height={136}
+                />
               )}
+
               <input
                 type="file"
                 accept="image/*"
