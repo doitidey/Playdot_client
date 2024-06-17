@@ -13,3 +13,8 @@ export type SendVoteDetailProps = {
   miniGameId: number;
   option: number;
 };
+
+export type Headers = {
+  gameId: string;
+  Authorization: string;
+};

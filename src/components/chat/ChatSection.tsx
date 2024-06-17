@@ -19,20 +19,21 @@ import {
 import ShoutBubble from "@/components/chat/chatlog/ShoutBubble";
 
 function ChatSection({ pid }: { pid: string }) {
-  const { stompClient, setStompClient } = useStompClient();
-  const { connectSocket } = useSocket();
+  const { connectSocket, deactivateSocket } = useSocket();
   const { menuModalState } = useMenuModalState();
   const { shoutData } = useStompShoutData();
   const { voteData } = useStompVoteData();
+  const { setRoomId } = useStompClient();
 
   const today = new Date();
   const ROOMNUM = Number(pid);
 
   useEffect(() => {
+    deactivateSocket();
+    setRoomId(ROOMNUM);
     connectSocket(ROOMNUM);
     return () => {
-      stompClient?.deactivate();
-      setStompClient(null);
+      deactivateSocket();
     };
   }, []);
 
