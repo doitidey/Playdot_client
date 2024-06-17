@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Title from "@/components/common/Title";
 import useTokenNumberStore from "@/lib/store/chat/tokenStore";
+import { useModal } from "@/lib/hooks/useModal";
 
 type ProfileModal = {
   nickname: string;
@@ -23,6 +24,7 @@ function ProfileModal({ nickname }: { nickname: string }) {
     comment: "",
   });
   const { totalStore } = useTokenNumberStore();
+  const { closeModal } = useModal();
 
   useEffect(() => {
     const getProfileData = async () => {
@@ -38,6 +40,7 @@ function ProfileModal({ nickname }: { nickname: string }) {
   const onClickTokenPresent = () => {
     if (isButtonActive()) {
       putToken(tokenBody);
+      closeModal();
     }
     return;
   };
