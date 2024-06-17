@@ -15,9 +15,8 @@ import {
 } from "react";
 import { MdRefresh } from "react-icons/md";
 import CommentList from "./CommentList";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getTodayComment, postTodayComment } from "@/lib/api/todayAPI";
-import { queryClient } from "@/components/common/Layout";
 
 export interface Content {
   profileImageUrl?: string;
@@ -61,9 +60,10 @@ export interface CommentData {
 
 function Comment() {
   const [value, setValue] = useState("");
-  const [comment, setComment] = useState<Content[]>([]);
 
   const commentRef = useRef<HTMLTextAreaElement>(null);
+
+  const queryClient = useQueryClient();
 
   const { data: commentData, refetch } = useQuery<CommentData>(
     "todayComment",
@@ -76,14 +76,6 @@ function Comment() {
 
   const { mutate: postComment } = useMutation(() => postTodayComment(value), {
     onSuccess: () => {
-      setComment([
-        ...comment,
-        {
-          teamName: localStorage.getItem("teamName") as string,
-          nickname: localStorage.getItem("nickname") as string,
-          content: value,
-        },
-      ]);
       console.warn(`댓글 입력 완료: ${value}`);
       queryClient.invalidateQueries({ queryKey: ["todayComment"] });
     },
