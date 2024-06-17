@@ -37,9 +37,9 @@ export const updateTodayGames = async (gameId: number, teamId: number) => {
 };
 
 // 오늘의 승부예측 댓글 조회 API
-export const getTodayComment = async (page?: number, item?: number) => {
+export const getTodayComment = async () => {
   const response = await instance
-    .get(`games/daily-replies?page=${page}&item=${item}`)
+    .get(`games/daily-replies`)
     .then((res) => res.data);
   return response.data;
 };
@@ -53,9 +53,9 @@ export const getTodayReply = async (replyId: number) => {
 };
 
 // 오늘의 승부예측 댓글 작성 API
-export const postTodayComment = async (comment: string) => {
+export const postTodayComment = async (content: string) => {
   const requestBody = {
-    comment: comment,
+    content: content,
   };
   const response = await instance
     .post(`games/daily-reply`, requestBody)
