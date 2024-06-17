@@ -9,13 +9,12 @@ import Title from "../common/Title";
 import { TodayMatchData } from "./Today";
 import { getAwayLogo, getHomeLogo } from "@/lib/util/getLogo";
 import { gameDate } from "@/lib/util/getGameTime";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import {
   deleteTodayGames,
   updateTodayGames,
   voteTodayGames,
 } from "@/lib/api/todayAPI";
-import { queryClient } from "../common/Layout";
 
 // Interface
 interface ScoreListItemProps extends TodayMatchData {
@@ -30,6 +29,8 @@ function ScoreListItem({
   gameId,
   status,
 }: ScoreListItemProps) {
+  const queryClient = useQueryClient();
+  
   // 원정 팀 선택
   const { mutate: awayVote } = useMutation(
     () => voteTodayGames(gameId, awayTeam.id),

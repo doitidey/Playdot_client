@@ -9,13 +9,12 @@ import classNames from "classnames";
 import { Content } from "./Comment";
 import TeamTag from "@/components/tag/TeamTag";
 import { commentDate } from "@/lib/util/getGameTime";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import {
   cancelCommentLike,
   deleteTodayComment,
   postCommentLike,
 } from "@/lib/api/todayAPI";
-import { queryClient } from "@/components/common/Layout";
 
 function CommentItem({
   content,
@@ -28,6 +27,8 @@ function CommentItem({
   teamName,
 }: Content) {
   const [visibleBalloon, setVisibleBalloon] = useState(false);
+
+  const queryClient = useQueryClient();
 
   const { mutate: deleteComment } = useMutation(
     () => deleteTodayComment(replyId as number),
