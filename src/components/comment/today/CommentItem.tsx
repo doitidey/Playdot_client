@@ -15,6 +15,7 @@ import {
   deleteTodayComment,
   postCommentLike,
 } from "@/lib/api/todayAPI";
+import Image from "next/image";
 
 function CommentItem({
   content,
@@ -22,7 +23,7 @@ function CommentItem({
   isLiked,
   likeCount,
   nickname,
-  // profileImageUrl,
+  profileImageUrl,
   replyId,
   teamName,
 }: Content) {
@@ -80,7 +81,13 @@ function CommentItem({
   return (
     <li className="item-block">
       <div className="item-block__comment">
-        <div className="profile-image" />
+        <Image
+          className="profile-image"
+          alt="profile"
+          src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${profileImageUrl}`}
+          width={50}
+          height={50}
+        />
         <div className="content">
           <div className="content__profile">
             <Text medium>{nickname}</Text>
