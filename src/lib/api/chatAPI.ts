@@ -2,7 +2,7 @@ import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
 import { fetchData } from "@/lib/api/commonAPI";
 
-export const configureStompClient = (gameId: number) => {
+export const configureStompClient = (gameId: string) => {
   const serverUrl = `${process.env.NEXT_PUBLIC_BASE_URL}chat`;
   const token = localStorage.getItem("authToken");
   const sockJs = new SockJS(serverUrl);

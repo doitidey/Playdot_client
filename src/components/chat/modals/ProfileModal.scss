@@ -1,9 +1,14 @@
 .profilemodal {
+  transition: 0.2;
   &__contents {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 12px;
     margin-bottom: 26px;
+    overflow: hidden;
+    img {
+      border-radius: 50%;
+    }
   }
 }
