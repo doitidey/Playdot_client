@@ -26,7 +26,7 @@ function ChatSection({ pid }: { pid: string }) {
   const { setRoomId } = useStompClient();
 
   const today = new Date();
-  const ROOMNUM = Number(pid);
+  const ROOMNUM = pid;
 
   useEffect(() => {
     deactivateSocket();

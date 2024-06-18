@@ -15,7 +15,7 @@ import {
 } from "@/lib/types/hooks/useSocketTypes";
 
 export const useSocket = () => {
-  const { stompClient, setStompClient, roomId, setRoomId } = useStompClient();
+  const { stompClient, setStompClient, roomId } = useStompClient();
   const { setMessageData, setMessageDataEmpty } = useStompMessageData();
   const { setShoutData, setEmptyShoutData } = useStompShoutData();
   const { setVoteData } = useStompVoteData();
@@ -32,8 +32,7 @@ export const useSocket = () => {
   }, [roomId]);
 
   // 소켓 연결하기
-  const connectSocket = (roomNumber: number) => {
-    setRoomId(roomNumber);
+  const connectSocket = (roomNumber: string) => {
     const socket = configureStompClient(roomNumber);
 
     // 소켓 연결 후 바로 구독
