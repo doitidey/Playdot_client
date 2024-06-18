@@ -12,7 +12,6 @@ function VoteModal() {
   const { voteData } = useStompVoteData();
   const { sendVote } = useSocket();
   const [voteActive, setVoteActive] = useState(false);
-  console.log(voteData);
   // const voteData = VOTE_DATA;
 
   const onVote = (e: React.MouseEvent<HTMLButtonElement>) => {
