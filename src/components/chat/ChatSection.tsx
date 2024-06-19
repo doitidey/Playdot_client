@@ -17,6 +17,9 @@ import {
   useStompVoteData,
 } from "@/lib/store/chat/stompclientStore";
 import ShoutBubble from "@/components/chat/chatlog/ShoutBubble";
+import useChatErrorStore from "@/lib/store/chat/chatErrorStore";
+import ErroorModal from "@/components/chat/modals/ErrorModal";
+import { useModal } from "@/lib/hooks/useModal";
 
 function ChatSection({ pid }: { pid: string }) {
   const { connectSocket, deactivateSocket } = useSocket();
@@ -24,6 +27,8 @@ function ChatSection({ pid }: { pid: string }) {
   const { shoutData } = useStompShoutData();
   const { voteData } = useStompVoteData();
   const { setRoomId } = useStompClient();
+  const { errorMessage } = useChatErrorStore();
+  const { openModal } = useModal();
 
   const today = new Date();
   const ROOMNUM = pid;
@@ -36,6 +41,13 @@ function ChatSection({ pid }: { pid: string }) {
       deactivateSocket();
     };
   }, []);
+
+  useEffect(() => {
+    if (errorMessage.length > 1)
+      openModal({
+        content: <ErroorModal />,
+      });
+  }, [errorMessage]);
 
   return (
     <div className="chat">

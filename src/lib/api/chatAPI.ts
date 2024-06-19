@@ -2,9 +2,13 @@ import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
 import { fetchData } from "@/lib/api/commonAPI";
 
-export const configureStompClient = (gameId: string) => {
+export const configureStompClient = (
+  gameId: string,
+  setMsg: (message: string) => void,
+) => {
   const serverUrl = `${process.env.NEXT_PUBLIC_BASE_URL}chat`;
   const token = localStorage.getItem("authToken");
+
   const sockJs = new SockJS(serverUrl);
   const stompClient = new Client({
     webSocketFactory: () => sockJs,
@@ -12,11 +16,12 @@ export const configureStompClient = (gameId: string) => {
       gameId: `${gameId}`,
       Authorization: `${token}`,
     },
-    // onStompError: (frame) => {
-    //   console.log("ㄷㄱ객", frame);
-    // },
+    onStompError: (str) => {
+      console.error(str.body);
+      setMsg(str.body);
+    },
     debug: (str) => {
-      // console.log(str);
+      console.log(str);
     },
     reconnectDelay: 5000,
     heartbeatIncoming: 4000,
