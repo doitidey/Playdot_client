@@ -88,3 +88,20 @@
   align-self: flex-end;
   margin-right: 100px;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  li {
+    a {
+      color: #fff;
+    }
+    padding: 16px;
+    border-radius: 8px;
+    &.active {
+      background: blue;
+    }
+  }
+}
