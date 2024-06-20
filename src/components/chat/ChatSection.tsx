@@ -14,24 +14,26 @@ import { useSocket } from "@/lib/hooks/useSocket";
 import {
   useStompClient,
   useStompShoutData,
+  useStompVoteData,
 } from "@/lib/store/chat/stompclientStore";
 import ShoutBubble from "@/components/chat/chatlog/ShoutBubble";
 
 function ChatSection({ pid }: { pid: string }) {
-  const { stompClient } = useStompClient();
-  const { connectSocket } = useSocket();
+  const { connectSocket, deactivateSocket } = useSocket();
   const { menuModalState } = useMenuModalState();
   const { shoutData } = useStompShoutData();
+  const { voteData } = useStompVoteData();
+  const { setRoomId } = useStompClient();
 
   const today = new Date();
-  const ROOMNUM = Number(pid);
+  const ROOMNUM = pid;
 
   useEffect(() => {
+    deactivateSocket();
+    setRoomId(ROOMNUM);
     connectSocket(ROOMNUM);
     return () => {
-      if (stompClient) {
-        stompClient.deactivate();
-      }
+      deactivateSocket();
     };
   }, []);
 
@@ -42,15 +44,21 @@ function ChatSection({ pid }: { pid: string }) {
         <div className="float">
           <div className="float__contents">
             {menuModalState.isOpen && <MenuModal />}
-            <VoteModal />
+            {voteData[0] && <VoteModal />}
+            {/* <VoteModal /> */}
           </div>
           <ChatInput />
         </div>
         <ChatLog />
       </div>
-      {shoutData.map((data) => (
+      {shoutData.map((data, index) => (
         <ShoutBubble
-          key={data.profile.nickname + today.getHours + today.getMinutes}
+          key={
+            index +
+            data.profile.nickname +
+            today.getMinutes() +
+            today.getMilliseconds()
+          }
           data={data}
         />
       ))}

@@ -50,6 +50,9 @@
       color: $dark-text2;
       position: relative;
       overflow: hidden;
+      &:hover {
+        opacity: 80%;
+      }
       h3 {
         display: block;
         z-index: 9;

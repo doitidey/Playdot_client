@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState, useEffect } from "react";
 
 import { configureStompClient } from "@/lib/api/chatAPI";
 import {
@@ -9,38 +9,42 @@ import {
 } from "@/lib/store/chat/stompclientStore";
 import {
   CreateVoteDetailProps,
+  Headers,
   MessageDetailProps,
+  SendVoteDetailProps,
 } from "@/lib/types/hooks/useSocketTypes";
 
 export const useSocket = () => {
-  const { stompClient, roomId, setStompClient, setRoomId } = useStompClient();
-  const { setMessageData } = useStompMessageData();
-  const { setShoutData } = useStompShoutData();
+  const { stompClient, setStompClient, roomId } = useStompClient();
+  const { setMessageData, setMessageDataEmpty } = useStompMessageData();
+  const { setShoutData, setEmptyShoutData } = useStompShoutData();
   const { setVoteData } = useStompVoteData();
+  const [headers, setHeaders] = useState<Headers>();
 
-  useStompVoteData;
-  const headers = {
-    gameId: `${roomId}`,
-    Authorization: `${localStorage.getItem("authToken")}`,
-  };
+  useEffect(() => {
+    if (roomId !== undefined) {
+      const newHeaders = {
+        gameId: `${roomId}`,
+        Authorization: `${localStorage.getItem("authToken")}`,
+      };
+      setHeaders(newHeaders);
+    }
+  }, [roomId]);
 
-  //소켓 연결하기
-  const connectSocket = (roomNumber: number) => {
-    setRoomId(roomNumber);
-    const socket = configureStompClient(roomId);
+  // 소켓 연결하기
+  const connectSocket = (roomNumber: string) => {
+    const socket = configureStompClient(roomNumber);
 
-    //소켓 연결 후 바로 구독
+    // 소켓 연결 후 바로 구독
     socket.onConnect = () => {
       setStompClient(socket);
       socket.subscribe(
-        `/sub/chat/${roomId}`,
+        `/sub/chat/${roomNumber}`,
         (frame: { body: string }) => {
           try {
             const receivedMessage = JSON.parse(frame.body);
-            // console.log(receivedMessage);
             if (receivedMessage.type === "BAWWLING") {
               setShoutData(receivedMessage);
-              // isShoutMessageShow || setIsShoutMessageShow();
             } else if (receivedMessage.type === "NORMAL") {
               setMessageData(receivedMessage);
             } else {
@@ -51,7 +55,7 @@ export const useSocket = () => {
           }
         },
         {
-          gameId: `${roomId}`,
+          gameId: `${roomNumber}`,
           Authorization: `${localStorage.getItem("authToken")}`,
         },
       );
@@ -60,7 +64,7 @@ export const useSocket = () => {
     socket.activate();
   };
 
-  //메세지 보내기
+  // 메시지 보내기
   const sendMessage = useCallback(
     (props: MessageDetailProps) => {
       if (stompClient && stompClient.connected) {
@@ -76,10 +80,10 @@ export const useSocket = () => {
         });
       }
     },
-    [roomId, stompClient],
+    [roomId, stompClient, headers],
   );
 
-  //미니투표 만들기
+  // 미니투표 만들기
   const createVote = useCallback(
     (props: CreateVoteDetailProps) => {
       if (stompClient && stompClient.connected) {
@@ -96,8 +100,34 @@ export const useSocket = () => {
         });
       }
     },
-    [roomId, stompClient],
+    [roomId, stompClient, headers],
   );
 
-  return { connectSocket, sendMessage, createVote };
+  const sendVote = useCallback(
+    (props: SendVoteDetailProps) => {
+      if (stompClient && stompClient.connected) {
+        const voteDetails = JSON.stringify({
+          miniGameId: `${props.miniGameId}`,
+          option: `${props.option}`,
+        });
+        stompClient.publish({
+          destination: "/pub/chat/vote",
+          body: voteDetails,
+          headers: headers,
+        });
+      }
+    },
+    [stompClient, headers],
+  );
+
+  const deactivateSocket = () => {
+    if (stompClient === null) {
+      return;
+    }
+    stompClient.deactivate();
+    setMessageDataEmpty();
+    setEmptyShoutData();
+  };
+
+  return { connectSocket, sendMessage, createVote, sendVote, deactivateSocket };
 };

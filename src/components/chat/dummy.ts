@@ -17,3 +17,21 @@ export const GAME_DATA = {
   gameTime: "2024-01-17 14:00:00",
   status: "PROGRESS",
 };
+
+export const VOTE_DATA = [
+  {
+    miniGameId: 1,
+    message: "가능한거임?",
+    profile: {
+      nickname: "붐뱁",
+      profileImageUrl: "profiles/3d54a810-a577-4ee9-8031-c20052ed7aa0.webp",
+      teamName: "한화 이글스",
+    },
+    miniGames: {
+      question: "완성 가능할까요?",
+      option1: "못한다",
+      option2: "아냐 쌉가능",
+      startedAt: "2024-06-09 14:00:00",
+    },
+  },
+];

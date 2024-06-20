@@ -22,8 +22,8 @@ export default function usePath() {
     pathname === PATH.previous ? ACTIVE_PAGE : ""
   }`;
 
-  const ACTIVE_COMMUNITY_CLASSNAME = `${
-    pathname === PATH.community ? ACTIVE_PAGE : ""
+  const ACTIVE_MYPAGE_CLASSNAME = `${
+    pathname === PATH.mypage ? ACTIVE_PAGE : ""
   }`;
 
   const UNDERBAR_MATCH_CLASSNAME = `${
@@ -32,14 +32,14 @@ export default function usePath() {
     pathname === PATH.previous ? UNDER_BAR : ""
   }`;
 
-  const UNDERBAR_COMMUNITY_CLASSNAME = `${
-    pathname === PATH.community ? UNDER_BAR : ""
+  const UNDERBAR_MYPAGE_CLASSNAME = `${
+    pathname === PATH.mypage ? UNDER_BAR : ""
   }`;
 
   return {
     ACTIVE_MATCH_CLASSNAME,
-    ACTIVE_COMMUNITY_CLASSNAME,
-    UNDERBAR_COMMUNITY_CLASSNAME,
+    ACTIVE_MYPAGE_CLASSNAME,
+    UNDERBAR_MYPAGE_CLASSNAME,
     UNDERBAR_MATCH_CLASSNAME,
     PATH,
   };
