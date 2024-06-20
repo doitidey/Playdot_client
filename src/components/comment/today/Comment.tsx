@@ -17,6 +17,8 @@ import { MdRefresh } from "react-icons/md";
 import CommentList from "./CommentList";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getTodayComment, postTodayComment } from "@/lib/api/todayAPI";
+import Pagination from "react-js-pagination";
+import { FcPrevious, FcNext } from "react-icons/fc";
 
 export interface Content {
   profileImageUrl?: string;
@@ -36,12 +38,12 @@ interface Sort {
 }
 
 interface Pageable {
-  pageNumber?: number;
-  pageSize?: number;
-  sort?: Sort;
-  offset?: number;
-  paged?: boolean;
-  unpaged?: boolean;
+  pageNumber?: number; // 현재 페이지 번호
+  pageSize?: number; // 한 페이지당 보여줄 데이터 개수
+  sort?: Sort; // 정렬
+  offset?: number; // 데이터 시작 위치
+  paged?: boolean; // 페이지네이션 사용 여부
+  unpaged?: boolean; //
 }
 
 export interface CommentData {
@@ -59,20 +61,22 @@ export interface CommentData {
 }
 
 function Comment() {
+  // state
   const [value, setValue] = useState("");
+  const [page, setPage] = useState(1);
 
-  const commentRef = useRef<HTMLTextAreaElement>(null);
-
-  const queryClient = useQueryClient();
+  const item = 15;
 
   const { data: commentData, refetch } = useQuery<CommentData>(
-    "todayComment",
-    () => getTodayComment(),
+    ["todayComment", page],
+    () => getTodayComment(page, item),
     {
       staleTime: 1000 * 60,
       cacheTime: 1000 * 60 * 5,
     },
   );
+
+  console.warn(commentData);
 
   const { mutate: postComment } = useMutation(() => postTodayComment(value), {
     onSuccess: () => {
@@ -84,6 +88,10 @@ function Comment() {
     },
   });
 
+  const commentRef = useRef<HTMLTextAreaElement>(null);
+
+  const queryClient = useQueryClient();
+
   const onChange = useCallback(
     (event: ChangeEvent) => {
       event.preventDefault();
@@ -93,6 +101,10 @@ function Comment() {
     [setValue],
   );
 
+  const onPageChange = useCallback(() => {
+    setPage(page);
+  }, [page]);
+
   const onSubmit = useCallback(
     (event: FormEvent) => {
       event.preventDefault();
@@ -101,6 +113,7 @@ function Comment() {
       } else {
         postComment();
       }
+      setValue("");
     },
     [postComment, value],
   );
@@ -140,6 +153,16 @@ function Comment() {
           {value.length} / 300
         </Text>
         <CommentList commentData={commentData as CommentData} />
+        <Pagination
+          activePage={commentData?.pageable?.pageNumber as number}
+          totalItemsCount={commentData?.totalElements as number}
+          itemsCountPerPage={15}
+          pageRangeDisplayed={5}
+          onChange={onPageChange}
+          hideFirstLastPages={true}
+          prevPageText={<FcPrevious />}
+          nextPageText={<FcNext />}
+        />
       </form>
     </div>
   );
