@@ -18,23 +18,24 @@ import CommentList from "./CommentList";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getTodayComment, postTodayComment } from "@/lib/api/todayAPI";
 import Pagination from "react-js-pagination";
-import { FcPrevious, FcNext } from "react-icons/fc";
+import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 
+// interface
 export interface Content {
-  profileImageUrl?: string;
-  nickname?: string;
-  teamName?: string;
-  replyId?: number;
-  content?: string;
-  likeCount?: number;
-  createdAt?: string;
-  isLiked?: boolean;
+  profileImageUrl?: string; // 프로필 이미지
+  nickname?: string; // 닉네임
+  teamName?: string; // 팀 이름
+  replyId?: number; // id 값
+  content?: string; // 댓글 내용
+  likeCount?: number; // 좋아요 수
+  createdAt?: string; // 작성 시간
+  isLiked?: boolean; // 좋아요 여부
 }
 
 interface Sort {
-  sorted?: boolean;
-  empty?: boolean;
-  unsorted?: boolean;
+  sorted?: boolean; // 정렬 사용 여부
+  unsorted?: boolean; // 정렬 미사용 여부
+  empty?: boolean; // 리스트가 비어있는 지 여부
 }
 
 interface Pageable {
@@ -43,30 +44,35 @@ interface Pageable {
   sort?: Sort; // 정렬
   offset?: number; // 데이터 시작 위치
   paged?: boolean; // 페이지네이션 사용 여부
-  unpaged?: boolean; //
+  unpaged?: boolean; // 페이지네이션 비사용 여부
 }
 
 export interface CommentData {
-  content: Content[];
-  pageable?: Pageable;
-  totalElements?: number;
-  totalPages?: number;
-  last?: boolean;
-  size?: number;
-  number?: number;
-  sort?: Sort;
-  numberOfElements?: number;
-  first?: boolean;
-  empty?: boolean;
+  content: Content[]; // 실제 데이터
+  pageable?: Pageable; // 페이지네이션
+  totalElements?: number; // 전체 데이터 수
+  totalPages?: number; // 총 페이지 수
+  last?: boolean; // 마지막 페이지인지 여부
+  size?: number; // 한 페이지 당 보여줄 데이터 개수
+  number?: number; // 현재 페이지 번호
+  sort?: Sort; // 정렬
+  numberOfElements?: number; // 현재 페이지 데이터 수
+  first?: boolean; // 첫번째 페이지 여부
+  empty?: boolean; // 데이터가 비어있는지 여부
 }
 
+// component
 function Comment() {
-  // state
+  // hooks
   const [value, setValue] = useState("");
   const [page, setPage] = useState(1);
+  const queryClient = useQueryClient();
+  const commentRef = useRef<HTMLTextAreaElement>(null);
 
+  // variable
   const item = 15;
 
+  // 댓글 조회 API
   const { data: commentData, refetch } = useQuery<CommentData>(
     ["todayComment", page],
     () => getTodayComment(page, item),
@@ -76,8 +82,7 @@ function Comment() {
     },
   );
 
-  console.warn(commentData);
-
+  // 댓글 입력 API
   const { mutate: postComment } = useMutation(() => postTodayComment(value), {
     onSuccess: () => {
       console.warn(`댓글 입력 완료: ${value}`);
@@ -88,10 +93,7 @@ function Comment() {
     },
   });
 
-  const commentRef = useRef<HTMLTextAreaElement>(null);
-
-  const queryClient = useQueryClient();
-
+  // 댓글 입력 이벤트 함수
   const onChange = useCallback(
     (event: ChangeEvent) => {
       event.preventDefault();
@@ -101,10 +103,12 @@ function Comment() {
     [setValue],
   );
 
-  const onPageChange = useCallback(() => {
+  // 댓글 페이지 변경 이벤트 함수
+  const onPageChange = useCallback((page: number) => {
     setPage(page);
-  }, [page]);
+  }, []);
 
+  // 댓글 Submit 이벤트 함수
   const onSubmit = useCallback(
     (event: FormEvent) => {
       event.preventDefault();
@@ -118,6 +122,7 @@ function Comment() {
     [postComment, value],
   );
 
+  // 댓글 새로고침 이벤트 함수
   const onRefresh = useCallback(() => {
     refetch();
   }, [refetch]);
@@ -128,6 +133,7 @@ function Comment() {
     }
   }, []);
 
+  // render
   return (
     <div className="comment-block">
       <form className="comment-block__content" onSubmit={onSubmit}>
@@ -154,14 +160,14 @@ function Comment() {
         </Text>
         <CommentList commentData={commentData as CommentData} />
         <Pagination
-          activePage={commentData?.pageable?.pageNumber as number}
+          activePage={(commentData?.pageable?.pageNumber as number) + 1}
           totalItemsCount={commentData?.totalElements as number}
           itemsCountPerPage={15}
           pageRangeDisplayed={5}
           onChange={onPageChange}
           hideFirstLastPages={true}
-          prevPageText={<FcPrevious />}
-          nextPageText={<FcNext />}
+          prevPageText={<MdNavigateBefore />}
+          nextPageText={<MdNavigateNext />}
         />
       </form>
     </div>

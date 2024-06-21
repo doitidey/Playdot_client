@@ -96,12 +96,22 @@
   gap: 2px;
   li {
     a {
-      color: #fff;
+      color: #6b6b6b;
+      svg {
+        font-size: 24px;
+        color: #6b6b6b;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
     padding: 16px;
     border-radius: 8px;
     &.active {
-      background: blue;
+      background: #693bff;
+      a {
+        color: #fff;
+      }
     }
   }
 }
