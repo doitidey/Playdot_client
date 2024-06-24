@@ -30,7 +30,6 @@ function ChatSection({ pid }: { pid: string }) {
   const { errorMessage } = useChatErrorStore();
   const { openModal } = useModal();
 
-  const today = new Date();
   const ROOMNUM = pid;
 
   useEffect(() => {
@@ -63,17 +62,11 @@ function ChatSection({ pid }: { pid: string }) {
         </div>
         <ChatLog />
       </div>
-      {shoutData.map((data, index) => (
-        <ShoutBubble
-          key={
-            index +
-            data.profile.nickname +
-            today.getMinutes() +
-            today.getMilliseconds()
-          }
-          data={data}
-        />
-      ))}
+      <div className="chat__shout">
+        {shoutData.map((data, index) => (
+          <ShoutBubble key={index} data={data} />
+        ))}
+      </div>
     </div>
   );
 }
