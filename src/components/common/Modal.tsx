@@ -15,15 +15,17 @@ function Modal() {
       {modalData.isOpen && (
         <section className="modal-block">
           <div className="modal-content">
-            <div className="modal-content__close">
-              <Image
-                src={"/images/modalcloseicon.svg"}
-                width={16}
-                height={16}
-                alt={"deleteicon"}
-                onClick={handleOnClickClose}
-              />
-            </div>
+            {modalData.isNotCloseModal! && (
+              <div className="modal-content__close">
+                <Image
+                  src={"/images/modalcloseicon.svg"}
+                  width={16}
+                  height={16}
+                  alt={"deleteicon"}
+                  onClick={handleOnClickClose}
+                />
+              </div>
+            )}
             <div className="modal-content__detail">{modalData.content}</div>
           </div>
         </section>

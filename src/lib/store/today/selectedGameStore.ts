@@ -1,8 +1,9 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface UseSelectedGameDataStore {
-  gameData: TodayMatchData;
-  setGameData: (data: TodayMatchData) => void;
+  gameData: TodayMatchData[] | [];
+  setGameData: (data: TodayMatchData[]) => void;
 }
 interface TodayMatchData {
   gameId: number;
@@ -23,30 +24,18 @@ interface TodayMatchData {
   };
   status?: string;
 }
-const useSelectedGameDataStore = create<UseSelectedGameDataStore>((set) => ({
-  gameData: {
-    gameId: 0,
-    gameTime: "",
-    homeTeam: {
-      id: 0,
-      score: 0,
-      teamName: "",
-      teamShortName: "",
-      voteRatio: 0,
-    },
-    awayTeam: {
-      id: 0,
-      score: 0,
-      teamName: "",
-      teamShortName: "",
-      voteRatio: 0,
-    },
-    status: "",
-  },
-  setGameData: (data) =>
-    set(() => ({
-      gameData: data,
-    })),
-}));
+const useSelectedGameDataStore = create<UseSelectedGameDataStore>()(
+  persist(
+    (set) => ({
+      gameData: [],
+
+      setGameData: (data) =>
+        set(() => ({
+          gameData: data,
+        })),
+    }),
+    { name: "TodayGameData" },
+  ),
+);
 
 export default useSelectedGameDataStore;

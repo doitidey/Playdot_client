@@ -17,6 +17,9 @@ import {
   useStompVoteData,
 } from "@/lib/store/chat/stompclientStore";
 import ShoutBubble from "@/components/chat/chatlog/ShoutBubble";
+import useChatErrorStore from "@/lib/store/chat/chatErrorStore";
+import ErroorModal from "@/components/chat/modals/ErrorModal";
+import { useModal } from "@/lib/hooks/useModal";
 
 function ChatSection({ pid }: { pid: string }) {
   const { connectSocket, deactivateSocket } = useSocket();
@@ -24,8 +27,9 @@ function ChatSection({ pid }: { pid: string }) {
   const { shoutData } = useStompShoutData();
   const { voteData } = useStompVoteData();
   const { setRoomId } = useStompClient();
+  const { errorMessage } = useChatErrorStore();
+  const { openModal } = useModal();
 
-  const today = new Date();
   const ROOMNUM = pid;
 
   useEffect(() => {
@@ -37,31 +41,32 @@ function ChatSection({ pid }: { pid: string }) {
     };
   }, []);
 
+  useEffect(() => {
+    if (errorMessage.length > 1)
+      openModal({
+        content: <ErroorModal />,
+        isNotCloseModal: true,
+      });
+  }, [errorMessage]);
+
   return (
     <div className="chat">
-      <ChatHeader />
+      <ChatHeader pid={pid} />
       <div className="chat__inside">
         <div className="float">
           <div className="float__contents">
             {menuModalState.isOpen && <MenuModal />}
             {voteData[0] && <VoteModal />}
-            {/* <VoteModal /> */}
           </div>
           <ChatInput />
         </div>
         <ChatLog />
       </div>
-      {shoutData.map((data, index) => (
-        <ShoutBubble
-          key={
-            index +
-            data.profile.nickname +
-            today.getMinutes() +
-            today.getMilliseconds()
-          }
-          data={data}
-        />
-      ))}
+      <div className="chat__shout">
+        {shoutData.map((data, index) => (
+          <ShoutBubble key={index} data={data} />
+        ))}
+      </div>
     </div>
   );
 }
