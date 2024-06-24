@@ -50,13 +50,12 @@ function ChatSection({ pid }: { pid: string }) {
 
   return (
     <div className="chat">
-      <ChatHeader />
+      <ChatHeader pid={pid} />
       <div className="chat__inside">
         <div className="float">
           <div className="float__contents">
             {menuModalState.isOpen && <MenuModal />}
             {voteData[0] && <VoteModal />}
-            {/* <VoteModal /> */}
           </div>
           <ChatInput />
         </div>
