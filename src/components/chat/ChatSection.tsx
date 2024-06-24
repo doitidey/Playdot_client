@@ -45,6 +45,7 @@ function ChatSection({ pid }: { pid: string }) {
     if (errorMessage.length > 1)
       openModal({
         content: <ErroorModal />,
+        isNotCloseModal: true,
       });
   }, [errorMessage]);
 

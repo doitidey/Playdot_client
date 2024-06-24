@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 interface ModalDataState {
   isOpen?: boolean;
+  isNotCloseModal?: boolean;
   content: JSX.Element | string;
 }
 
@@ -13,6 +14,7 @@ interface ModalState {
 const modalState = create<ModalState>((set) => ({
   modalData: {
     isOpen: false,
+    isNotCloseModal: false,
     content: "",
   },
   setModalDataState: (state) =>
