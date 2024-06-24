@@ -61,27 +61,6 @@ export const useSocket = () => {
           Authorization: `${localStorage.getItem("authToken")}`,
         },
       );
-      socket.subscribe(
-        `/user/${nickname}/voteResult`,
-        (frame: { body: string }) => {
-          try {
-            const receivedMessage = JSON.parse(frame.body);
-            if (receivedMessage.type === "BAWWLING") {
-              setShoutData(receivedMessage);
-            } else if (receivedMessage.type === "NORMAL") {
-              setMessageData(receivedMessage);
-            } else {
-              setVoteData(receivedMessage);
-            }
-          } catch (error) {
-            console.error("stomp 구독에 오류가 발생했습니다:", error);
-          }
-        },
-        {
-          gameId: `${roomNumber}`,
-          Authorization: `${localStorage.getItem("authToken")}`,
-        },
-      );
     };
 
     socket.activate();
