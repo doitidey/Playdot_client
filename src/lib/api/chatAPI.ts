@@ -21,7 +21,7 @@ export const configureStompClient = (
       setMsg(str.body);
     },
     debug: (str) => {
-      console.log(str);
+      // console.log(str);
     },
     reconnectDelay: 5000,
     heartbeatIncoming: 4000,
