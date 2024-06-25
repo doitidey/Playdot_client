@@ -9,6 +9,7 @@
   align-items: center;
   background: none;
   cursor: pointer;
+  position: relative;
   &__chatting {
     &:disabled {
       svg {
