@@ -30,7 +30,7 @@ function ScoreListItem({
   status,
 }: ScoreListItemProps) {
   const queryClient = useQueryClient();
-  
+
   // 원정 팀 선택
   const { mutate: awayVote } = useMutation(
     () => voteTodayGames(gameId, awayTeam.id),
@@ -135,7 +135,6 @@ function ScoreListItem({
         <Title className="match-day" small>
           {gameDate(gameTime)}
         </Title>
-        {/* <GameStatus status={status} gameTime={gameTime} /> */}
       </div>
       <li className="score-item-block">
         {status === "READY" || (
@@ -145,6 +144,9 @@ function ScoreListItem({
             {status === "END" && <Title small>경기 종료</Title>}
           </div>
         )}
+        {/* <div className="vote-end">
+          <Title small>경기 종료</Title>
+        </div> */}
         <div
           className={classNames(
             `score-item-block__left ${awayTeam.hasVote ? "active-left" : ""}`,
