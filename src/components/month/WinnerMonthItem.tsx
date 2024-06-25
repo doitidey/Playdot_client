@@ -45,19 +45,21 @@ function WinnerMonthItem({ monthData }: WinnerMonthItemProps) {
         </div>
         {/* 추후 Image 컴포넌트로 변경 */}
         <div className="image-percentage">
-          <div className="user-image" />
-          <Title largest>{monthData?.winMembers[0].voteRatio}%</Title>
+          <Title largest>승률 {monthData?.winMembers[0].voteRatio}%</Title>
+        </div>
+        <div className="title-area">
+          <Title medium>{monthData?.winMembers[0].title}</Title>
         </div>
         <div className="text-logo">
+          <div className="user-image" />
           <div className="text">
             <Title large>
               {truncateNickname(monthData?.winMembers[0].nickname, 6)}
             </Title>
-            <Text large>
+            <Text caption>
               승리요정 {monthData?.winMembers[0].winFairyCount}회 / 패배요정{" "}
               {monthData?.winMembers[0].loseFairyCount}회
             </Text>
-            <Title medium>{monthData?.winMembers[0].title}</Title>
           </div>
           <Image src="/images/lions.svg" alt="" width={60} height={60} />
         </div>
