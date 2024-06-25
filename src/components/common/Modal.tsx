@@ -15,7 +15,7 @@ function Modal() {
       {modalData.isOpen && (
         <section className="modal-block">
           <div className="modal-content">
-            {modalData.isNotCloseModal! && (
+            {modalData.isNotCloseModal || (
               <div className="modal-content__close">
                 <Image
                   src={"/images/modalcloseicon.svg"}
