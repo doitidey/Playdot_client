@@ -5,7 +5,6 @@ import Text from "@/components/common/Text";
 import { FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
 import { useCallback, useState } from "react";
 import classNames from "classnames";
-import { Content } from "./Comment";
 import TeamTag from "@/components/tag/TeamTag";
 import { commentDate } from "@/lib/util/getGameTime";
 import { useMutation, useQuery, useQueryClient } from "react-query";
@@ -16,18 +15,9 @@ import {
   postCommentLike,
 } from "@/lib/api/todayAPI";
 import Image from "next/image";
-// import Reply from "@/components/reply/today/Reply";
-
-export interface TodayReplyData {
-  profileImageUrl?: string; // 프로필 이미지
-  nickname?: string; // 닉네임
-  teamName?: string; // 팀 이름
-  replyId?: number; // id 값
-  content?: string; // 댓글 내용
-  likeCount?: number; // 좋아요 수
-  createdAt?: string; // 작성 시간
-  isLiked?: boolean; // 좋아요 여부
-}
+import Reply from "@/components/reply/today/Reply";
+import { Content } from "@/lib/types/today/comment";
+import { TodayReplyData } from "@/lib/types/today/reply";
 
 function CommentItem({
   content,
@@ -163,12 +153,12 @@ function CommentItem({
           </div>
         </div>
       </li>
-      {/* {visibleReply && (
+      {visibleReply && (
         <Reply
           todayReply={todayReply as TodayReplyData[]}
           replyId={replyId as number}
         />
-      )} */}
+      )}
     </>
   );
 }
