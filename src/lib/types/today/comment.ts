@@ -1,3 +1,4 @@
+// 댓글 조회
 export interface Content {
   profileImageUrl?: string; // 프로필 이미지
   nickname?: string; // 닉네임
@@ -36,4 +37,10 @@ export interface CommentData {
   numberOfElements?: number; // 현재 페이지 데이터 수
   first?: boolean; // 첫번째 페이지 여부
   empty?: boolean; // 데이터가 비어있는지 여부
+}
+
+// 댓글 신고
+type ReportType = "ABUSE" | "SPAM" | "PRIVACY" | "ETC";
+export interface ReportData {
+  type: ReportType;
 }
