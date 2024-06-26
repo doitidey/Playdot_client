@@ -1,8 +1,8 @@
 "use client";
 
+import { TodayMatchData } from "@/lib/types/today/today";
 import "./ScoreList.scss";
 import ScoreListItem from "./ScoreListItem";
-import { TodayMatchData } from "./Today";
 
 interface ScoreListProps {
   todayData: TodayMatchData[];
