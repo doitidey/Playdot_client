@@ -5,11 +5,10 @@ import "@/components/reply/today/ReplyItem.scss";
 import Text from "@/components/common/Text";
 import classNames from "classnames";
 import { FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
-import { TodayReplyData } from "@/components/comment/today/CommentItem";
+import { TodayReplyData } from "@/lib/types/today/reply";
 import Image from "next/image";
 import TeamTag from "@/components/tag/TeamTag";
 import { commentDate } from "@/lib/util/getGameTime";
-import { useCallback, useState } from "react";
 
 interface ReplyItemProps extends TodayReplyData {}
 
@@ -20,7 +19,7 @@ function ReplyItem({
   likeCount,
   nickname,
   profileImageUrl,
-  replyId,
+  // replyId,
   teamName,
 }: ReplyItemProps) {
   return (

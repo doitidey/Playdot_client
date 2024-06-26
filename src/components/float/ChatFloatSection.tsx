@@ -4,7 +4,7 @@ import "@/components/float/ChatFloatSection.scss";
 import ChatRooms from "@/components/float/ChatRooms";
 import Float from "@/components/float/Float";
 import FloatButton from "@/components/float/FloatButton";
-import { TodayMatchData } from "@/components/today/Today";
+import { TodayMatchData } from "@/lib/types/today/today";
 import useSelectedGameDataStore from "@/lib/store/today/selectedGameStore";
 
 function ChatFloatSection({ game }: { game: TodayMatchData[] }) {
