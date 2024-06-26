@@ -163,12 +163,12 @@ function CommentItem({
           </div>
         </div>
       </li>
-      {visibleReply && (
+      {/* {visibleReply && (
         <Reply
           todayReply={todayReply as TodayReplyData[]}
           replyId={replyId as number}
         />
-      )}
+      )} */}
     </>
   );
 }
