@@ -18,6 +18,7 @@ import Image from "next/image";
 import Reply from "@/components/reply/today/Reply";
 import { Content } from "@/lib/types/today/comment";
 import { TodayReplyData } from "@/lib/types/today/reply";
+import Report from "./Report";
 
 function CommentItem({
   content,
@@ -31,6 +32,7 @@ function CommentItem({
 }: Content) {
   const [visibleBalloon, setVisibleBalloon] = useState(false);
   const [visibleReply, setVisibleReply] = useState(false);
+  const [visibleReport, setVisibleReport] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -44,7 +46,7 @@ function CommentItem({
     },
   );
 
-  console.warn(todayReply);
+  // console.warn(todayReply);
 
   const { mutate: deleteComment } = useMutation(
     () => deleteTodayComment(replyId as number),
@@ -97,6 +99,14 @@ function CommentItem({
     setVisibleReply(!visibleReply);
   }, [visibleReply]);
 
+  const onVisibleReport = useCallback(() => {
+    setVisibleReport(true);
+  }, []);
+
+  const onCloseReport = useCallback(() => {
+    setVisibleReport(false);
+  }, []);
+
   return (
     <>
       <li className="item-block">
@@ -136,7 +146,7 @@ function CommentItem({
               </div>
             )}
             <span>{commentDate(createdAt)}</span>
-            <span>신고</span>
+            <span onClick={onVisibleReport}>신고</span>
             <span onClick={onVisibleBalloon}>삭제</span>
           </div>
           <div className="item-block__button__like">
@@ -159,6 +169,7 @@ function CommentItem({
           replyId={replyId as number}
         />
       )}
+      {visibleReport && <Report onCloseReport={onCloseReport} />}
     </>
   );
 }
