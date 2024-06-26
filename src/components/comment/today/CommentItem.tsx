@@ -16,7 +16,7 @@ import {
   postCommentLike,
 } from "@/lib/api/todayAPI";
 import Image from "next/image";
-import Reply from "@/components/reply/today/Reply";
+// import Reply from "@/components/reply/today/Reply";
 
 export interface TodayReplyData {
   profileImageUrl?: string; // 프로필 이미지
@@ -163,12 +163,12 @@ function CommentItem({
           </div>
         </div>
       </li>
-      {visibleReply && (
+      {/* {visibleReply && (
         <Reply
           todayReply={todayReply as TodayReplyData[]}
           replyId={replyId as number}
         />
-      )}
+      )} */}
     </>
   );
 }
