@@ -1,6 +1,8 @@
 @import "@/styles/colors.scss";
 
 .item-block {
+  width: 100%;
+  max-width: 1200px;
   display: flex;
   justify-content: space-between;
   margin-bottom: 40px;
