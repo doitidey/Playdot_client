@@ -6,7 +6,6 @@ import "./ScoreListItem.scss";
 import classNames from "classnames";
 import Image from "next/image";
 import Title from "../common/Title";
-import { TodayMatchData } from "./Today";
 import { getAwayLogo, getHomeLogo } from "@/lib/util/getLogo";
 import { gameDate } from "@/lib/util/getGameTime";
 import { useMutation, useQueryClient } from "react-query";
@@ -15,6 +14,7 @@ import {
   updateTodayGames,
   voteTodayGames,
 } from "@/lib/api/todayAPI";
+import { TodayMatchData } from "@/lib/types/today/today";
 
 // Interface
 interface ScoreListItemProps extends TodayMatchData {
@@ -144,9 +144,6 @@ function ScoreListItem({
             {status === "END" && <Title small>경기 종료</Title>}
           </div>
         )}
-        {/* <div className="vote-end">
-          <Title small>경기 종료</Title>
-        </div> */}
         <div
           className={classNames(
             `score-item-block__left ${awayTeam.hasVote ? "active-left" : ""}`,

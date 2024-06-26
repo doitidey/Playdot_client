@@ -4,7 +4,7 @@ import { useState } from "react";
 import "@/components/float/ChatRooms.scss";
 import FloatButton from "@/components/float/FloatButton";
 import FloatEntrancePopup from "@/components/float/FloatEntrancePopup";
-import { TodayMatchData } from "@/components/today/Today";
+import { TodayMatchData } from "@/lib/types/today/today";
 import usePopupStore from "@/lib/store/today/popupStore";
 
 interface ChatRoomsProps {
