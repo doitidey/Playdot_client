@@ -4,11 +4,11 @@ import Text from "../common/Text";
 import Image from "next/image";
 import { MonthData } from "./Month";
 
-interface LoserMonthItemProps {
+interface WinnerMonthItemProps {
   monthData: MonthData;
 }
 
-function LoserMonthItem({ monthData }: LoserMonthItemProps) {
+function WinnerMonthItem({ monthData }: WinnerMonthItemProps) {
   // 글자 수 제한 함수
   const truncateNickname = (str: string, n: number) => {
     return str && str.length > n ? str.substring(0, n - 1) + "..." : str;
@@ -45,19 +45,21 @@ function LoserMonthItem({ monthData }: LoserMonthItemProps) {
         </div>
         {/* 추후 Image 컴포넌트로 변경 */}
         <div className="image-percentage">
-          <div className="user-image" />
-          <Title largest>{monthData?.loseMembers[0].voteRatio}%</Title>
+          <Title largest>승률 {monthData?.loseMembers[0].voteRatio}%</Title>
+        </div>
+        <div className="title-area">
+          <Title medium>{monthData?.loseMembers[0].title}</Title>
         </div>
         <div className="text-logo">
+          <div className="user-image" />
           <div className="text">
             <Title large>
-              {truncateNickname(monthData?.loseMembers[0].nickname, 5)}
+              {truncateNickname(monthData?.loseMembers[0].nickname, 6)}
             </Title>
-            <Text large>
+            <Text caption>
               승리요정 {monthData?.loseMembers[0].winFairyCount}회 / 패배요정{" "}
               {monthData?.loseMembers[0].loseFairyCount}회
             </Text>
-            <Title medium>{monthData?.loseMembers[0].title}</Title>
           </div>
           <Image src="/images/lions.svg" alt="" width={60} height={60} />
         </div>
@@ -84,4 +86,4 @@ function LoserMonthItem({ monthData }: LoserMonthItemProps) {
   );
 }
 
-export default LoserMonthItem;
+export default WinnerMonthItem;

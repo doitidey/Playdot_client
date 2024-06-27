@@ -90,6 +90,9 @@
       position: relative;
       overflow: hidden;
       object-fit: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       width: 212px;
       height: 260px;
       img {

@@ -6,11 +6,14 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Title from "@/components/common/Title";
 import useTokenNumberStore from "@/lib/store/chat/tokenStore";
+import { useModal } from "@/lib/hooks/useModal";
 
 type ProfileModal = {
+  comment: string;
   nickname: string;
-  profileImageUrl: string;
+  profileImageUrl: string | null;
   winFairyCount: number;
+  teamName: string;
   loseFairyCount: number;
 };
 
@@ -23,6 +26,7 @@ function ProfileModal({ nickname }: { nickname: string }) {
     comment: "",
   });
   const { totalStore } = useTokenNumberStore();
+  const { closeModal } = useModal();
 
   useEffect(() => {
     const getProfileData = async () => {
@@ -38,6 +42,7 @@ function ProfileModal({ nickname }: { nickname: string }) {
   const onClickTokenPresent = () => {
     if (isButtonActive()) {
       putToken(tokenBody);
+      closeModal();
     }
     return;
   };
@@ -80,33 +85,48 @@ function ProfileModal({ nickname }: { nickname: string }) {
   return (
     <section className="profilemodal">
       <div className="profilemodal__contents">
-        <Image
-          className="profilemodal__img"
-          width={40}
-          height={40}
-          alt="profileImage"
-          src={
-            profileData
-              ? `${process.env.NEXT_PUBLIC_IMAGE_URL}${profileData.profileImageUrl}`
-              : "/images/logo.svg"
-          }
-        />
+        <div className="profilemodal__img">
+          <Image
+            width={32}
+            height={32}
+            alt="profileImage"
+            src={
+              profileData?.profileImageUrl
+                ? `${process.env.NEXT_PUBLIC_IMAGE_URL}${profileData.profileImageUrl}`
+                : "/images/logo.svg"
+            }
+          />
+        </div>
         <Title small className="profilemodal__title">
           {profileData && profileData.nickname}
         </Title>
       </div>
-      {isClickPresent && (
+      {isClickPresent ? (
         <PresentModal
           onChangeMessage={onChangeMessage}
           onChangeTokenNumber={onChangeTokenNumber}
         />
+      ) : (
+        <div>
+          <div className="profiledetail__box">
+            <h5>구단</h5>
+            <div>{profileData?.teamName}</div>
+          </div>
+          <div className="profiledetail__box">
+            <h5>한마디</h5>
+            <div>{profileData?.comment}</div>
+          </div>
+        </div>
       )}
-      <Button
-        size={isClickPresent ? "large" : "medium"}
-        variant={isButtonActive() ? "active" : "disactive"}
-        label="선물하기"
-        onClick={isClickPresent ? onClickTokenPresent : onClickPresent}
-      />
+
+      <div className="profilemodal__button">
+        <Button
+          size={isClickPresent ? "large" : "medium"}
+          variant={isButtonActive() ? "active" : "disactive"}
+          label="선물하기"
+          onClick={isClickPresent ? onClickTokenPresent : onClickPresent}
+        />
+      </div>
     </section>
   );
 }

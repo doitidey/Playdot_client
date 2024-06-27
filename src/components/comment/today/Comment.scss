@@ -6,22 +6,26 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
   &__content {
     width: 1200px;
-    border-radius: 8px;
     display: flex;
     flex-direction: column;
     gap: 16px;
-    // position: relative;
   }
+}
+
+.comment-container {
+  width: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .comment-header {
   display: flex;
   align-items: center;
   gap: 16px;
-  div {
+  &__refresh {
     background: #000;
     display: flex;
     justify-content: center;
@@ -90,4 +94,31 @@
 .value-length {
   align-self: flex-end;
   margin-right: 100px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  li {
+    a {
+      color: #6b6b6b;
+      svg {
+        font-size: 24px;
+        color: #6b6b6b;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    padding: 16px;
+    border-radius: 8px;
+    &.active {
+      background: #693bff;
+      a {
+        color: #fff;
+      }
+    }
+  }
 }

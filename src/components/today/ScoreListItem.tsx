@@ -6,16 +6,15 @@ import "./ScoreListItem.scss";
 import classNames from "classnames";
 import Image from "next/image";
 import Title from "../common/Title";
-import { TodayMatchData } from "./Today";
 import { getAwayLogo, getHomeLogo } from "@/lib/util/getLogo";
 import { gameDate } from "@/lib/util/getGameTime";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import {
   deleteTodayGames,
   updateTodayGames,
   voteTodayGames,
 } from "@/lib/api/todayAPI";
-import { queryClient } from "../common/Layout";
+import { TodayMatchData } from "@/lib/types/today/today";
 
 // Interface
 interface ScoreListItemProps extends TodayMatchData {
@@ -30,6 +29,8 @@ function ScoreListItem({
   gameId,
   status,
 }: ScoreListItemProps) {
+  const queryClient = useQueryClient();
+
   // 원정 팀 선택
   const { mutate: awayVote } = useMutation(
     () => voteTodayGames(gameId, awayTeam.id),
@@ -134,7 +135,6 @@ function ScoreListItem({
         <Title className="match-day" small>
           {gameDate(gameTime)}
         </Title>
-        {/* <GameStatus status={status} gameTime={gameTime} /> */}
       </div>
       <li className="score-item-block">
         {status === "READY" || (

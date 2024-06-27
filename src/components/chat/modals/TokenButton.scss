@@ -1,7 +1,7 @@
 @import "@/styles/colors.scss";
 
 .token__block {
-  width: 110px;
+  width: fit-content;
   height: 32px;
   border-radius: 8px;
   border: $token-border solid 2px;

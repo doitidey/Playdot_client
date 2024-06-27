@@ -14,46 +14,59 @@ import { useSocket } from "@/lib/hooks/useSocket";
 import {
   useStompClient,
   useStompShoutData,
+  useStompVoteData,
 } from "@/lib/store/chat/stompclientStore";
 import ShoutBubble from "@/components/chat/chatlog/ShoutBubble";
+import useChatErrorStore from "@/lib/store/chat/chatErrorStore";
+import ErroorModal from "@/components/chat/modals/ErrorModal";
+import { useModal } from "@/lib/hooks/useModal";
 
 function ChatSection({ pid }: { pid: string }) {
-  const { stompClient } = useStompClient();
-  const { connectSocket } = useSocket();
+  const { connectSocket, deactivateSocket } = useSocket();
   const { menuModalState } = useMenuModalState();
   const { shoutData } = useStompShoutData();
+  const { voteData } = useStompVoteData();
+  const { setRoomId } = useStompClient();
+  const { errorMessage } = useChatErrorStore();
+  const { openModal } = useModal();
 
-  const today = new Date();
-  const ROOMNUM = Number(pid);
+  const ROOMNUM = pid;
 
   useEffect(() => {
+    deactivateSocket();
+    setRoomId(ROOMNUM);
     connectSocket(ROOMNUM);
     return () => {
-      if (stompClient) {
-        stompClient.deactivate();
-      }
+      deactivateSocket();
     };
   }, []);
 
+  useEffect(() => {
+    if (errorMessage.length > 1)
+      openModal({
+        content: <ErroorModal />,
+        isNotCloseModal: true,
+      });
+  }, [errorMessage]);
+
   return (
     <div className="chat">
-      <ChatHeader />
+      <ChatHeader pid={pid} />
       <div className="chat__inside">
         <div className="float">
           <div className="float__contents">
             {menuModalState.isOpen && <MenuModal />}
-            <VoteModal />
+            {voteData[0] && <VoteModal />}
           </div>
           <ChatInput />
         </div>
         <ChatLog />
       </div>
-      {shoutData.map((data) => (
-        <ShoutBubble
-          key={data.profile.nickname + today.getHours + today.getMinutes}
-          data={data}
-        />
-      ))}
+      <div className="chat__shout">
+        {shoutData.map((data, index) => (
+          <ShoutBubble key={index} data={data} />
+        ))}
+      </div>
     </div>
   );
 }

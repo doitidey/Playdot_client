@@ -1,0 +1,9 @@
+.profilepic {
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #32363b;
+  img {
+    object-fit: cover;
+  }
+}

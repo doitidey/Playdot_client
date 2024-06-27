@@ -1,9 +1,20 @@
+import { AxiosError } from "axios";
 import { instance } from "./instance";
 
 // 오늘의 승부예측 조회 API
 export const getTodayGames = async () => {
-  const response = await instance.get("games").then((res) => res.data);
-  return response.data;
+  try {
+    const response = await instance.get("games");
+    return response.data.data;
+  } catch (error) {
+    const err = error as AxiosError;
+    if (err.response?.status === 400) {
+      localStorage.clear();
+      window.location.href = "/";
+    } else {
+      throw error;
+    }
+  }
 };
 
 // 오늘의 승부예측 투표 API
@@ -37,7 +48,7 @@ export const updateTodayGames = async (gameId: number, teamId: number) => {
 };
 
 // 오늘의 승부예측 댓글 조회 API
-export const getTodayComment = async (page?: number, item?: number) => {
+export const getTodayComment = async (page: number, item: number) => {
   const response = await instance
     .get(`games/daily-replies?page=${page}&item=${item}`)
     .then((res) => res.data);
@@ -53,9 +64,9 @@ export const getTodayReply = async (replyId: number) => {
 };
 
 // 오늘의 승부예측 댓글 작성 API
-export const postTodayComment = async (comment: string) => {
+export const postTodayComment = async (content: string) => {
   const requestBody = {
-    comment: comment,
+    content: content,
   };
   const response = await instance
     .post(`games/daily-reply`, requestBody)

@@ -3,25 +3,26 @@ import { MessageType, VoteType } from "@/lib/types/chat/chatTypes";
 
 export interface ClientStore {
   stompClient: Client | null;
-  roomId: number;
-  setStompClient: (client: Client) => void;
-  setRoomId: (roomNumber: number) => void;
+  roomId: string | undefined;
+  setStompClient: (client: Client | null) => void;
+  setRoomId: (roomNumber: string) => void;
 }
 
 export interface MessageDataStore {
   messageData: MessageType[] | [];
   setMessageData: (receivedMessage: MessageType) => void;
+  setMessageDataEmpty: () => void;
 }
 
 export interface ShoutMessageDataStore {
   shoutData: MessageType[] | [];
   //   isShoutMessageShow: boolean;
   setShoutData: (receivedMessage: MessageType) => void;
-  //   setEmptyShoutData: () => void;
+  setEmptyShoutData: () => void;
   //   setIsShoutMessageShow: () => void;
 }
 
 export interface VoteDataStore {
-  voteData: VoteType | {};
+  voteData: VoteType[] | [];
   setVoteData: (receivedMessage: VoteType) => void;
 }

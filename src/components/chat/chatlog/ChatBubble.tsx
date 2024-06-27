@@ -16,13 +16,19 @@ function ChatBubble({ data }: { data: MessageType }) {
   return (
     <div className="bubble">
       <div className="bubble__profile" onClick={onClickNickname}>
-        <Image
-          className="bubble__img"
-          width={36}
-          height={36}
-          alt="profileImage"
-          src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${data.profile.profileImageUrl}`}
-        />
+        <div className="bubble__profile__img">
+          <Image
+            width={32}
+            height={32}
+            alt="profileImage"
+            src={
+              data.profile?.profileImageUrl
+                ? `${process.env.NEXT_PUBLIC_IMAGE_URL}${data.profile.profileImageUrl}`
+                : "/images/logo.svg"
+            }
+          />
+        </div>
+
         <div
           className={
             data.teamType === "home"

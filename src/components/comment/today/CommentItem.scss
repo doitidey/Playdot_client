@@ -1,13 +1,15 @@
 @import "@/styles/colors.scss";
 
 .item-block {
+  width: 100%;
+  max-width: 1200px;
   display: flex;
   justify-content: space-between;
   margin-bottom: 40px;
 
   &__comment {
     display: flex;
-    gap: 8px;
+    gap: 16px;
   }
 
   &__button {

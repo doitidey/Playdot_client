@@ -10,10 +10,10 @@ function ChatLog() {
     <div className="chatlog">
       {messageData.length > 0 &&
         messageData.map(
-          (data) =>
+          (data, index) =>
             data.type === "NORMAL" && (
               <ChatBubble
-                key={data.profile.nickname + today.getHours + today.getMinutes}
+                key={index + today.getMinutes() + today.getMilliseconds()}
                 data={data}
               />
             ),

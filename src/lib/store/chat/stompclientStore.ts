@@ -8,7 +8,7 @@ import { create } from "zustand";
 
 export const useStompClient = create<ClientStore>((set) => ({
   stompClient: null,
-  roomId: 1,
+  roomId: undefined,
   setStompClient: (client) => {
     set(() => ({ stompClient: client }));
   },
@@ -24,6 +24,9 @@ export const useStompMessageData = create<MessageDataStore>((set) => ({
       messageData: [receivedMessage, ...prev.messageData],
     }));
   },
+  setMessageDataEmpty: () => {
+    set(() => ({ messageData: [] }));
+  },
 }));
 
 export const useStompShoutData = create<ShoutMessageDataStore>((set) => ({
@@ -35,12 +38,11 @@ export const useStompShoutData = create<ShoutMessageDataStore>((set) => ({
       shoutData: [...prev.shoutData, receivedMessage],
     }));
   },
-  // shoutData를 날려줘야할때
-  // setEmptyShoutData: () => {
-  //   set(() => ({
-  //     shoutData: [],
-  //   }));
-  // },
+  setEmptyShoutData: () => {
+    set(() => ({
+      shoutData: [],
+    }));
+  },
   // setIsShoutMessageShow: () => {
   //   set((prev) => ({
   //     isShoutMessageShow: !prev.isShoutMessageShow,
@@ -49,10 +51,10 @@ export const useStompShoutData = create<ShoutMessageDataStore>((set) => ({
 }));
 
 export const useStompVoteData = create<VoteDataStore>((set) => ({
-  voteData: {},
+  voteData: [],
   setVoteData: (receivedMessage) => {
     set(() => ({
-      voteData: receivedMessage,
+      voteData: [receivedMessage],
     }));
   },
 }));

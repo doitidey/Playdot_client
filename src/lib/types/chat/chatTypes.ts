@@ -24,6 +24,6 @@ export type VoteType = {
     question: string;
     option1: string;
     option2: string;
-    startedAt: string;
   };
+  startedAt: string;
 };
