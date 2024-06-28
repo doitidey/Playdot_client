@@ -11,35 +11,35 @@ while (startDate <= endDate) {
 }
 
 // 첫번째 주
-const firstWeek = dateArray.slice(0, 6);
+const firstWeek = dateArray.slice(0, 7);
 export const firstStartDate = firstWeek.splice(0, 1).join();
-export const firstEndDate = firstWeek.splice(4, 4).join();
+export const firstEndDate = firstWeek[firstWeek.length - 1];
 export const firstStartDateSub = firstStartDate.substring(5);
 export const firstEndDateSub = firstEndDate.substring(5);
 
 // 두번째 주
-const secondWeek = dateArray.slice(7, 13);
+const secondWeek = dateArray.slice(7, 14);
 export const secondStartDate = secondWeek.splice(0, 1).join();
-export const secondEndDate = secondWeek.splice(4, 4).join();
+export const secondEndDate = secondWeek[secondWeek.length - 1];
 export const secondStartDateSub = secondStartDate.substring(5);
 export const secondEndDateSub = secondEndDate.substring(5);
 
 // 세번째 주
-const thirdWeek = dateArray.slice(14, 20);
+const thirdWeek = dateArray.slice(14, 21);
 export const thirdStartDate = thirdWeek.splice(0, 1).join();
-export const thirdEndDate = thirdWeek.splice(4, 4).join();
+export const thirdEndDate = thirdWeek[thirdWeek.length - 1];
 export const thirdStartDateSub = thirdStartDate.substring(5);
 export const thirdEndDateSub = thirdEndDate.substring(5);
 
 // 네번째 주
 const fourthWeek = dateArray.slice(21, 27);
 export const fourthStartDate = fourthWeek.splice(0, 1).join();
-export const fourthEndDate = fourthWeek.splice(4, 4).join();
+export const fourthEndDate = fourthWeek[fourthWeek.length - 1];
 export const fourthStartDateSub = fourthStartDate.substring(5);
 export const fourthEndDateSub = fourthEndDate.substring(5);
 
 // 다섯번째 주
-const fifthWeek = dateArray.slice(28, 30);
+const fifthWeek = dateArray.slice(27, 31);
 export const fifthStartDate = fifthWeek.splice(0, 1).join();
 export const fifthEndDate = fifthWeek[fifthWeek.length - 1];
 export const fifthStartDateSub = fifthStartDate.substring(5);
