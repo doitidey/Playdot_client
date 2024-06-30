@@ -7,51 +7,11 @@
   flex-direction: column;
   gap: 16px;
   &__item {
+    border-radius: 8px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     height: inherit;
+    background: $surface;
   }
-}
-
-.awayTeam {
-  height: inherit;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-  padding: 0 20px;
-  background: linear-gradient(to right, #ff7854, #fd493f, $surface);
-  border-radius: 8px;
-}
-
-.homeTeam {
-  height: inherit;
-  display: flex;
-  flex-flow: row-reverse;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-  flex: 1;
-  background: linear-gradient(to right, $surface, #53a1ff, #5c70ff);
-  padding-right: 20px;
-  border-radius: 8px;
-}
-
-.home {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  flex: 2;
-  gap: 8px;
-}
-
-.away {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-right: 20px;
-}
-
-hr {
-  width: 100%;
 }

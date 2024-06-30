@@ -1,0 +1,53 @@
+@import "@/styles/colors.scss";
+
+.awayTeam {
+  height: inherit;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 20px;
+  background: linear-gradient(to right, #ff7854, #fd493f);
+  border-radius: 8px;
+}
+
+.homeTeam {
+  height: inherit;
+  display: flex;
+  flex-flow: row-reverse;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(to right, #53a1ff, #5c70ff);
+  padding: 0 20px;
+  border-radius: 8px;
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.away {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-right: 20px;
+}
+
+.not-vote {
+  background: none;
+  padding: 0 20px;
+}
+
+.one-hundred {
+  flex: 1 1 20px;
+}
+
+.seventy {
+  flex: 0.7 1 20px;
+}
+
+.fifty {
+  flex: 0.5 1 20px;
+}

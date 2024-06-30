@@ -21,7 +21,6 @@ function TeamInfo({
   fourthData,
   fifthData,
 }: TeamInfoProps) {
-  console.warn(firstData);
   switch (activeTab) {
     case 0: {
       return (
@@ -33,6 +32,7 @@ function TeamInfo({
                 awayTeam={item.awayTeam}
                 homeTeam={item.homeTeam}
                 gameDate={item.gameDate}
+                voteTeamId={item.voteTeamId}
               />
             ))}
         </ul>
@@ -48,6 +48,7 @@ function TeamInfo({
                 awayTeam={item.awayTeam}
                 homeTeam={item.homeTeam}
                 gameDate={item.gameDate}
+                voteTeamId={item.voteTeamId}
               />
             ))}
         </ul>
@@ -63,6 +64,7 @@ function TeamInfo({
                 awayTeam={item.awayTeam}
                 homeTeam={item.homeTeam}
                 gameDate={item.gameDate}
+                voteTeamId={item.voteTeamId}
               />
             ))}
         </ul>
@@ -78,6 +80,7 @@ function TeamInfo({
                 awayTeam={item.awayTeam}
                 homeTeam={item.homeTeam}
                 gameDate={item.gameDate}
+                voteTeamId={item.voteTeamId}
               />
             ))}
         </ul>
@@ -93,6 +96,7 @@ function TeamInfo({
                 awayTeam={item.awayTeam}
                 homeTeam={item.homeTeam}
                 gameDate={item.gameDate}
+                voteTeamId={item.voteTeamId}
               />
             ))}
         </ul>

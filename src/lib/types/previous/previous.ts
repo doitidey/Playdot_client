@@ -11,5 +11,5 @@ export interface PreviousData {
     id: number;
   };
   gameDate: string;
-  voteTeamId?: number;
+  voteTeamId: number | null;
 }
