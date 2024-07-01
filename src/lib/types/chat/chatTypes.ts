@@ -27,3 +27,25 @@ export type VoteType = {
   };
   startedAt: string;
 };
+
+export type GameData = {
+  gameId: number;
+  homeTeam: {
+    teamName: string;
+    teamShortName: string;
+    score: number;
+    voteRatio: number;
+    id: number;
+    hasVote: boolean;
+  };
+  awayTeam: {
+    teamName: string;
+    teamShortName: string;
+    score: number;
+    voteRatio: number;
+    id: number;
+    hasVote: boolean;
+  };
+  gameTime: string;
+  status: string;
+};
