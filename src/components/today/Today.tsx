@@ -5,31 +5,9 @@ import { useQuery } from "react-query";
 import DateSection from "@/components/today/DateSection";
 import ScoreList from "@/components/today/ScoreList";
 import ChatFloatSection from "@/components/float/ChatFloatSection";
-
-import { getTodayGames } from "@/lib/api/todayAPI";
 import Comment from "../comment/today/Comment";
-
-export interface TodayMatchData {
-  gameId: number;
-  gameTime: string;
-  homeTeam: {
-    id: number;
-    score: number;
-    teamName: string;
-    teamShortName: string;
-    voteRatio: number;
-    hasVote: boolean;
-  };
-  awayTeam: {
-    id: number;
-    score: number;
-    teamName: string;
-    teamShortName: string;
-    voteRatio: number;
-    hasVote: boolean;
-  };
-  status?: string;
-}
+import { getTodayGames } from "@/lib/api/todayAPI";
+import { TodayMatchData } from "@/lib/types/today/today";
 
 function Today() {
   const { data: todayData } = useQuery<TodayMatchData[]>(

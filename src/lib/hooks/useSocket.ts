@@ -1,5 +1,5 @@
 import { useCallback, useState, useEffect } from "react";
-
+import useChatErrorStore from "@/lib/store/chat/chatErrorStore";
 import { configureStompClient } from "@/lib/api/chatAPI";
 import {
   useStompClient,
@@ -19,6 +19,8 @@ export const useSocket = () => {
   const { setMessageData, setMessageDataEmpty } = useStompMessageData();
   const { setShoutData, setEmptyShoutData } = useStompShoutData();
   const { setVoteData } = useStompVoteData();
+  const { setErrorMessage } = useChatErrorStore();
+
   const [headers, setHeaders] = useState<Headers>();
 
   useEffect(() => {
@@ -33,7 +35,7 @@ export const useSocket = () => {
 
   // 소켓 연결하기
   const connectSocket = (roomNumber: string) => {
-    const socket = configureStompClient(roomNumber);
+    const socket = configureStompClient(roomNumber, setErrorMessage);
 
     // 소켓 연결 후 바로 구독
     socket.onConnect = () => {

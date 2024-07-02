@@ -1,9 +1,20 @@
+import { AxiosError } from "axios";
 import { instance } from "./instance";
 
 // 오늘의 승부예측 조회 API
 export const getTodayGames = async () => {
-  const response = await instance.get("games").then((res) => res.data);
-  return response.data;
+  try {
+    const response = await instance.get("games");
+    return response.data.data;
+  } catch (error) {
+    const err = error as AxiosError;
+    if (err.response?.status === 400) {
+      localStorage.clear();
+      window.location.href = "/";
+    } else {
+      throw error;
+    }
+  }
 };
 
 // 오늘의 승부예측 투표 API
