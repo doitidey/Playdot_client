@@ -47,7 +47,7 @@ export const fetchForm = async (
 // 공용 request interceptor
 instance.interceptors.request.use(
   function (config) {
-    const accessToken = localStorage.getItem("authToken") as string;
+    const accessToken = localStorage.getItem("accessToken") as string;
     if (!accessToken) {
       return config;
     }
@@ -61,18 +61,22 @@ instance.interceptors.request.use(
 
 // 로그인 response interceptor
 authInstance.interceptors.response.use(
-  function (config) {
-    if (config.status === 404) {
+  function (response) {
+    const { status, headers, data } = response;
+    if (status === 404) {
       console.error("404 Not Found");
-    } else if (config.status === 403) {
+    } else if (status === 403) {
       console.error("403 Forbidden");
-    } else if (config.status === 401) {
+    } else if (status === 401) {
       console.error("401 Unauthorized");
-    } else if (config.status === 500) {
+    } else if (status === 500) {
       console.error("500 Internal Error");
     }
-    localStorage.setItem("authToken", config.headers.authorization);
-    return config;
+
+    if (data && data.data && data.data.accessToken) {
+      localStorage.setItem("accessToken", data.data.accessToken);
+    }
+    return response;
   },
   function (error) {
     return Promise.reject(error);
@@ -82,7 +86,7 @@ authInstance.interceptors.response.use(
 // 폼데이터 response interceptor
 formInstance.interceptors.request.use(
   function (config) {
-    const accessToken = localStorage.getItem("authToken") as string;
+    const accessToken = localStorage.getItem("accessToken") as string;
     if (!accessToken) {
       return config;
     }
