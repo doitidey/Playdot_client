@@ -8,7 +8,7 @@ export const getMonthGame = async () => {
 // 요청 인터셉터
 instance.interceptors.request.use(
   function (config) {
-    const accessToken = localStorage.getItem("authToken") as string;
+    const accessToken = localStorage.getItem("accessToken") as string;
     if (!accessToken) {
       return config;
     }
