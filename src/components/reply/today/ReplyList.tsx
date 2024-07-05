@@ -1,6 +1,6 @@
 "use client";
 
-import { TodayReplyData } from "@/lib/types/today/reply";
+import { TodayReplyData } from "@/lib/types/comment/reply";
 import Text from "@/components/common/Text";
 import "@/components/reply/today/ReplyList.scss";
 import ReplyItem from "./ReplyItem";
