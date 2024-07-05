@@ -5,7 +5,7 @@ import "@/components/reply/today/ReplyItem.scss";
 import Text from "@/components/common/Text";
 import classNames from "classnames";
 import { FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
-import { TodayReplyData } from "@/lib/types/today/reply";
+import { TodayReplyData } from "@/lib/types/comment/reply";
 import Image from "next/image";
 import TeamTag from "@/components/tag/TeamTag";
 import { commentDate } from "@/lib/util/getGameTime";

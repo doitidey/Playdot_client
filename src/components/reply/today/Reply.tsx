@@ -14,7 +14,7 @@ import {
 import { useMutation, useQueryClient } from "react-query";
 import { postTodayReply } from "@/lib/api/todayAPI";
 import autosize from "autosize";
-import { TodayReplyData } from "@/lib/types/today/reply";
+import { TodayReplyData } from "@/lib/types/comment/reply";
 
 interface ReplyProps {
   todayReply: TodayReplyData[];
