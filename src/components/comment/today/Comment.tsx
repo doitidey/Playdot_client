@@ -19,7 +19,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getTodayComment, postTodayComment } from "@/lib/api/todayAPI";
 import Pagination from "react-js-pagination";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
-import { CommentData } from "@/lib/types/today/comment";
+import { CommentData } from "@/lib/types/comment/comment";
 
 // component
 function Comment() {

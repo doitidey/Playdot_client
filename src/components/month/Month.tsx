@@ -1,26 +1,12 @@
 "use client";
 
 import "@/components/month/Month.scss";
-// import Comment from "@/components/comment/Comment";
 import WinnerMonthItem from "./WinnerMonthItem";
 import LoserMonthItem from "./LoserMonthItem";
 import { useQuery } from "react-query";
 import { getMonthGame } from "@/lib/api/monthAPI";
-
-export interface Members {
-  rank: number;
-  voteRatio: number;
-  memberId: number;
-  nickname: string;
-  winFairyCount: number;
-  loseFairyCount: number;
-  title: string;
-}
-
-export interface MonthData {
-  winMembers: Members[];
-  loseMembers: Members[];
-}
+import { MonthData } from "@/lib/types/month/month";
+import Comment from "../comment/month/Comment";
 
 function Month() {
   const { data: monthData } = useQuery<MonthData>("month", () =>
@@ -35,7 +21,7 @@ function Month() {
           <LoserMonthItem monthData={monthData as MonthData} />
         </div>
       </section>
-      {/* <Comment /> */}
+      <Comment />
     </>
   );
 }

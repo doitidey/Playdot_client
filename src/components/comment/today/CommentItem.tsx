@@ -16,8 +16,8 @@ import {
 } from "@/lib/api/todayAPI";
 import Image from "next/image";
 import Reply from "@/components/reply/today/Reply";
-import { Content } from "@/lib/types/today/comment";
-import { TodayReplyData } from "@/lib/types/today/reply";
+import { Content } from "@/lib/types/comment/comment";
+import { TodayReplyData } from "@/lib/types/comment/reply";
 import Report from "./Report";
 
 function CommentItem({
