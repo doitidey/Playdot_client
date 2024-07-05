@@ -2,7 +2,8 @@ import "@/components/month/MonthItem.scss";
 import Title from "../common/Title";
 import Text from "../common/Text";
 import Image from "next/image";
-import { MonthData } from "./Month";
+import { MonthData } from "@/lib/types/month/month";
+import { getAwayLogo } from "@/lib/util/getLogo";
 
 interface WinnerMonthItemProps {
   monthData: MonthData;
@@ -61,7 +62,12 @@ function WinnerMonthItem({ monthData }: WinnerMonthItemProps) {
               {monthData?.winMembers[0].loseFairyCount}회
             </Text>
           </div>
-          <Image src="/images/lions.svg" alt="" width={60} height={60} />
+          <Image
+            src={getAwayLogo(monthData?.winMembers[0].teamName)}
+            alt=""
+            width={60}
+            height={60}
+          />
         </div>
       </div>
       {monthData?.winMembers.slice(1, 5).map((item) => (
