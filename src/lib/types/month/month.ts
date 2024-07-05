@@ -6,6 +6,7 @@ export interface Members {
   winFairyCount: number;
   loseFairyCount: number;
   title: string;
+  teamName: string;
 }
 
 export interface MonthData {
