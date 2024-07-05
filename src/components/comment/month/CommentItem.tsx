@@ -10,12 +10,8 @@ import { Content } from "./Comment";
 import TeamTag from "@/components/tag/TeamTag";
 import { commentDate } from "@/lib/util/getGameTime";
 import { useMutation, useQueryClient } from "react-query";
-import {
-  cancelCommentLike,
-  deleteTodayComment,
-  postCommentLike,
-} from "@/lib/api/todayAPI";
 import Image from "next/image";
+import { cancelCommentLike, deleteMonthComment, postCommentLike } from "@/lib/api/monthAPI";
 
 function CommentItem({
   content,
@@ -32,11 +28,11 @@ function CommentItem({
   const queryClient = useQueryClient();
 
   const { mutate: deleteComment } = useMutation(
-    () => deleteTodayComment(replyId as number),
+    () => deleteMonthComment(replyId as number),
     {
       onSuccess: () => {
         console.warn(`댓글 삭제 완료: ${replyId}`);
-        queryClient.invalidateQueries({ queryKey: ["todayComment"] });
+        queryClient.invalidateQueries({ queryKey: ["monthComment"] });
       },
     },
   );
@@ -46,7 +42,7 @@ function CommentItem({
     {
       onSuccess: () => {
         console.warn(`댓글 좋아요 완료: ${replyId}`);
-        queryClient.invalidateQueries({ queryKey: ["todayComment"] });
+        queryClient.invalidateQueries({ queryKey: ["monthComment"] });
       },
     },
   );
@@ -56,7 +52,7 @@ function CommentItem({
     {
       onSuccess: () => {
         console.warn(`댓글 좋아요 취소 완료: ${replyId}`);
-        queryClient.invalidateQueries({ queryKey: ["todayComment"] });
+        queryClient.invalidateQueries({ queryKey: ["monthComment"] });
       },
     },
   );

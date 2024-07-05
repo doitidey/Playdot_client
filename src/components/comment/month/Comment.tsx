@@ -16,9 +16,9 @@ import {
 import { MdRefresh } from "react-icons/md";
 import CommentList from "./CommentList";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { getTodayComment, postTodayComment } from "@/lib/api/todayAPI";
 import Pagination from "react-js-pagination";
 import { FcPrevious, FcNext } from "react-icons/fc";
+import { getMonthComment, postMonthComment } from "@/lib/api/monthAPI";
 
 export interface Content {
   profileImageUrl?: string;
@@ -68,8 +68,8 @@ function Comment() {
   const item = 15;
 
   const { data: commentData, refetch } = useQuery<CommentData>(
-    ["todayComment", page],
-    () => getTodayComment(page, item),
+    ["monthComment", page],
+    () => getMonthComment(page, item),
     {
       staleTime: 1000 * 60,
       cacheTime: 1000 * 60 * 5,
@@ -78,10 +78,10 @@ function Comment() {
 
   console.warn(commentData);
 
-  const { mutate: postComment } = useMutation(() => postTodayComment(value), {
+  const { mutate: postComment } = useMutation(() => postMonthComment(value), {
     onSuccess: () => {
       console.warn(`댓글 입력 완료: ${value}`);
-      queryClient.invalidateQueries({ queryKey: ["todayComment"] });
+      queryClient.invalidateQueries({ queryKey: ["monthComment"] });
     },
     onError: () => {
       console.warn(`댓글 입력 실패`);
