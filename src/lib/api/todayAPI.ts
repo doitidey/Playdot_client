@@ -3,18 +3,19 @@ import { instance } from "./instance";
 
 // 오늘의 승부예측 조회 API
 export const getTodayGames = async () => {
-  try {
-    const response = await instance.get("games");
-    return response.data.data;
-  } catch (error) {
-    const err = error as AxiosError;
-    if (err.response?.status === 400) {
-      localStorage.clear();
-      window.location.href = "/";
-    } else {
-      throw error;
-    }
-  }
+  const response = await instance
+    .get("games")
+    .then((res) => res.data)
+    .catch((error) => {
+      const err = error as AxiosError;
+      if (err.response?.status === 400) {
+        localStorage.clear();
+        window.location.href = "/";
+      } else {
+        throw error;
+      }
+    });
+  return response.data;
 };
 
 // 오늘의 승부예측 투표 API
