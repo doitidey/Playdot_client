@@ -1,5 +1,31 @@
 @import "@/styles/colors.scss";
 
+.description {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &__content {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    h2 {
+      color: #b5b5b5;
+    }
+    span {
+      &:last-child {
+        color: $dark-text1;
+        white-space: pre-line;
+        font-size: 18px;
+        line-height: 32px;
+      }
+    }
+  }
+}
+
 .month-block {
   width: 100%;
   padding: 40px 20px;

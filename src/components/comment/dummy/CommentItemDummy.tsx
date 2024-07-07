@@ -7,10 +7,10 @@ import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import classNames from "classnames";
 import TeamTag from "@/components/tag/TeamTag";
 import { commentDate } from "@/lib/util/getGameTime";
-import Image from "next/image";
 import { Content } from "@/lib/types/comment/comment";
 import Report from "./ReportDummy";
 import ReplyDummy from "@/components/reply/dummy/ReplyDummy";
+import Profile from "@/components/common/Profile";
 
 interface CommentItemProps extends Content {
   setLikeCount: Dispatch<SetStateAction<number>>;
@@ -72,12 +72,10 @@ function CommentItemDummy({
     <>
       <li className="item-block">
         <div className="item-block__comment">
-          <Image
-            className="profile-image"
-            alt="profile"
-            src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${profileImageUrl}`}
-            width={50}
-            height={50}
+          <Profile
+            imageUrl={profileImageUrl as string}
+            nickname={nickname as string}
+            size={50}
           />
           <div className="content">
             <div className="content__profile">
