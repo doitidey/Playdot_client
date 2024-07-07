@@ -23,3 +23,9 @@ export const deleteAccessTokenCookie = () => {
     document.cookie = expiresCookie;
   }
 };
+
+export const setRefreshTokenToCookie = (refreshToken: string) => {
+  if (typeof window !== "undefined" || !document) {
+    document.cookie = `refreshToken=${refreshToken}; path=/`;
+  }
+};

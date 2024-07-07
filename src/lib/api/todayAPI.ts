@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { instance } from "./instance";
+import { instance } from "@/lib/api/instance";
 
 // 오늘의 승부예측 조회 API
 export const getTodayGames = async () => {

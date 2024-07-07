@@ -6,7 +6,7 @@ import "./ScoreListItem.scss";
 import classNames from "classnames";
 import Image from "next/image";
 import Title from "../common/Title";
-import { getAwayLogo, getHomeLogo } from "@/lib/util/getLogo";
+import { getLogo } from "@/lib/util/getLogo";
 import { gameDate } from "@/lib/util/getGameTime";
 import { useMutation, useQueryClient } from "react-query";
 import {
@@ -152,7 +152,7 @@ function ScoreListItem({
         >
           <div className="team-img">
             <Image
-              src={getAwayLogo(awayTeam.teamName)}
+              src={getLogo(awayTeam.teamName)}
               alt={awayTeam.teamName}
               width={0}
               height={0}
@@ -176,7 +176,7 @@ function ScoreListItem({
         >
           <div className="team-img">
             <Image
-              src={getHomeLogo(homeTeam.teamName)}
+              src={getLogo(homeTeam.teamName)}
               alt={homeTeam.teamName}
               width={0}
               height={0}

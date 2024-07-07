@@ -1,6 +1,7 @@
 // 매월 첫번째 날과 마지막 날
 const dateArray = [];
 const date = new Date();
+// Todo: 한달 전으로 변경
 const startDate = new Date(date.getFullYear(), date.getMonth(), 2);
 const endDate = new Date(date.getFullYear(), date.getMonth() + 1, 1);
 
