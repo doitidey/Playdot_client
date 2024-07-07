@@ -15,7 +15,7 @@ import ReplyListDummy from "./ReplyListDummy";
 import { Content } from "@/lib/types/comment/comment";
 
 interface ReplyDummyProps {
-  onVisibleReply: () => void;
+  onVisibleReply?: () => void;
 }
 
 function ReplyDummy({ onVisibleReply }: ReplyDummyProps) {

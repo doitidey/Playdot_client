@@ -100,7 +100,7 @@ function Comment() {
         <form className="comment-block__content" onSubmit={onSubmit}>
           <div className="comment-header">
             <Title medium>댓글 {commentData?.content.length}개</Title>
-            <div className="comment-header__refresh">
+            <div className="comment-header__refresh" onClick={onRefresh}>
               <MdRefresh />
             </div>
           </div>
@@ -122,7 +122,7 @@ function Comment() {
         </form>
       </div>
       <CommentList commentData={commentData as CommentData} />
-      {/* <Pagination
+      <Pagination
         activePage={(commentData?.pageable?.pageNumber as number) + 1}
         totalItemsCount={commentData?.totalElements as number}
         itemsCountPerPage={15}
@@ -131,7 +131,8 @@ function Comment() {
         hideFirstLastPages={true}
         prevPageText={<MdNavigateBefore />}
         nextPageText={<MdNavigateNext />}
-      /> */}
+      />
+      <div className="space" />
     </>
   );
 }

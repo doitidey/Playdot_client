@@ -12,7 +12,7 @@ interface ReplyListProps {
   setLikeCount: Dispatch<SetStateAction<number>>;
   isLiked: boolean;
   likeCount: number;
-  onVisibleReply: () => void;
+  onVisibleReply?: () => void;
 }
 
 function ReplyListDummy({
