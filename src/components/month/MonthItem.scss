@@ -8,6 +8,18 @@
   gap: 24px;
 }
 
+.month-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  img {
+    &:last-child {
+      transform: scaleX(-1);
+    }
+  }
+}
+
 .primary {
   background: $surface;
   width: 100%;

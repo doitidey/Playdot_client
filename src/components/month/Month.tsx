@@ -15,6 +15,9 @@ function Month() {
   console.warn(monthData?.winMembers);
   return (
     <>
+      <div className="description">
+        
+      </div>
       <section className="month-block">
         <div className="month-content">
           <WinnerMonthItem monthData={monthData as MonthData} />

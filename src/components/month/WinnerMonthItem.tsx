@@ -32,7 +32,11 @@ function WinnerMonthItem({ monthData }: WinnerMonthItemProps) {
   // Render
   return (
     <div className="block">
-      <Title medium>승리요정</Title>
+      <div className="month-title">
+        <Image src="/images/wing.svg" alt="wing" width={29} height={29} />
+        <Title medium>승리요정</Title>
+        <Image src="/images/wing.svg" alt="wing" width={29} height={29} />
+      </div>
       <div className="primary">
         <div className="icon-container">
           <Image
