@@ -3,7 +3,7 @@ import Image from "next/image";
 import Text from "../common/Text";
 import Title from "../common/Title";
 import { PreviousData } from "@/lib/types/previous/previous";
-import { getHomeLogo } from "@/lib/util/getLogo";
+import { getLogo } from "@/lib/util/getLogo";
 import classNames from "classnames";
 
 function TeamInfoItem({
@@ -41,7 +41,7 @@ function TeamInfoItem({
           )}
         >
           <Image
-            src={getHomeLogo(awayTeam.teamName)}
+            src={getLogo(awayTeam.teamName)}
             alt=""
             width={60}
             height={60}
@@ -59,7 +59,7 @@ function TeamInfoItem({
           )}
         >
           <Image
-            src={getHomeLogo(homeTeam.teamName)}
+            src={getLogo(homeTeam.teamName)}
             alt=""
             width={60}
             height={60}

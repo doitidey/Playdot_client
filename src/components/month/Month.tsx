@@ -6,7 +6,7 @@ import LoserMonthItem from "./LoserMonthItem";
 import { useQuery } from "react-query";
 import { getMonthGame } from "@/lib/api/monthAPI";
 import { MonthData } from "@/lib/types/month/month";
-import Comment from "../comment/month/Comment";
+import CommentDummy from "../comment/dummy/CommentDummy";
 
 function Month() {
   const { data: monthData } = useQuery<MonthData>("month", () =>
@@ -21,7 +21,7 @@ function Month() {
           <LoserMonthItem monthData={monthData as MonthData} />
         </div>
       </section>
-      <Comment />
+      <CommentDummy />
     </>
   );
 }

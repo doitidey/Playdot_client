@@ -3,7 +3,7 @@ import Title from "../common/Title";
 import Text from "../common/Text";
 import Image from "next/image";
 import { MonthData } from "@/lib/types/month/month";
-import { getAwayLogo } from "@/lib/util/getLogo";
+import { getLogo } from "@/lib/util/getLogo";
 
 interface WinnerMonthItemProps {
   monthData: MonthData;
@@ -63,7 +63,7 @@ function WinnerMonthItem({ monthData }: WinnerMonthItemProps) {
             </Text>
           </div>
           <Image
-            src={getAwayLogo(monthData?.winMembers[0].teamName)}
+            src={getLogo(monthData?.winMembers[0].teamName)}
             alt=""
             width={60}
             height={60}

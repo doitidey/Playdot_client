@@ -3,24 +3,22 @@
 import "@/components/comment/today/CommentItem.scss";
 import Text from "@/components/common/Text";
 import { FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
-import { useCallback, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import classNames from "classnames";
 import TeamTag from "@/components/tag/TeamTag";
 import { commentDate } from "@/lib/util/getGameTime";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import {
-  cancelCommentLike,
-  deleteTodayComment,
-  getTodayReply,
-  postCommentLike,
-} from "@/lib/api/todayAPI";
 import Image from "next/image";
-import Reply from "@/components/reply/today/Reply";
 import { Content } from "@/lib/types/comment/comment";
-import { TodayReplyData } from "@/lib/types/comment/reply";
-import Report from "./Report";
+import Report from "./ReportDummy";
+import ReplyDummy from "@/components/reply/dummy/ReplyDummy";
 
-function CommentItem({
+interface CommentItemProps extends Content {
+  setLikeCount: Dispatch<SetStateAction<number>>;
+  setIsLiked: Dispatch<SetStateAction<boolean>>;
+  onDeleteComment: (id: number) => void;
+}
+
+function CommentItemDummy({
   content,
   createdAt,
   isLiked,
@@ -29,73 +27,29 @@ function CommentItem({
   profileImageUrl,
   replyId,
   teamName,
-}: Content) {
+  setIsLiked,
+  setLikeCount,
+  onDeleteComment,
+}: CommentItemProps) {
   // Hooks
   const [visibleBalloon, setVisibleBalloon] = useState(false);
   const [visibleReply, setVisibleReply] = useState(false);
   const [visibleReport, setVisibleReport] = useState(false);
-  const queryClient = useQueryClient();
-
-  // 대댓글 조회 API 함수
-  const { data: todayReply } = useQuery<TodayReplyData[]>(
-    ["todayReply", replyId],
-    () => getTodayReply(replyId as number),
-    {
-      staleTime: 1000 * 60,
-      cacheTime: 1000 * 60 * 5,
-    },
-  );
-
-  // 댓글 삭제 API 함수
-  const { mutate: deleteComment } = useMutation(
-    () => deleteTodayComment(replyId as number),
-    {
-      onSuccess: () => {
-        console.warn(`댓글 삭제 완료: ${replyId}`);
-        queryClient.invalidateQueries({ queryKey: ["todayComment"] });
-      },
-    },
-  );
-
-  // 댓글 좋아요 API 함수
-  const { mutate: postLike } = useMutation(
-    () => postCommentLike(replyId as number),
-    {
-      onSuccess: () => {
-        console.warn(`댓글 좋아요 완료: ${replyId}`);
-        queryClient.invalidateQueries({ queryKey: ["todayComment"] });
-      },
-    },
-  );
-
-  // 댓글 좋아요 취소 API 
-  const { mutate: cancelLike } = useMutation(
-    () => cancelCommentLike(replyId as number),
-    {
-      onSuccess: () => {
-        console.warn(`댓글 좋아요 취소 완료: ${replyId}`);
-        queryClient.invalidateQueries({ queryKey: ["todayComment"] });
-      },
-    },
-  );
 
   // Event Function
   const onVisibleBalloon = useCallback(() => {
     setVisibleBalloon(!visibleBalloon);
   }, [visibleBalloon]);
 
-  const onDeleteComment = useCallback(() => {
-    deleteComment();
-    setVisibleBalloon(false);
-  }, [deleteComment]);
-
   const onLikeComment = useCallback(() => {
     if (isLiked === false) {
-      postLike();
+      setIsLiked(true);
+      setLikeCount((likeCount as number) + 1);
     } else if (isLiked === true) {
-      cancelLike();
+      setIsLiked(false);
+      setLikeCount((likeCount as number) - 1);
     }
-  }, [postLike, isLiked, cancelLike]);
+  }, [isLiked, setIsLiked, likeCount, setLikeCount]);
 
   const onVisibleReply = useCallback(() => {
     setVisibleReply(!visibleReply);
@@ -108,6 +62,11 @@ function CommentItem({
   const onCloseReport = useCallback(() => {
     setVisibleReport(false);
   }, []);
+
+  const onRemove = () => {
+    onDeleteComment(replyId as number);
+    setVisibleBalloon(false);
+  };
 
   return (
     <>
@@ -131,7 +90,7 @@ function CommentItem({
               </Text>
             ))}
             <div className="content__reply">
-              <span onClick={onVisibleReply}>답글 {todayReply?.length}</span>
+              <span onClick={onVisibleReply}>답글 0개</span>
               <span onClick={onVisibleReply}>답글 쓰기</span>
             </div>
           </div>
@@ -142,7 +101,7 @@ function CommentItem({
               <div className="balloon">
                 <Text small>삭제하시겠습니까?</Text>
                 <div className="balloon__button">
-                  <span onClick={onDeleteComment}>삭제</span>
+                  <span onClick={onRemove}>삭제</span>
                   <span onClick={onVisibleBalloon}>취소</span>
                 </div>
               </div>
@@ -165,15 +124,10 @@ function CommentItem({
           </div>
         </div>
       </li>
-      {visibleReply && (
-        <Reply
-          todayReply={todayReply as TodayReplyData[]}
-          replyId={replyId as number}
-        />
-      )}
+      {visibleReply && <ReplyDummy onVisibleReply={onVisibleReply} />}
       {visibleReport && <Report onCloseReport={onCloseReport} />}
     </>
   );
 }
 
-export default CommentItem;
+export default CommentItemDummy;

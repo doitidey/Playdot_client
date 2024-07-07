@@ -3,8 +3,8 @@
 
 MKCERT_INSTALLED=$(which mkcert)
 
-if [ -z $MKCERT_INSTALLED ];then 
-    brew install mkcert
+if [ -z $MKCERT_INSTALLED ];then
+    arch -arm64 brew install mkcert
 fi
 
 mkcert -install

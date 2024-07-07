@@ -14,44 +14,20 @@ import {
   useState,
 } from "react";
 import { MdRefresh } from "react-icons/md";
-import CommentList from "./CommentList";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { getTodayComment, postTodayComment } from "@/lib/api/todayAPI";
-import Pagination from "react-js-pagination";
-import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
-import { CommentData } from "@/lib/types/comment/comment";
+import { Content } from "@/lib/types/comment/comment";
+import CommentListDummy from "./CommentListDummy";
 
 // component
-function Comment() {
+function CommentDummy() {
   // hooks
   const [value, setValue] = useState("");
-  const [page, setPage] = useState(1);
-  const queryClient = useQueryClient();
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
   const commentRef = useRef<HTMLTextAreaElement>(null);
+  const [dummy, setDummy] = useState<Content[]>([]);
+  const nextId = useRef(0);
 
-  // variable
-  const item = 15;
-
-  // 댓글 조회 API
-  const { data: commentData, refetch } = useQuery<CommentData>(
-    ["todayComment", page],
-    () => getTodayComment(page, item),
-    {
-      staleTime: 1000 * 60,
-      cacheTime: 1000 * 60 * 5,
-    },
-  );
-
-  // 댓글 입력 API
-  const { mutate: postComment } = useMutation(() => postTodayComment(value), {
-    onSuccess: () => {
-      console.warn(`댓글 입력 완료: ${value}`);
-      queryClient.invalidateQueries({ queryKey: ["todayComment"] });
-    },
-    onError: () => {
-      console.warn(`댓글 입력 실패`);
-    },
-  });
+  console.warn(dummy);
 
   // 댓글 입력 이벤트 함수
   const onChange = useCallback(
@@ -63,10 +39,23 @@ function Comment() {
     [setValue],
   );
 
-  // 댓글 페이지 변경 이벤트 함수
-  const onPageChange = useCallback((page: number) => {
-    setPage(page);
-  }, []);
+  const onInsert = useCallback(
+    (text: string) => {
+      const comment: Content = {
+        content: text,
+        replyId: nextId.current,
+        createdAt: "2024-07-06",
+        isLiked: isLiked,
+        likeCount: likeCount,
+        nickname: "test",
+        profileImageUrl: "",
+        teamName: "삼성 라이온즈",
+      };
+      setDummy(dummy.concat(comment));
+      nextId.current += 1;
+    },
+    [isLiked, likeCount, dummy],
+  );
 
   // 댓글 Submit 이벤트 함수
   const onSubmit = useCallback(
@@ -75,17 +64,19 @@ function Comment() {
       if (value === "") {
         window.alert("댓글을 입력하세요!");
       } else {
-        postComment();
+        onInsert(value);
       }
       setValue("");
     },
-    [value, postComment],
+    [value, onInsert],
   );
 
-  // 댓글 새로고침 이벤트 함수
-  const onRefresh = useCallback(() => {
-    refetch();
-  }, [refetch]);
+  const onDeleteComment = useCallback(
+    (id: number) => {
+      setDummy(dummy.filter((comment) => comment.replyId !== id));
+    },
+    [dummy],
+  );
 
   useEffect(() => {
     if (commentRef) {
@@ -99,7 +90,7 @@ function Comment() {
       <div className="comment-block">
         <form className="comment-block__content" onSubmit={onSubmit}>
           <div className="comment-header">
-            <Title medium>댓글 {commentData?.content.length}개</Title>
+            <Title medium>댓글 {dummy.length}개</Title>
             <div className="comment-header__refresh">
               <MdRefresh />
             </div>
@@ -121,7 +112,14 @@ function Comment() {
           </Text>
         </form>
       </div>
-      <CommentList commentData={commentData as CommentData} />
+      <CommentListDummy
+        commentData={dummy as Content[]}
+        setIsLiked={setIsLiked}
+        setLikeCount={setLikeCount}
+        isLiked={isLiked}
+        likeCount={likeCount}
+        onDeleteComment={onDeleteComment}
+      />
       {/* <Pagination
         activePage={(commentData?.pageable?.pageNumber as number) + 1}
         totalItemsCount={commentData?.totalElements as number}
@@ -136,4 +134,4 @@ function Comment() {
   );
 }
 
-export default Comment;
+export default CommentDummy;
