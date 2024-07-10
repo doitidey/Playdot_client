@@ -4,6 +4,7 @@ import Text from "../common/Text";
 import Image from "next/image";
 import { MonthData } from "@/lib/types/month/month";
 import { getLogo } from "@/lib/util/getLogo";
+import Profile from "../common/Profile";
 
 interface WinnerMonthItemProps {
   monthData: MonthData;
@@ -56,7 +57,7 @@ function WinnerMonthItem({ monthData }: WinnerMonthItemProps) {
         </div>
         <div className="text-logo">
           {/* 추후 Image 컴포넌트로 변경 */}
-          <div className="user-image" />
+          <Profile imageUrl="" nickname="" size={60} />
           <div className="text">
             <Title large>
               {truncateNickname(monthData?.loseMembers[0].nickname, 6)}
