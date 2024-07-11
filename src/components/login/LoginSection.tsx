@@ -7,10 +7,9 @@ import Text from "@/components/common/Text";
 import LoginButton from "@/components/login/LoginButton";
 import "@/components/login/LoginSection.scss";
 import Button from "../common/Button";
-// import { login } from "@/lib/api/authAPI";
+import { login } from "@/lib/api/authAPI";
 
 import { useUserDataStore } from "@/lib/store/userDataStore";
-import { login } from "@/lib/api/loginAPI";
 
 function LoginSection() {
   const { setUserData } = useUserDataStore();

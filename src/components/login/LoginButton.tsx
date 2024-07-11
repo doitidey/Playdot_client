@@ -12,7 +12,7 @@ function LoginButton() {
   const router = useRouter();
 
   useEffect(() => {
-    const authToken = localStorage.getItem("accessToken");
+    const authToken = localStorage.getItem("authToken");
     if (authToken) {
       router.push("/match/today");
     }
