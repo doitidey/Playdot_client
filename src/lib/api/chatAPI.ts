@@ -7,7 +7,7 @@ export const configureStompClient = (
   setMsg: (message: string) => void,
 ) => {
   const serverUrl = `${process.env.NEXT_PUBLIC_BASE_URL}chat`;
-  const token = localStorage.getItem("accessToken");
+  const token = localStorage.getItem("authToken");
 
   const sockJs = new SockJS(serverUrl);
   const stompClient = new Client({

@@ -3,15 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node server.js",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "postinstall": "husky install",
-    "lint-staged": "lint-staged",
-    "initlocalhost": "sh init.sh"
+    "lint-staged": "lint-staged"
   },
   "lint-staged": {
     "*.{js,ts}": "eslint --fix"
