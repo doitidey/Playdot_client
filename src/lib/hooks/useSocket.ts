@@ -27,7 +27,7 @@ export const useSocket = () => {
     if (roomId !== undefined) {
       const newHeaders = {
         gameId: `${roomId}`,
-        Authorization: `${localStorage.getItem("accessToken")}`,
+        Authorization: `${localStorage.getItem("authToken")}`,
       };
       setHeaders(newHeaders);
     }
@@ -58,7 +58,7 @@ export const useSocket = () => {
         },
         {
           gameId: `${roomNumber}`,
-          Authorization: `${localStorage.getItem("accessToken")}`,
+          Authorization: `${localStorage.getItem("authToken")}`,
         },
       );
     };
