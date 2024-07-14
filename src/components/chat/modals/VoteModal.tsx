@@ -1,18 +1,26 @@
 "use client";
 import Image from "next/image";
 import "@/components/chat/modals/VoteModal.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import classNames from "classnames";
-import { useStompVoteData } from "@/lib/store/chat/stompclientStore";
+import {
+  useStompVoteData,
+  useStompVoteRatiosData,
+} from "@/lib/store/chat/stompclientStore";
 // import { VOTE_DATA } from "../dummy";
 import { useSocket } from "@/lib/hooks/useSocket";
 import VoteTimer from "./VoteTimer";
 
 function VoteModal() {
   const { voteData } = useStompVoteData();
-  const { sendVote } = useSocket();
+  const { sendVote, voteRatioSubscribe } = useSocket();
+  const { voteRatioData } = useStompVoteRatiosData();
   const [voteActive, setVoteActive] = useState(false);
   // const voteData = VOTE_DATA;
+
+  useEffect(() => {
+    voteRatioSubscribe(voteData[0].miniGameId);
+  }, []);
 
   const onVote = (e: React.MouseEvent<HTMLButtonElement>) => {
     // console.log(e.target.value);
@@ -55,7 +63,11 @@ function VoteModal() {
               "vote__content-button__item__bg",
               voteActive && "vote__content-button__item__bg--active",
             )}
-            style={voteActive ? { height: "27%" } : { height: "100%" }} //api 연동
+            style={
+              voteActive
+                ? { height: `${voteRatioData[0].voteRatio.option1VoteRatio}%` }
+                : { height: "0%" }
+            } //api 연동
           ></div>
         </button>
         <button
@@ -69,7 +81,11 @@ function VoteModal() {
               "vote__content-button__item__bg",
               voteActive && "vote__content-button__item__bg--active",
             )}
-            style={voteActive ? { height: "85%" } : { height: "100%" }}
+            style={
+              voteActive
+                ? { height: `${voteRatioData[0].voteRatio.option2VoteRatio}%` }
+                : { height: "0%" }
+            }
           ></div>
         </button>
       </div>
