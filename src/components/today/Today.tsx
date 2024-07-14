@@ -5,10 +5,9 @@ import { useQuery } from "react-query";
 import DateSection from "@/components/today/DateSection";
 import ScoreList from "@/components/today/ScoreList";
 import ChatFloatSection from "@/components/float/ChatFloatSection";
-// import Comment from "../comment/today/Comment";
 import { getTodayGames } from "@/lib/api/todayAPI";
 import { TodayMatchData } from "@/lib/types/today/today";
-import CommentDummy from "../comment/dummy/CommentDummy";
+import Comment from "../comment/today/Comment";
 
 function Today() {
   const { data: todayData } = useQuery<TodayMatchData[]>(
@@ -27,8 +26,7 @@ function Today() {
       <div className="today-block">
         <DateSection />
         <ScoreList todayData={todayData as []} />
-        {/* <Comment /> */}
-        <CommentDummy />
+        <Comment />
         <ChatFloatSection game={todayData as []} />
       </div>
     </>

@@ -14,11 +14,10 @@ import {
   getTodayReply,
   postCommentLike,
 } from "@/lib/api/todayAPI";
-import Image from "next/image";
 import Reply from "@/components/reply/today/Reply";
 import { Content } from "@/lib/types/comment/comment";
-import { TodayReplyData } from "@/lib/types/comment/reply";
 import Report from "./Report";
+import Profile from "@/components/common/Profile";
 
 function CommentItem({
   content,
@@ -37,13 +36,9 @@ function CommentItem({
   const queryClient = useQueryClient();
 
   // 대댓글 조회 API 함수
-  const { data: todayReply } = useQuery<TodayReplyData[]>(
+  const { data: todayReply } = useQuery<Content[]>(
     ["todayReply", replyId],
     () => getTodayReply(replyId as number),
-    {
-      staleTime: 1000 * 60,
-      cacheTime: 1000 * 60 * 5,
-    },
   );
 
   // 댓글 삭제 API 함수
@@ -68,7 +63,7 @@ function CommentItem({
     },
   );
 
-  // 댓글 좋아요 취소 API 
+  // 댓글 좋아요 취소 API
   const { mutate: cancelLike } = useMutation(
     () => cancelCommentLike(replyId as number),
     {
@@ -113,12 +108,10 @@ function CommentItem({
     <>
       <li className="item-block">
         <div className="item-block__comment">
-          <Image
-            className="profile-image"
-            alt="profile"
-            src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${profileImageUrl}`}
-            width={50}
-            height={50}
+          <Profile
+            imageUrl={profileImageUrl as string}
+            nickname={nickname as string}
+            size={50}
           />
           <div className="content">
             <div className="content__profile">
@@ -167,8 +160,9 @@ function CommentItem({
       </li>
       {visibleReply && (
         <Reply
-          todayReply={todayReply as TodayReplyData[]}
+          replyData={todayReply as Content[]}
           replyId={replyId as number}
+          setVisibleReply={setVisibleReply}
         />
       )}
       {visibleReport && <Report onCloseReport={onCloseReport} />}

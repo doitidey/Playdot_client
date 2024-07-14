@@ -1,13 +1,13 @@
 "use client";
 
-import { TodayReplyData } from "@/lib/types/comment/reply";
+import { Content } from "@/lib/types/comment/reply";
 import Text from "@/components/common/Text";
 import "@/components/reply/month/ReplyList.scss";
 import ReplyItemDummy from "./ReplyItemDummy";
 import { Dispatch, SetStateAction } from "react";
 
 interface ReplyListProps {
-  dummyReply?: TodayReplyData[];
+  dummyReply?: Content[];
   setIsLiked: Dispatch<SetStateAction<boolean>>;
   setLikeCount: Dispatch<SetStateAction<number>>;
   isLiked: boolean;

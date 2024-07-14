@@ -2,16 +2,22 @@
 
 import "@/components/comment/month/CommentItem.scss";
 import Text from "@/components/common/Text";
-// import TeamTag from "@/components/tag/TeamTag";
 import { FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
 import { useCallback, useState } from "react";
 import classNames from "classnames";
-import { Content } from "./Comment";
+
 import TeamTag from "@/components/tag/TeamTag";
 import { commentDate } from "@/lib/util/getGameTime";
-import { useMutation, useQueryClient } from "react-query";
-import Image from "next/image";
-import { cancelCommentLike, deleteMonthComment, postCommentLike } from "@/lib/api/monthAPI";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import {
+  cancelCommentLike,
+  deleteMonthComment,
+  getMonthReply,
+  postCommentLike,
+} from "@/lib/api/monthAPI";
+import Profile from "@/components/common/Profile";
+import Reply from "@/components/reply/month/Reply";
+import { Content } from "@/lib/types/comment/comment";
 
 function CommentItem({
   content,
@@ -24,6 +30,7 @@ function CommentItem({
   teamName,
 }: Content) {
   const [visibleBalloon, setVisibleBalloon] = useState(false);
+  const [visibleReply, setVisibleReply] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -57,9 +64,17 @@ function CommentItem({
     },
   );
 
+  const { data: replyData } = useQuery<Content[]>(["monthReply", replyId], () =>
+    getMonthReply(replyId as number),
+  );
+
   const onVisibleBalloon = useCallback(() => {
     setVisibleBalloon(!visibleBalloon);
   }, [visibleBalloon]);
+
+  const onVisibleReply = useCallback(() => {
+    setVisibleReply(!visibleReply);
+  }, [visibleReply]);
 
   const onDeleteComment = useCallback(() => {
     deleteComment();
@@ -75,60 +90,67 @@ function CommentItem({
   }, [postLike, isLiked, cancelLike]);
 
   return (
-    <li className="item-block">
-      <div className="item-block__comment">
-        <Image
-          className="profile-image"
-          alt="profile"
-          src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${profileImageUrl}`}
-          width={50}
-          height={50}
-        />
-        <div className="content">
-          <div className="content__profile">
-            <Text medium>{nickname}</Text>
-            <TeamTag teamName={teamName as string} />
-          </div>
-          {content?.split("\n").map((text, index) => (
-            <Text key={index} medium>
-              {text}
-            </Text>
-          ))}
-          <div className="content__reply">
-            <span>답글 20</span>
-            <span>답글 쓰기</span>
-          </div>
-        </div>
-      </div>
-      <div className="item-block__button">
-        <div className="item-block__button__date">
-          {visibleBalloon && (
-            <div className="balloon">
-              <Text small>삭제하시겠습니까?</Text>
-              <div className="balloon__button">
-                <span onClick={onDeleteComment}>삭제</span>
-                <span onClick={onVisibleBalloon}>취소</span>
-              </div>
+    <>
+      <li className="item-block">
+        <div className="item-block__comment">
+          <Profile
+            imageUrl={profileImageUrl as string}
+            nickname={nickname as string}
+            size={50}
+          />
+          <div className="content">
+            <div className="content__profile">
+              <Text medium>{nickname}</Text>
+              <TeamTag teamName={teamName as string} />
             </div>
-          )}
-          <span>{commentDate(createdAt)}</span>
-          <span>신고</span>
-          <span onClick={onVisibleBalloon}>삭제</span>
-        </div>
-        <div className="item-block__button__like">
-          <Text>좋아요</Text>
-          <span>{likeCount}</span>
-          <div
-            className={classNames(
-              `${isLiked ? "active-like-btn" : "inactive-like-btn"}`,
-            )}
-            onClick={onLikeComment}
-          >
-            {isLiked ? <FaThumbsUp /> : <FaRegThumbsUp />}
+            {content?.split("\n").map((text, index) => (
+              <Text key={index} medium>
+                {text}
+              </Text>
+            ))}
+            <div className="content__reply">
+              <span onClick={onVisibleReply}>답글 {replyData?.length}</span>
+              <span onClick={onVisibleReply}>답글 쓰기</span>
+            </div>
           </div>
         </div>
-      </div>
-    </li>
+        <div className="item-block__button">
+          <div className="item-block__button__date">
+            {visibleBalloon && (
+              <div className="balloon">
+                <Text small>삭제하시겠습니까?</Text>
+                <div className="balloon__button">
+                  <span onClick={onDeleteComment}>삭제</span>
+                  <span onClick={onVisibleBalloon}>취소</span>
+                </div>
+              </div>
+            )}
+            <span>{commentDate(createdAt)}</span>
+            <span>신고</span>
+            <span onClick={onVisibleBalloon}>삭제</span>
+          </div>
+          <div className="item-block__button__like">
+            <Text>좋아요</Text>
+            <span>{likeCount}</span>
+            <div
+              className={classNames(
+                `${isLiked ? "active-like-btn" : "inactive-like-btn"}`,
+              )}
+              onClick={onLikeComment}
+            >
+              {isLiked ? <FaThumbsUp /> : <FaRegThumbsUp />}
+            </div>
+          </div>
+        </div>
+      </li>
+      {visibleReply && (
+        <Reply
+          replyData={replyData as Content[]}
+          replyId={replyId as number}
+          setVisibleReply={setVisibleReply}
+        />
+      )}
+    </>
   );
 }
 

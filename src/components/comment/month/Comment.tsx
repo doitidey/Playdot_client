@@ -19,46 +19,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import Pagination from "react-js-pagination";
 import { FcPrevious, FcNext } from "react-icons/fc";
 import { getMonthComment, postMonthComment } from "@/lib/api/monthAPI";
-
-export interface Content {
-  profileImageUrl?: string;
-  nickname?: string;
-  teamName?: string;
-  replyId?: number;
-  content?: string;
-  likeCount?: number;
-  createdAt?: string;
-  isLiked?: boolean;
-}
-
-interface Sort {
-  sorted?: boolean;
-  empty?: boolean;
-  unsorted?: boolean;
-}
-
-interface Pageable {
-  pageNumber?: number; // 현재 페이지 번호
-  pageSize?: number; // 한 페이지당 보여줄 데이터 개수
-  sort?: Sort; // 정렬
-  offset?: number; // 데이터 시작 위치
-  paged?: boolean; // 페이지네이션 사용 여부
-  unpaged?: boolean; //
-}
-
-export interface CommentData {
-  content: Content[];
-  pageable?: Pageable;
-  totalElements?: number;
-  totalPages?: number;
-  last?: boolean;
-  size?: number;
-  number?: number;
-  sort?: Sort;
-  numberOfElements?: number;
-  first?: boolean;
-  empty?: boolean;
-}
+import { CommentData } from "@/lib/types/comment/comment";
 
 function Comment() {
   // state
@@ -129,42 +90,45 @@ function Comment() {
   }, []);
 
   return (
-    <div className="comment-block">
-      <form className="comment-block__content" onSubmit={onSubmit}>
-        <div className="comment-header">
-          <Title medium>댓글 {commentData?.totalElements}개</Title>
-          <div className="comment-header__refresh" onClick={onRefresh}>
-            <MdRefresh />
+    <>
+      <div className="comment-block">
+        <form className="comment-block__content" onSubmit={onSubmit}>
+          <div className="comment-header">
+            <Title medium>댓글 {commentData?.totalElements}개</Title>
+            <div className="comment-header__refresh" onClick={onRefresh}>
+              <MdRefresh />
+            </div>
           </div>
-        </div>
-        <div className="comment-input-area">
-          <textarea
-            className="comment-input"
-            placeholder="댓글을 입력하세요."
-            rows={1}
-            maxLength={300}
-            spellCheck={false}
-            value={value}
-            onChange={onChange}
-          />
-          <Button size="submit" variant="active" type="submit" label="등록" />
-        </div>
-        <Text medium className="value-length">
-          {value.length} / 300
-        </Text>
-        <CommentList commentData={commentData as CommentData} />
-        <Pagination
-          activePage={commentData?.pageable?.pageNumber as number}
-          totalItemsCount={commentData?.totalElements as number}
-          itemsCountPerPage={15}
-          pageRangeDisplayed={5}
-          onChange={onPageChange}
-          hideFirstLastPages={true}
-          prevPageText={<FcPrevious />}
-          nextPageText={<FcNext />}
-        />
-      </form>
-    </div>
+          <div className="comment-input-area">
+            <textarea
+              className="comment-input"
+              placeholder="댓글을 입력하세요."
+              rows={1}
+              maxLength={300}
+              spellCheck={false}
+              value={value}
+              onChange={onChange}
+            />
+            <Button size="submit" variant="active" type="submit" label="등록" />
+          </div>
+          <Text medium className="value-length">
+            {value.length} / 300
+          </Text>
+        </form>
+      </div>
+      <CommentList commentData={commentData as CommentData} />
+      <Pagination
+        activePage={commentData?.pageable?.pageNumber as number}
+        totalItemsCount={commentData?.totalElements as number}
+        itemsCountPerPage={15}
+        pageRangeDisplayed={5}
+        onChange={onPageChange}
+        hideFirstLastPages={true}
+        prevPageText={<FcPrevious />}
+        nextPageText={<FcNext />}
+      />
+      <div className="space" />
+    </>
   );
 }
 

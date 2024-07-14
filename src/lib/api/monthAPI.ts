@@ -33,9 +33,9 @@ export const postMonthComment = async (content: string) => {
 };
 
 // 월간 승리요정 대댓글 작성 API
-export const postMonthReply = async (reply: string, replyId: number) => {
+export const postMonthReply = async (content: string, replyId: number) => {
   const requestBody = {
-    reply: reply,
+    content: content,
   };
   const response = await instance
     .post(`statistics/replies/${replyId}/sub`, requestBody)
