@@ -49,3 +49,21 @@ export type GameData = {
   gameTime: string;
   status: string;
 };
+
+export type voteRatioResults = {
+  creatorNickname: string;
+  creatorOptions: {
+    question: string;
+    option1: string;
+    option2: string;
+  };
+  myProfile: {
+    nickname: string;
+    profileImageUrl: string;
+    teamName: string;
+  };
+  voteRatio: {
+    option1VoteRatio: number;
+    option2VoteRatio: number;
+  };
+};
