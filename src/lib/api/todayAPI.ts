@@ -17,7 +17,6 @@ export const getTodayGames = async () => {
   }
 };
 
-
 // 오늘의 승부예측 투표 API
 export const voteTodayGames = async (gameId: number, teamId: number) => {
   const requestBody = {
