@@ -1,17 +1,12 @@
 import "@/components/chat/ChatHeader.scss";
 import Image from "next/image";
 import { getTeamLogo } from "@/lib/util/TeamTagLogo";
-import useSelectedGameDataStore from "@/lib/store/today/selectedGameStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getGameData } from "@/lib/api/chatAPI";
 import { GameData } from "@/lib/types/chat/chatTypes";
-// import { GAME_DATA } from "./dummy";
-// import { TODAY_DATA } from "../today/dummy";
 
 function ChatHeader({ pid }: { pid: string }) {
-  // const { gameData } = useSelectedGameDataStore();
-
   const [gameData, setGameData] = useState<GameData>({
     gameId: 0,
     homeTeam: {
@@ -35,8 +30,6 @@ function ChatHeader({ pid }: { pid: string }) {
   });
 
   const router = useRouter();
-  // setGameData(TODAY_DATA);
-  // const gameData = TODAY_DATA;
 
   useEffect(() => {
     const getData = async () => {
@@ -45,11 +38,6 @@ function ChatHeader({ pid }: { pid: string }) {
     };
     getData();
   }, []);
-
-  // const chatRoomGameData = gameData.filter(
-  //   (game) => game.gameId === Number(pid),
-  // )[0];
-  // const GAME_DATA = chatRoomGameData;
 
   const onClickPrevRoom = () => {
     router.push("/match/chat/" + (gameData.gameId - 1));
