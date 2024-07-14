@@ -27,3 +27,43 @@ export type VoteType = {
   };
   startedAt: string;
 };
+
+export type GameData = {
+  gameId: number;
+  homeTeam: {
+    teamName: string;
+    teamShortName: string;
+    score: number;
+    voteRatio: number;
+    id: number;
+    hasVote: boolean;
+  };
+  awayTeam: {
+    teamName: string;
+    teamShortName: string;
+    score: number;
+    voteRatio: number;
+    id: number;
+    hasVote: boolean;
+  };
+  gameTime: string;
+  status: string;
+};
+
+export type voteRatioResults = {
+  creatorNickname: string;
+  creatorOptions: {
+    question: string;
+    option1: string;
+    option2: string;
+  };
+  myProfile: {
+    nickname: string;
+    profileImageUrl: string;
+    teamName: string;
+  };
+  voteRatio: {
+    option1VoteRatio: number;
+    option2VoteRatio: number;
+  };
+};

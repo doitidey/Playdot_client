@@ -53,3 +53,12 @@ export const getProfile = (nickname: string) => {
     console.error(error);
   }
 };
+
+export const getGameData = (roomId: string) => {
+  try {
+    const res = fetchData(`games/${roomId}`, "get");
+    return res;
+  } catch (error) {
+    console.error(error);
+  }
+};

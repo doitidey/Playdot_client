@@ -6,6 +6,8 @@ import {
   useStompMessageData,
   useStompShoutData,
   useStompVoteData,
+  useStompVoteNoticeData,
+  useStompVoteRatiosData,
 } from "@/lib/store/chat/stompclientStore";
 import {
   CreateVoteDetailProps,
@@ -13,6 +15,7 @@ import {
   MessageDetailProps,
   SendVoteDetailProps,
 } from "@/lib/types/hooks/useSocketTypes";
+import { useUserDataStore } from "../store/userDataStore";
 
 export const useSocket = () => {
   const { stompClient, setStompClient, roomId } = useStompClient();
@@ -20,6 +23,9 @@ export const useSocket = () => {
   const { setShoutData, setEmptyShoutData } = useStompShoutData();
   const { setVoteData } = useStompVoteData();
   const { setErrorMessage } = useChatErrorStore();
+  const { userData } = useUserDataStore();
+  const { setVoteNoticeData } = useStompVoteNoticeData();
+  const { setVoteRatioData } = useStompVoteRatiosData();
 
   const [headers, setHeaders] = useState<Headers>();
 
@@ -36,7 +42,6 @@ export const useSocket = () => {
   // 소켓 연결하기
   const connectSocket = (roomNumber: string) => {
     const socket = configureStompClient(roomNumber, setErrorMessage);
-
     // 소켓 연결 후 바로 구독
     socket.onConnect = () => {
       setStompClient(socket);
@@ -56,13 +61,21 @@ export const useSocket = () => {
             console.error("stomp 구독에 오류가 발생했습니다:", error);
           }
         },
-        {
-          gameId: `${roomNumber}`,
-          Authorization: `${localStorage.getItem("authToken")}`,
+        headers,
+      );
+      const nickname = userData.nickname;
+      socket.subscribe(
+        ` /user/${nickname}/chat/${roomNumber}`,
+        (frame: { body: string }) => {
+          try {
+            const receivedMessage = JSON.parse(frame.body);
+            setVoteNoticeData(receivedMessage);
+          } catch (error) {
+            console.error("stomp 구독에 오류가 발생했습니다:", error);
+          }
         },
       );
     };
-
     socket.activate();
   };
 
@@ -131,5 +144,31 @@ export const useSocket = () => {
     setEmptyShoutData();
   };
 
-  return { connectSocket, sendMessage, createVote, sendVote, deactivateSocket };
+  const voteRatioSubscribe = (miniGameId: number) => {
+    const nickname = userData.nickname;
+    stompClient &&
+      (stompClient.onConnect = () => {
+        stompClient.subscribe(
+          `/user/${nickname}/voteRatioResults/${miniGameId}`,
+          (frame: { body: string }) => {
+            try {
+              const receivedMessage = JSON.parse(frame.body);
+              setVoteRatioData(receivedMessage);
+            } catch (error) {
+              console.error("stomp 구독에 오류가 발생했습니다:", error);
+            }
+          },
+          headers,
+        );
+      });
+  };
+
+  return {
+    connectSocket,
+    sendMessage,
+    createVote,
+    sendVote,
+    deactivateSocket,
+    voteRatioSubscribe,
+  };
 };
