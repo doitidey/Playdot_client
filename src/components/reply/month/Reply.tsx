@@ -14,14 +14,15 @@ import {
 import { useMutation, useQueryClient } from "react-query";
 import { postMonthReply } from "@/lib/api/monthAPI";
 import autosize from "autosize";
-import { TodayReplyData } from "@/lib/types/comment/reply";
+import { Content } from "@/lib/types/comment/reply";
 
 interface ReplyProps {
-  todayReply: TodayReplyData[];
+  replyData: Content[];
   replyId: number;
+  setVisibleReply: (visibleReply: boolean) => void;
 }
 
-function Reply({ todayReply, replyId }: ReplyProps) {
+function Reply({ replyId, setVisibleReply, replyData }: ReplyProps) {
   const [value, setValue] = useState("");
   const queryClient = useQueryClient();
   const replyRef = useRef<HTMLTextAreaElement>(null);
@@ -38,6 +39,10 @@ function Reply({ todayReply, replyId }: ReplyProps) {
       },
     },
   );
+
+  const onClickCancel = useCallback(() => {
+    setVisibleReply(false);
+  }, [setVisibleReply]);
 
   const onChange = useCallback(
     (event: ChangeEvent) => {
@@ -79,11 +84,16 @@ function Reply({ todayReply, replyId }: ReplyProps) {
             value={value}
             onChange={onChange}
           />
-          <Button size="submit" variant="cancel" type="submit" label="취소" />
+          <Button
+            size="submit"
+            variant="cancel"
+            label="취소"
+            onClick={onClickCancel}
+          />
           <Button size="submit" variant="active" type="submit" label="등록" />
         </div>
       </form>
-      <ReplyList todayReply={todayReply} />
+      <ReplyList replyData={replyData as Content[]} />
     </div>
   );
 }
