@@ -1,3 +1,4 @@
+import { useStompVoteData } from "@/lib/store/chat/stompclientStore";
 import { useState, useEffect } from "react";
 
 interface TimeLeft {
@@ -7,9 +8,10 @@ interface TimeLeft {
 
 const VoteTimer = ({ targetTime }: { targetTime: string }) => {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({
-    minutes: 0,
-    seconds: 0,
+    minutes: 3,
+    seconds: 60,
   });
+  const { setVoteDataEmpty } = useStompVoteData();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -19,6 +21,12 @@ const VoteTimer = ({ targetTime }: { targetTime: string }) => {
 
     return () => clearInterval(timer);
   }, [targetTime]);
+
+  useEffect(() => {
+    if (timeLeft.minutes === 0 && timeLeft.minutes === 0) {
+      setVoteDataEmpty();
+    }
+  }, [timeLeft]);
 
   const calculateTimeLeft = (): TimeLeft => {
     const endTime = new Date(targetTime).getTime() + 3 * 60 * 1000; // 3분 추가

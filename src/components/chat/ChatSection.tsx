@@ -15,13 +15,16 @@ import {
   useStompClient,
   useStompShoutData,
   useStompVoteData,
+  useStompVoteNoticeData,
 } from "@/lib/store/chat/stompclientStore";
 import ShoutBubble from "@/components/chat/chatlog/ShoutBubble";
 import useChatErrorStore from "@/lib/store/chat/chatErrorStore";
 import ErroorModal from "@/components/chat/modals/ErrorModal";
 import { useModal } from "@/lib/hooks/useModal";
+import ChatNotice from "./chatlog/ChatNotice";
 
 function ChatSection({ pid }: { pid: string }) {
+  const { voteNoticeData } = useStompVoteNoticeData();
   const { connectSocket, deactivateSocket } = useSocket();
   const { menuModalState } = useMenuModalState();
   const { shoutData } = useStompShoutData();
@@ -52,7 +55,9 @@ function ChatSection({ pid }: { pid: string }) {
   return (
     <div className="chat">
       <ChatHeader pid={pid} />
+
       <div className="chat__inside">
+        {voteNoticeData[0] && <ChatNotice />}
         <div className="float">
           <div className="float__contents">
             {menuModalState.isOpen && <MenuModal />}

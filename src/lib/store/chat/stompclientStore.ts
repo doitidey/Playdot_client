@@ -3,6 +3,8 @@ import {
   MessageDataStore,
   ShoutMessageDataStore,
   VoteDataStore,
+  VoteNoticeDataStore,
+  VoteRatioData,
 } from "@/lib/types/store/stompclientTypes";
 import { create } from "zustand";
 
@@ -55,6 +57,39 @@ export const useStompVoteData = create<VoteDataStore>((set) => ({
   setVoteData: (receivedMessage) => {
     set(() => ({
       voteData: [receivedMessage],
+    }));
+  },
+  setVoteDataEmpty: () => {
+    set(() => ({
+      voteData: [],
+    }));
+  },
+}));
+
+export const useStompVoteNoticeData = create<VoteNoticeDataStore>((set) => ({
+  voteNoticeData: [],
+  setVoteNoticeData: (receivedMessage) => {
+    set(() => ({
+      voteNoticeData: [receivedMessage],
+    }));
+  },
+  setVoteNoticeDataEmpty: () => {
+    set(() => ({
+      voteNoticeData: [],
+    }));
+  },
+}));
+
+export const useStompVoteRatiosData = create<VoteRatioData>((set) => ({
+  voteRatioData: [],
+  setVoteRatioData: (receivedMessage) => {
+    set(() => ({
+      voteRatioData: [receivedMessage],
+    }));
+  },
+  setVoteRatioDataEmpty: () => {
+    set(() => ({
+      voteRatioData: [],
     }));
   },
 }));
