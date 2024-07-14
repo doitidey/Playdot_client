@@ -93,7 +93,7 @@ function Reply({ replyId, setVisibleReply, replyData }: ReplyProps) {
           <Button size="submit" variant="active" type="submit" label="등록" />
         </div>
       </form>
-      <ReplyList replyData={replyData as Content[]} />
+      <ReplyList replyData={replyData as Content[]} onClickCancel={onClickCancel} />
     </div>
   );
 }

@@ -6,9 +6,9 @@ import Text from "@/components/common/Text";
 import classNames from "classnames";
 import { FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
 import { Content } from "@/lib/types/comment/reply";
-import Image from "next/image";
 import TeamTag from "@/components/tag/TeamTag";
 import { commentDate } from "@/lib/util/getGameTime";
+import Profile from "@/components/common/Profile";
 
 interface ReplyItemProps extends Content {}
 
@@ -24,12 +24,10 @@ function ReplyItem({
 }: ReplyItemProps) {
   return (
     <li className="reply-item-block">
-      <Image
-        className="profile-image"
-        alt="profile"
-        src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${profileImageUrl}`}
-        width={50}
-        height={50}
+      <Profile
+        imageUrl={profileImageUrl as string}
+        nickname={nickname as string}
+        size={50}
       />
       <div className="reply-item-block__content">
         <div className="reply-item-block__content__info">

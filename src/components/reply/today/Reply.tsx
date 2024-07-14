@@ -1,8 +1,8 @@
 "use client";
 
 import Button from "@/components/common/Button";
-import "@/components/reply/today/Reply.scss";
-import ReplyList from "./ReplyList";
+import "@/components/reply/month/Reply.scss";
+import ReplyList from "@/components/reply/month/ReplyList";
 import {
   ChangeEvent,
   FormEvent,
@@ -12,16 +12,17 @@ import {
   useState,
 } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { postTodayReply } from "@/lib/api/todayAPI";
 import autosize from "autosize";
-import { TodayReplyData } from "@/lib/types/comment/reply";
+import { Content } from "@/lib/types/comment/reply";
+import { postTodayReply } from "@/lib/api/todayAPI";
 
 interface ReplyProps {
-  todayReply: TodayReplyData[];
+  replyData: Content[];
   replyId: number;
+  setVisibleReply: (visibleReply: boolean) => void;
 }
 
-function Reply({ todayReply, replyId }: ReplyProps) {
+function Reply({ replyId, setVisibleReply, replyData }: ReplyProps) {
   const [value, setValue] = useState("");
   const queryClient = useQueryClient();
   const replyRef = useRef<HTMLTextAreaElement>(null);
@@ -31,13 +32,17 @@ function Reply({ todayReply, replyId }: ReplyProps) {
     {
       onSuccess: () => {
         console.warn(`댓글 입력 완료: ${value}`);
-        queryClient.invalidateQueries({ queryKey: ["todayReply"] });
+        queryClient.invalidateQueries({ queryKey: ["monthReply"] });
       },
       onError: () => {
         console.warn(`댓글 입력 실패`);
       },
     },
   );
+
+  const onClickCancel = useCallback(() => {
+    setVisibleReply(false);
+  }, [setVisibleReply]);
 
   const onChange = useCallback(
     (event: ChangeEvent) => {
@@ -79,11 +84,19 @@ function Reply({ todayReply, replyId }: ReplyProps) {
             value={value}
             onChange={onChange}
           />
-          <Button size="submit" variant="cancel" type="submit" label="취소" />
+          <Button
+            size="submit"
+            variant="cancel"
+            label="취소"
+            onClick={onClickCancel}
+          />
           <Button size="submit" variant="active" type="submit" label="등록" />
         </div>
       </form>
-      <ReplyList todayReply={todayReply} />
+      <ReplyList
+        replyData={replyData as Content[]}
+        onClickCancel={onClickCancel}
+      />
     </div>
   );
 }

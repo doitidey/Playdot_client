@@ -7,9 +7,10 @@ import ReplyItem from "@/components/reply/month/ReplyItem";
 
 interface ReplyListProps {
   replyData: Content[];
+  onClickCancel: () => void;
 }
 
-function ReplyList({ replyData }: ReplyListProps) {
+function ReplyList({ replyData, onClickCancel }: ReplyListProps) {
   return (
     <>
       <ul className="reply-list-block">
@@ -27,7 +28,8 @@ function ReplyList({ replyData }: ReplyListProps) {
           />
         ))}
       </ul>
-      <div className="hide">
+      <div className="hide" onClick={onClickCancel}>
+        <div className="line" />
         <Text>답글 숨기기</Text>
       </div>
     </>
