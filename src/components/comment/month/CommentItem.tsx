@@ -34,6 +34,10 @@ function CommentItem({
 
   const queryClient = useQueryClient();
 
+  const { data: replyData } = useQuery<Content[]>(["monthReply", replyId], () =>
+    getMonthReply(replyId as number),
+  );
+
   const { mutate: deleteComment } = useMutation(
     () => deleteMonthComment(replyId as number),
     {
@@ -62,10 +66,6 @@ function CommentItem({
         queryClient.invalidateQueries({ queryKey: ["monthComment"] });
       },
     },
-  );
-
-  const { data: replyData } = useQuery<Content[]>(["monthReply", replyId], () =>
-    getMonthReply(replyId as number),
   );
 
   const onVisibleBalloon = useCallback(() => {

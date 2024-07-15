@@ -32,7 +32,7 @@ function Reply({ replyId, setVisibleReply, replyData }: ReplyProps) {
     {
       onSuccess: () => {
         console.warn(`댓글 입력 완료: ${value}`);
-        queryClient.invalidateQueries({ queryKey: ["monthReply"] });
+        queryClient.invalidateQueries({ queryKey: ["todayReply"] });
       },
       onError: () => {
         console.warn(`댓글 입력 실패`);

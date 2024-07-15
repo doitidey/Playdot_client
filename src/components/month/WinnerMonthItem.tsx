@@ -49,15 +49,18 @@ function WinnerMonthItem({ monthData }: WinnerMonthItemProps) {
           />
           <Text large>1st</Text>
         </div>
-        {/* 추후 Image 컴포넌트로 변경 */}
         <div className="image-percentage">
           <Title largest>승률 {monthData?.winMembers[0].voteRatio}%</Title>
         </div>
         <div className="title-area">
-          <Title medium>{monthData?.winMembers[0].title}</Title>
+          <Title medium>&quot; {monthData?.winMembers[0].title} &quot;</Title>
         </div>
         <div className="text-logo">
-          <Profile imageUrl="" nickname="" size={60} />
+          <Profile
+            imageUrl=""
+            nickname={monthData?.winMembers[0].nickname}
+            size={60}
+          />
           <div className="text">
             <Title large>
               {truncateNickname(monthData?.winMembers[0].nickname, 6)}

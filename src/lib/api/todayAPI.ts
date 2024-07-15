@@ -75,12 +75,12 @@ export const postTodayComment = async (content: string) => {
 };
 
 // 오늘의 승부예측 대댓글 작성 API
-export const postTodayReply = async (reply: string, replyId: number) => {
+export const postTodayReply = async (content: string, replyId: number) => {
   const requestBody = {
-    reply: reply,
+    content: content,
   };
   const response = await instance
-    .post(`games/daily-reply/${replyId}/sub`, requestBody)
+    .post(`games/daily-replies/${replyId}/sub`, requestBody)
     .then((res) => res.data);
   return response.data;
 };
