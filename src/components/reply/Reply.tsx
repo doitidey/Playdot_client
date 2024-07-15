@@ -108,6 +108,7 @@ function Reply({
       <ReplyList
         replyData={replyData as Content[]}
         onClickCancel={onClickCancel}
+        replyQuery={replyQuery as CommentType}
       />
     </div>
   );

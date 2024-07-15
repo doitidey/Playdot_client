@@ -13,8 +13,11 @@ import { cancelCommentLike, postCommentLike } from "@/lib/api/monthAPI";
 import { useCallback, useState } from "react";
 import Report from "@/components/comment/Report";
 import Profile from "../common/Profile";
+import { CommentType } from "../comment/Comment";
 
-interface ReplyItemProps extends Content {}
+interface ReplyItemProps extends Content {
+  replyQuery: CommentType;
+}
 
 function ReplyItem({
   content,
@@ -25,6 +28,7 @@ function ReplyItem({
   profileImageUrl,
   replyId,
   teamName,
+  replyQuery,
 }: ReplyItemProps) {
   const [visibleReport, setVisibleReport] = useState(false);
   const queryClient = useQueryClient();
@@ -34,7 +38,7 @@ function ReplyItem({
     {
       onSuccess: () => {
         console.warn(`댓글 좋아요 완료: ${replyId}`);
-        queryClient.invalidateQueries({ queryKey: ["todayComment"] });
+        queryClient.invalidateQueries({ queryKey: [replyQuery] });
       },
     },
   );
@@ -45,7 +49,7 @@ function ReplyItem({
     {
       onSuccess: () => {
         console.warn(`댓글 좋아요 취소 완료: ${replyId}`);
-        queryClient.invalidateQueries({ queryKey: ["todayComment"] });
+        queryClient.invalidateQueries({ queryKey: [replyQuery] });
       },
     },
   );

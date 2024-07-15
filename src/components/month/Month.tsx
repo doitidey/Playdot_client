@@ -36,8 +36,8 @@ function Month() {
           <WinnerMonthItem monthData={monthData as MonthData} />
           <LoserMonthItem monthData={monthData as MonthData} />
         </div>
-      </section>
       <Comment commentType="month" />
+      </section>
     </>
   );
 }
