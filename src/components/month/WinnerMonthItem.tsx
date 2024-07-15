@@ -92,7 +92,7 @@ function WinnerMonthItem({ monthData }: WinnerMonthItemProps) {
           </div>
           <div className="user-icon">
             <Title small>{truncateNickname(item.nickname, 6)}</Title>
-            <Image src="/images/lions.svg" alt="" width={60} height={60} />
+            <Image src={getLogo(item.teamName)} alt="" width={60} height={60} />
           </div>
         </div>
       ))}
