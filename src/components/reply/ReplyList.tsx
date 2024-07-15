@@ -4,13 +4,15 @@ import { Content } from "@/lib/types/comment/reply";
 import Text from "@/components/common/Text";
 import "@/components/reply/ReplyList.scss";
 import ReplyItem from "@/components/reply/ReplyItem";
+import { CommentType } from "../comment/Comment";
 
 interface ReplyListProps {
   replyData: Content[];
   onClickCancel: () => void;
+  replyQuery: CommentType;
 }
 
-function ReplyList({ replyData, onClickCancel }: ReplyListProps) {
+function ReplyList({ replyData, onClickCancel, replyQuery }: ReplyListProps) {
   return (
     <>
       <ul className="reply-list-block">
@@ -25,6 +27,7 @@ function ReplyList({ replyData, onClickCancel }: ReplyListProps) {
             profileImageUrl={item.profileImageUrl}
             replyId={item.replyId}
             teamName={item.teamName}
+            replyQuery={replyQuery}
           />
         ))}
       </ul>
