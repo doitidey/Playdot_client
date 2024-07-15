@@ -1,12 +1,19 @@
-import "@/components/comment/month/CommentList.scss";
-import CommentItem from "@/components/comment/month/CommentItem";
+import "@/components/comment/CommentList.scss";
+import CommentItem from "./CommentItem";
 import { CommentData } from "@/lib/types/comment/comment";
+import { CommentType } from "./Comment";
 
 interface CommentListProps {
   commentData: CommentData;
+  commentType: CommentType;
+  commentQuery: CommentType;
 }
 
-function CommentList({ commentData }: CommentListProps) {
+function CommentList({
+  commentData,
+  commentType,
+  commentQuery,
+}: CommentListProps) {
   return (
     <ul className="comment-list-block">
       {commentData?.content.map((item, index) => (
@@ -20,6 +27,8 @@ function CommentList({ commentData }: CommentListProps) {
           profileImageUrl={item.profileImageUrl}
           replyId={item.replyId}
           teamName={item.teamName}
+          commentType={commentType}
+          commentQuery={commentQuery}
         />
       ))}
     </ul>

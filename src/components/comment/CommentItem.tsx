@@ -1,6 +1,6 @@
 "use client";
 
-import "@/components/comment/today/CommentItem.scss";
+import "@/components/comment/CommentItem.scss";
 import Text from "@/components/common/Text";
 import { FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
 import { useCallback, useState } from "react";
@@ -14,10 +14,17 @@ import {
   getTodayReply,
   postCommentLike,
 } from "@/lib/api/todayAPI";
-import Reply from "@/components/reply/today/Reply";
+import Reply from "@/components/reply/Reply";
 import { Content } from "@/lib/types/comment/comment";
 import Report from "./Report";
 import Profile from "@/components/common/Profile";
+import { CommentType } from "./Comment";
+import { getMonthReply } from "@/lib/api/monthAPI";
+
+interface CommentItemProps extends Content {
+  commentType: CommentType;
+  commentQuery: CommentType;
+}
 
 function CommentItem({
   content,
@@ -28,17 +35,23 @@ function CommentItem({
   profileImageUrl,
   replyId,
   teamName,
-}: Content) {
+  commentType,
+  commentQuery,
+}: CommentItemProps) {
   // Hooks
   const [visibleBalloon, setVisibleBalloon] = useState(false);
   const [visibleReply, setVisibleReply] = useState(false);
   const [visibleReport, setVisibleReport] = useState(false);
   const queryClient = useQueryClient();
 
+  const replyQuery = commentType === "today" ? "todayReply" : "monthReply";
+
   // 대댓글 조회 API 함수
-  const { data: todayReply } = useQuery<Content[]>(
-    ["todayReply", replyId],
-    () => getTodayReply(replyId as number),
+  const { data: replyData } = useQuery<Content[]>(
+    [replyQuery, replyId],
+    commentType === "today"
+      ? () => getTodayReply(replyId as number)
+      : () => getMonthReply(replyId as number),
   );
 
   // 댓글 삭제 API 함수
@@ -47,7 +60,7 @@ function CommentItem({
     {
       onSuccess: () => {
         console.warn(`댓글 삭제 완료: ${replyId}`);
-        queryClient.invalidateQueries({ queryKey: ["todayComment"] });
+        queryClient.invalidateQueries({ queryKey: [commentQuery] });
       },
     },
   );
@@ -58,7 +71,7 @@ function CommentItem({
     {
       onSuccess: () => {
         console.warn(`댓글 좋아요 완료: ${replyId}`);
-        queryClient.invalidateQueries({ queryKey: ["todayComment"] });
+        queryClient.invalidateQueries({ queryKey: [commentQuery] });
       },
     },
   );
@@ -69,7 +82,7 @@ function CommentItem({
     {
       onSuccess: () => {
         console.warn(`댓글 좋아요 취소 완료: ${replyId}`);
-        queryClient.invalidateQueries({ queryKey: ["todayComment"] });
+        queryClient.invalidateQueries({ queryKey: [commentQuery] });
       },
     },
   );
@@ -124,7 +137,7 @@ function CommentItem({
               </Text>
             ))}
             <div className="content__reply">
-              <span onClick={onVisibleReply}>답글 {todayReply?.length}</span>
+              <span onClick={onVisibleReply}>답글 {replyData?.length}</span>
               <span onClick={onVisibleReply}>답글 쓰기</span>
             </div>
           </div>
@@ -160,9 +173,11 @@ function CommentItem({
       </li>
       {visibleReply && (
         <Reply
-          replyData={todayReply as Content[]}
+          replyData={replyData as Content[]}
           replyId={replyId as number}
           setVisibleReply={setVisibleReply}
+          replyQuery={replyQuery as CommentType}
+          commentType={commentType as CommentType}
         />
       )}
       {visibleReport && <Report onCloseReport={onCloseReport} />}
