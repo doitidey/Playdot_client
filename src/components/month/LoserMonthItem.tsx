@@ -53,7 +53,7 @@ function WinnerMonthItem({ monthData }: WinnerMonthItemProps) {
           <Title largest>승률 {monthData?.loseMembers[0].voteRatio}%</Title>
         </div>
         <div className="title-area">
-          <Title medium>{monthData?.loseMembers[0].title}</Title>
+          <Title medium>&quot; {monthData?.loseMembers[0].title} &quot;</Title>
         </div>
         <div className="text-logo">
           {/* 추후 Image 컴포넌트로 변경 */}
