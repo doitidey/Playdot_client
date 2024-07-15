@@ -1,8 +1,8 @@
 "use client";
 
 import Button from "@/components/common/Button";
-import "@/components/reply/month/Reply.scss";
-import ReplyList from "@/components/reply/month/ReplyList";
+import "@/components/reply/Reply.scss";
+import ReplyList from "@/components/reply/ReplyList";
 import {
   ChangeEvent,
   FormEvent,
@@ -12,27 +12,39 @@ import {
   useState,
 } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { postMonthReply } from "@/lib/api/monthAPI";
 import autosize from "autosize";
 import { Content } from "@/lib/types/comment/reply";
+import { postTodayReply } from "@/lib/api/todayAPI";
+import { postMonthReply } from "@/lib/api/monthAPI";
+import { CommentType } from "@/components/comment/Comment";
 
 interface ReplyProps {
   replyData: Content[];
   replyId: number;
   setVisibleReply: (visibleReply: boolean) => void;
+  replyQuery: CommentType;
+  commentType: CommentType;
 }
 
-function Reply({ replyId, setVisibleReply, replyData }: ReplyProps) {
+function Reply({
+  replyId,
+  setVisibleReply,
+  replyData,
+  replyQuery,
+  commentType,
+}: ReplyProps) {
   const [value, setValue] = useState("");
   const queryClient = useQueryClient();
   const replyRef = useRef<HTMLTextAreaElement>(null);
 
   const { mutate: postReply } = useMutation(
-    () => postMonthReply(value, replyId),
+    commentType === "today"
+      ? () => postTodayReply(value, replyId)
+      : () => postMonthReply(value, replyId),
     {
       onSuccess: () => {
         console.warn(`댓글 입력 완료: ${value}`);
-        queryClient.invalidateQueries({ queryKey: ["monthReply"] });
+        queryClient.invalidateQueries({ queryKey: [replyQuery] });
       },
       onError: () => {
         console.warn(`댓글 입력 실패`);
@@ -93,7 +105,10 @@ function Reply({ replyId, setVisibleReply, replyData }: ReplyProps) {
           <Button size="submit" variant="active" type="submit" label="등록" />
         </div>
       </form>
-      <ReplyList replyData={replyData as Content[]} onClickCancel={onClickCancel} />
+      <ReplyList
+        replyData={replyData as Content[]}
+        onClickCancel={onClickCancel}
+      />
     </div>
   );
 }

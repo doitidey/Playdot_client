@@ -1,6 +1,6 @@
 "use client";
 
-import "@/components/comment/today/Report.scss";
+import "@/components/comment/Report.scss";
 import Button from "@/components/common/Button";
 import Text from "@/components/common/Text";
 import Title from "@/components/common/Title";

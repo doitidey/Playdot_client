@@ -2,8 +2,8 @@
 
 import { Content } from "@/lib/types/comment/reply";
 import Text from "@/components/common/Text";
-import "@/components/reply/month/ReplyList.scss";
-import ReplyItem from "@/components/reply/month/ReplyItem";
+import "@/components/reply/ReplyList.scss";
+import ReplyItem from "@/components/reply/ReplyItem";
 
 interface ReplyListProps {
   replyData: Content[];

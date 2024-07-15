@@ -1,6 +1,6 @@
 "use client";
 
-import "@/components/comment/today/Comment.scss";
+import "@/components/comment/Comment.scss";
 import Button from "@/components/common/Button";
 import Text from "@/components/common/Text";
 import Title from "@/components/common/Title";
@@ -20,9 +20,16 @@ import { getTodayComment, postTodayComment } from "@/lib/api/todayAPI";
 import Pagination from "react-js-pagination";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { CommentData } from "@/lib/types/comment/comment";
+import { getMonthComment, postMonthComment } from "@/lib/api/monthAPI";
+
+export type CommentType = "today" | "month";
+
+interface CommentProps {
+  commentType?: CommentType;
+}
 
 // component
-function Comment() {
+function Comment({ commentType }: CommentProps) {
   // hooks
   const [value, setValue] = useState("");
   const [page, setPage] = useState(1);
@@ -31,11 +38,15 @@ function Comment() {
 
   // variable
   const item = 15;
+  const commentQuery =
+    commentType === "today" ? "todayComment" : "monthComment";
 
   // 댓글 조회 API
   const { data: commentData, refetch } = useQuery<CommentData>(
-    ["todayComment", page],
-    () => getTodayComment(page, item),
+    [commentQuery, page],
+    commentType === "today"
+      ? () => getTodayComment(page, item)
+      : () => getMonthComment(page, item),
     {
       staleTime: 1000 * 60,
       cacheTime: 1000 * 60 * 5,
@@ -43,15 +54,20 @@ function Comment() {
   );
 
   // 댓글 입력 API
-  const { mutate: postComment } = useMutation(() => postTodayComment(value), {
-    onSuccess: () => {
-      console.warn(`댓글 입력 완료: ${value}`);
-      queryClient.invalidateQueries({ queryKey: ["todayComment"] });
+  const { mutate: postComment } = useMutation(
+    commentType === "today"
+      ? () => postTodayComment(value)
+      : () => postMonthComment(value),
+    {
+      onSuccess: () => {
+        console.warn(`댓글 입력 완료: ${value}`);
+        queryClient.invalidateQueries({ queryKey: [commentQuery] });
+      },
+      onError: () => {
+        console.warn(`댓글 입력 실패`);
+      },
     },
-    onError: () => {
-      console.warn(`댓글 입력 실패`);
-    },
-  });
+  );
 
   // 댓글 입력 이벤트 함수
   const onChange = useCallback(
@@ -121,7 +137,11 @@ function Comment() {
           </Text>
         </form>
       </div>
-      <CommentList commentData={commentData as CommentData} />
+      <CommentList
+        commentData={commentData as CommentData}
+        commentType={commentType as CommentType}
+        commentQuery={commentQuery as CommentType}
+      />
       <Pagination
         activePage={(commentData?.pageable?.pageNumber as number) + 1}
         totalItemsCount={commentData?.totalElements as number}
