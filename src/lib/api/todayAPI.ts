@@ -8,7 +8,7 @@ export const getTodayGames = async () => {
     return response.data;
   } catch (error) {
     const err = error as AxiosError;
-    if (err.response?.status === 400) {
+    if (err.response?.status === 403) {
       localStorage.clear();
       window.location.href = "/";
     } else {
