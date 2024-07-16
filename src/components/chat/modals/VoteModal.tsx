@@ -64,10 +64,10 @@ function VoteModal() {
               voteActive && "vote__content-button__item__bg--active",
             )}
             style={
-              voteActive
+              voteActive && voteRatioData[0].voteRatio.option1VoteRatio
                 ? { height: `${voteRatioData[0].voteRatio.option1VoteRatio}%` }
-                : { height: "0%" }
-            } //api 연동
+                : { height: "100%" }
+            }
           ></div>
         </button>
         <button
@@ -82,7 +82,7 @@ function VoteModal() {
               voteActive && "vote__content-button__item__bg--active",
             )}
             style={
-              voteActive
+              voteActive && voteRatioData[0].voteRatio.option1VoteRatio
                 ? { height: `${voteRatioData[0].voteRatio.option2VoteRatio}%` }
                 : { height: "0%" }
             }
