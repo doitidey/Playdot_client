@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import { getGiftHistory } from "@/lib/api/mypageAPI";
 import Text from "../common/Text";
 import Pagination from "react-js-pagination";
+import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
+import { getTeamLogo } from "@/lib/util/TeamTagLogo";
+import Image from "next/image";
 interface ContentData {
   nickname: string;
   teamName: string;
@@ -36,6 +39,8 @@ function MypagePresentRecord() {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
+    // setPageData(pageDummyData.data);
+
     const getHistory = async () => {
       const res = await getGiftHistory(page);
       setPageData(res.data);
@@ -47,24 +52,37 @@ function MypagePresentRecord() {
     setPage(page);
   };
 
-  const presentHeader = ["닉네임", "토큰갯수", "한줄 메세지", "날짜"];
+  const presentHeader = [" ", "닉네임", "토큰갯수", "한줄 메세지", "날짜"];
 
+  const getHeaderClassname = (i: string) => {
+    switch (i) {
+      case " ": {
+        return "contentbox--logo";
+      }
+      case "한줄 메세지": {
+        return "contentbox--comment";
+      }
+      default: {
+        return "contentbox";
+      }
+    }
+  };
   return (
     <div className="present">
-      {pageData && pageData.content.length > 0 ? (
-        <>
-          {/* //TODO: 아이템 필터링
+      {/* //TODO: 아이템 필터링
           <div className="present-filter">
             보낸 선물내역
             <div className="present-filter__icon">
               <GoArrowUp />
             </div>
           </div> */}
+      {pageData && pageData.content.length > 0 ? (
+        <>
           <table className="present-record">
             <thead>
               <tr className="present-record__title">
                 {presentHeader.map((i) => (
-                  <th key={i} className="contentbox">
+                  <th key={i} className={getHeaderClassname(i)}>
                     {i}
                   </th>
                 ))}
@@ -80,9 +98,17 @@ function MypagePresentRecord() {
                         i % 2 === 0 && "present-record__content--deco"
                       }`}
                     >
+                      <td className="contentbox--logo">
+                        <Image
+                          src={getTeamLogo(data.teamName)}
+                          width={50}
+                          height={50}
+                          alt={`${data.teamName} 로고`}
+                        />
+                      </td>
                       <td className="contentbox">{data.nickname}</td>
                       <td className="contentbox">{data.token}</td>
-                      <td className="contentbox">{data.comment}</td>
+                      <td className="contentbox--comment">{data.comment}</td>
                       <td className="contentbox">{data.takeDate}</td>
                     </tr>
                   );
@@ -90,19 +116,19 @@ function MypagePresentRecord() {
             </tbody>
           </table>
           <Pagination
-            activePage={pageData.totalPages}
-            itemsCountPerPage={10}
-            totalItemsCount={10}
-            pageRangeDisplayed={
-              pageData.totalPages < 5 ? pageData.totalPages : 5
-            }
+            activePage={pageData?.pageable?.pageNumber as number}
+            totalItemsCount={pageData?.totalElements as number}
+            itemsCountPerPage={15}
             onChange={handlePageChange}
+            hideFirstLastPages={true}
+            prevPageText={<MdNavigateBefore />}
+            nextPageText={<MdNavigateNext />}
           />
         </>
       ) : (
-        <>
-          <Text large>내역이 존재하지 않아!ㅠㅠ</Text>
-        </>
+        <div className="emptyTable">
+          <Text large>아직 선물 내역이 없어!</Text>
+        </div>
       )}
     </div>
   );
