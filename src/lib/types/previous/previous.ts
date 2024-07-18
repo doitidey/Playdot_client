@@ -1,15 +1,19 @@
 export interface PreviousData {
+  games: GameData[];
+}
+
+export interface GameData {
   gameId?: number;
   homeTeam: {
+    id: number;
     teamName: string;
     voteRatio: number;
-    id: number;
   };
   awayTeam: {
+    id: number;
     teamName: string;
     voteRatio: number;
-    id: number;
   };
-  gameDate: string;
+  gameDate?: string;
   voteTeamId: number | null;
 }

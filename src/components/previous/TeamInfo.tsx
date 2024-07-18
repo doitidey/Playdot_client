@@ -26,15 +26,18 @@ function TeamInfo({
       return (
         <ul className="team-info-block">
           {firstData &&
-            firstData.map((item) => (
-              <TeamInfoItem
-                key={item.gameId}
-                awayTeam={item.awayTeam}
-                homeTeam={item.homeTeam}
-                gameDate={item.gameDate}
-                voteTeamId={item.voteTeamId}
-              />
-            ))}
+            firstData.map((item) =>
+              item.games.map((item, index) => (
+                <>
+                  <TeamInfoItem
+                    key={index}
+                    awayTeam={item.awayTeam}
+                    homeTeam={item.homeTeam}
+                    voteTeamId={item.voteTeamId}
+                  />
+                </>
+              )),
+            )}
         </ul>
       );
     }
@@ -42,15 +45,19 @@ function TeamInfo({
       return (
         <ul className="team-info-block">
           {secondData &&
-            secondData.map((item) => (
-              <TeamInfoItem
-                key={item.gameId}
-                awayTeam={item.awayTeam}
-                homeTeam={item.homeTeam}
-                gameDate={item.gameDate}
-                voteTeamId={item.voteTeamId}
-              />
-            ))}
+            secondData.map((item) =>
+              item.games.map((item) => (
+                <>
+                  <TeamInfoItem
+                    key={item.gameId}
+                    awayTeam={item.awayTeam}
+                    homeTeam={item.homeTeam}
+                    gameDate={item.gameDate}
+                    voteTeamId={item.voteTeamId}
+                  />
+                </>
+              )),
+            )}
         </ul>
       );
     }
@@ -58,15 +65,19 @@ function TeamInfo({
       return (
         <ul className="team-info-block">
           {thirdData &&
-            thirdData.map((item) => (
-              <TeamInfoItem
-                key={item.gameId}
-                awayTeam={item.awayTeam}
-                homeTeam={item.homeTeam}
-                gameDate={item.gameDate}
-                voteTeamId={item.voteTeamId}
-              />
-            ))}
+            thirdData.map((item) =>
+              item.games.map((item) => (
+                <>
+                  <TeamInfoItem
+                    key={item.gameId}
+                    awayTeam={item.awayTeam}
+                    homeTeam={item.homeTeam}
+                    gameDate={item.gameDate}
+                    voteTeamId={item.voteTeamId}
+                  />
+                </>
+              )),
+            )}
         </ul>
       );
     }
@@ -74,15 +85,19 @@ function TeamInfo({
       return (
         <ul className="team-info-block">
           {fourthData &&
-            fourthData.map((item) => (
-              <TeamInfoItem
-                key={item.gameId}
-                awayTeam={item.awayTeam}
-                homeTeam={item.homeTeam}
-                gameDate={item.gameDate}
-                voteTeamId={item.voteTeamId}
-              />
-            ))}
+            fourthData.map((item) =>
+              item.games.map((item) => (
+                <>
+                  <TeamInfoItem
+                    key={item.gameId}
+                    awayTeam={item.awayTeam}
+                    homeTeam={item.homeTeam}
+                    gameDate={item.gameDate}
+                    voteTeamId={item.voteTeamId}
+                  />
+                </>
+              )),
+            )}
         </ul>
       );
     }
@@ -90,15 +105,19 @@ function TeamInfo({
       return (
         <ul className="team-info-block">
           {fifthData &&
-            fifthData.map((item) => (
-              <TeamInfoItem
-                key={item.gameId}
-                awayTeam={item.awayTeam}
-                homeTeam={item.homeTeam}
-                gameDate={item.gameDate}
-                voteTeamId={item.voteTeamId}
-              />
-            ))}
+            fifthData.map((item) =>
+              item.games.map((item) => (
+                <>
+                  <TeamInfoItem
+                    key={item.gameId}
+                    awayTeam={item.awayTeam}
+                    homeTeam={item.homeTeam}
+                    gameDate={item.gameDate}
+                    voteTeamId={item.voteTeamId}
+                  />
+                </>
+              )),
+            )}
         </ul>
       );
     }
