@@ -137,6 +137,17 @@ function MypageProfile() {
 
   const onClickCancle = () => {
     setIsEditing(false);
+    setInputValue({
+      nickname: profileData ? profileData.nickname : "",
+      validNickname: false,
+      comment: profileData ? profileData.comment : "",
+      validComment: false,
+    });
+    setPreviewUrl("");
+    setValidMessage({
+      validNickname: "",
+      validComment: "",
+    });
   };
 
   const putSubmit = async () => {
@@ -292,6 +303,7 @@ function MypageProfile() {
                   placeholder={`${profileData?.nickname}`}
                   readOnly={!isEditing && true}
                   onChange={onChangeNicknameInput}
+                  value={inputValue.nickname}
                 />
               </li>
               <li className="detail-box__item">
@@ -322,6 +334,7 @@ function MypageProfile() {
             placeholder={`${profileData?.comment}`}
             readOnly={!isEditing && true}
             onChange={onChangeCommentInput}
+            value={inputValue.comment}
           />
         </form>
         <div className="profile-box__content level-box">
