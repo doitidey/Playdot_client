@@ -16,17 +16,16 @@ function VoteModal() {
   const { sendVote, voteRatioSubscribe } = useSocket();
   const { voteRatioData } = useStompVoteRatiosData();
   const [voteActive, setVoteActive] = useState(false);
+  const [selected, setSelected] = useState("");
   // const voteData = VOTE_DATA;
-
-  useEffect(() => {
-    voteRatioSubscribe(voteData[0].miniGameId);
-  }, []);
 
   const onVote = (e: React.MouseEvent<HTMLButtonElement>) => {
     // console.log(e.target.value);
     // todo: api 연동
+    voteRatioSubscribe(voteData[0].miniGameId);
     const value = e.currentTarget.value;
     setVoteActive(true);
+    setSelected(value);
     const voteBody = {
       miniGameId: Number(voteData[0].miniGameId),
       option: Number(value),
@@ -62,9 +61,10 @@ function VoteModal() {
             className={classNames(
               "vote__content-button__item__bg",
               voteActive && "vote__content-button__item__bg--active",
+              selected !== "1" && "vote__content-button__item__bg--selected",
             )}
             style={
-              voteActive && voteRatioData[0].voteRatio.option1VoteRatio
+              voteActive && voteRatioData[0]
                 ? { height: `${voteRatioData[0].voteRatio.option1VoteRatio}%` }
                 : { height: "100%" }
             }
@@ -80,11 +80,12 @@ function VoteModal() {
             className={classNames(
               "vote__content-button__item__bg",
               voteActive && "vote__content-button__item__bg--active",
+              selected !== "2" && "vote__content-button__item__bg--selected",
             )}
             style={
-              voteActive && voteRatioData[0].voteRatio.option1VoteRatio
+              voteActive && voteRatioData[0]
                 ? { height: `${voteRatioData[0].voteRatio.option2VoteRatio}%` }
-                : { height: "0%" }
+                : { height: "100%" }
             }
           ></div>
         </button>

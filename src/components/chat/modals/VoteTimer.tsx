@@ -23,7 +23,7 @@ const VoteTimer = ({ targetTime }: { targetTime: string }) => {
   }, [targetTime]);
 
   useEffect(() => {
-    if (timeLeft.minutes === 0 && timeLeft.minutes === 0) {
+    if (timeLeft.minutes === 0 && timeLeft.seconds === 0) {
       setVoteDataEmpty();
     }
   }, [timeLeft]);

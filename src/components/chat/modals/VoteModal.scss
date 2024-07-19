@@ -68,6 +68,9 @@
           display: block;
           animation: slider 0.2s;
         }
+        &--selected {
+          opacity: 0.8;
+        }
       }
     }
   }
