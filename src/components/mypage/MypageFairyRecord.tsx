@@ -33,8 +33,6 @@ function MypageFairyRecord() {
     getHistoryData();
   }, []);
 
-  console.log(historyData);
-
   return (
     <div className="fairy">
       <div className="fairy__content">
