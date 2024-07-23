@@ -57,7 +57,11 @@ function WinnerMonthItem({ monthData }: WinnerMonthItemProps) {
         </div>
         <div className="text-logo">
           {/* 추후 Image 컴포넌트로 변경 */}
-          <Profile imageUrl="" nickname="" size={60} />
+          <Profile
+            imageUrl=""
+            nickname={monthData?.loseMembers[0].nickname}
+            size={60}
+          />
           <div className="text">
             <Title large>
               {truncateNickname(monthData?.loseMembers[0].nickname, 6)}
