@@ -46,6 +46,9 @@ function CommentItem({
 
   const replyQuery = commentType === "today" ? "todayReply" : "monthReply";
 
+  const userData = JSON.parse(localStorage.getItem("userData") as string);
+  const username = userData.state.userData.nickname;
+
   // 대댓글 조회 API 함수
   const { data: replyData } = useQuery<Content[]>(
     [replyQuery, replyId],
@@ -155,7 +158,9 @@ function CommentItem({
             )}
             <span>{commentDate(createdAt)}</span>
             <span onClick={onVisibleReport}>신고</span>
-            <span onClick={onVisibleBalloon}>삭제</span>
+            {nickname === username && (
+              <span onClick={onVisibleBalloon}>삭제</span>
+            )}
           </div>
           <div className="item-block__button__like">
             <Text>좋아요</Text>
