@@ -7,7 +7,7 @@ import Title from "@/components/common/Title";
 import { getCommentReport, postCommentReport } from "@/lib/api/todayAPI";
 import { ReportData } from "@/lib/types/comment/reply";
 import classNames from "classnames";
-import { ChangeEvent, FormEvent, useCallback, useState } from "react";
+import { FormEvent, useCallback, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useMutation, useQuery } from "react-query";
 
