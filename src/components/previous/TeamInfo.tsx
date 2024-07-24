@@ -22,7 +22,6 @@ function TeamInfo({
   fourthData,
   fifthData,
 }: TeamInfoProps) {
-  console.warn(fourthData);
   switch (activeTab) {
     case 0: {
       return (

@@ -67,28 +67,6 @@ export const cancelCommentLike = async (replyId: number) => {
   return response.data;
 };
 
-// 월간 승리요정 댓글 신고 조회 API
-export const getMonthCommentReport = async (replyId: number) => {
-  const response = await instance
-    .get(`replies/${replyId}/report`)
-    .then((res) => res.data);
-  return response.data;
-};
-
-// 월간 승리요정 댓글 신고 API
-export const postMonthCommentReport = async (
-  replyId: number,
-  reportType: string,
-) => {
-  const requestBody = {
-    reportType: reportType,
-  };
-  const response = await instance
-    .post(`replies/${replyId}/report`, requestBody)
-    .then((res) => res.data);
-  return response.data;
-};
-
 // 요청 인터셉터
 instance.interceptors.request.use(
   function (config) {

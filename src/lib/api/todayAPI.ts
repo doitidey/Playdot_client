@@ -109,16 +109,16 @@ export const cancelCommentLike = async (replyId: number) => {
   return response.data;
 };
 
-// 오늘의 승부예측 댓글 신고 조회 API
-export const getTodayCommentReport = async (replyId: number) => {
+// 댓글 신고 조회 API
+export const getCommentReport = async (replyId: number) => {
   const response = await instance
     .get(`replies/${replyId}/report`)
     .then((res) => res.data);
   return response.data;
 };
 
-// 오늘의 승부예측 댓글 신고 API
-export const postTodayCommentReport = async (
+// 댓글 신고 API
+export const postCommentReport = async (
   replyId: number,
   reportType: string,
 ) => {
