@@ -53,8 +53,6 @@ function Comment({ commentType }: CommentProps) {
     },
   );
 
-  console.warn(commentData);
-
   // 댓글 입력 API
   const { mutate: postComment } = useMutation(
     commentType === "today"

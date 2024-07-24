@@ -22,7 +22,6 @@ function Month() {
       cacheTime: 1000 * 60 * 5,
     },
   );
-  console.warn(monthData?.winMembers);
   return (
     <>
       <div className="description">

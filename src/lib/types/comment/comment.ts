@@ -28,7 +28,7 @@ interface Pageable {
 export interface CommentData {
   content: Content[]; // 실제 데이터
   pageable?: Pageable; // 페이지네이션
-  totalElements?: number; // 전체 데이터 수
+  totalElements: number; // 전체 데이터 수
   totalPages?: number; // 총 페이지 수
   last?: boolean; // 마지막 페이지인지 여부
   size?: number; // 한 페이지 당 보여줄 데이터 개수
@@ -37,10 +37,4 @@ export interface CommentData {
   numberOfElements?: number; // 현재 페이지 데이터 수
   first?: boolean; // 첫번째 페이지 여부
   empty?: boolean; // 데이터가 비어있는지 여부
-}
-
-// 댓글 신고
-type ReportType = "ABUSE" | "SPAM" | "PRIVACY" | "ETC";
-export interface ReportData {
-  type: ReportType;
 }

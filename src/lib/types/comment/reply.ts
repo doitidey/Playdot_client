@@ -12,3 +12,8 @@ export interface Content {
 export interface ReplyData {
   content: Content[]; // 실제 데이터
 }
+
+export interface ReportData {
+  comment: string;
+  type: string;
+}

@@ -19,8 +19,6 @@ function Today() {
     },
   );
 
-  console.warn(todayData);
-
   return (
     <>
       <div className="today-block">

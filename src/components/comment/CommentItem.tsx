@@ -185,7 +185,9 @@ function CommentItem({
           commentType={commentType as CommentType}
         />
       )}
-      {visibleReport && <Report onCloseReport={onCloseReport} />}
+      {visibleReport && (
+        <Report replyId={replyId as number} onCloseReport={onCloseReport} />
+      )}
     </>
   );
 }

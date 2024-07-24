@@ -32,7 +32,7 @@ function ReplyItem({
 }: ReplyItemProps) {
   const [visibleReport, setVisibleReport] = useState(false);
   const queryClient = useQueryClient();
-  
+
   // 댓글 좋아요 API 함수
   const { mutate: postLike } = useMutation(
     () => postCommentLike(replyId as number),
@@ -112,7 +112,9 @@ function ReplyItem({
           </div>
         </div>
       </li>
-      {visibleReport && <Report onCloseReport={onCloseReport} />}
+      {visibleReport && (
+        <Report replyId={replyId as number} onCloseReport={onCloseReport} />
+      )}
     </>
   );
 }

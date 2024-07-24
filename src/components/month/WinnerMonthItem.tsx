@@ -79,7 +79,7 @@ function WinnerMonthItem({ monthData }: WinnerMonthItemProps) {
         </div>
       </div>
       {monthData?.winMembers.slice(1, 5).map((item) => (
-        <div key={item.memberId} className="secondary">
+        <div key={item.memberId as number} className="secondary">
           <div className="icon-container">
             <Image
               className="first-icon"
